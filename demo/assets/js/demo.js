@@ -92,7 +92,7 @@ var DEMO = {
 			alpha: 	1.0,
 			sunDirection: directionalLight.position.normalize(),
 			sunColor: 0xFFFFFF,
-			waterColor: 0x68758A,
+			waterColor: 0x8F81A1,
 			distortionScale: 20.0
 		});
 		var aMeshMirror = new THREE.Mesh(
@@ -108,12 +108,12 @@ var DEMO = {
 	
 	loadSkyBox: function loadSkyBox() {
 		var aCubeMap = THREE.ImageUtils.loadTextureCube([
-		  'assets/img/px.jpg',
-		  'assets/img/nx.jpg',
-		  'assets/img/py.jpg',
-		  'assets/img/ny.jpg',
-		  'assets/img/pz.jpg',
-		  'assets/img/nz.jpg'
+		  'assets/img/gradient_03.jpg',
+		  'assets/img/gradient_03.jpg',
+		  'assets/img/gradient_03.jpg',
+		  'assets/img/gradient_03.jpg',
+		  'assets/img/gradient_03.jpg',
+		  'assets/img/gradient_03.jpg'
 		]);
 		aCubeMap.format = THREE.RGBFormat;
 		aCubeMap.mapping = THREE.SphericalReflectionMapping;
