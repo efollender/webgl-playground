@@ -37,7 +37,7 @@ var DEMO = {
 		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
 		this.ms_Controls.userPan = false;
 		this.ms_Controls.userPanSpeed = 0.0;
-		this.ms_Controls.maxDistance = 5000.0;
+		this.ms_Controls.maxDistance = 8000.0;
 		this.ms_Controls.maxPolarAngle = Math.PI * 0.495;
 	
 		// Add light
@@ -54,35 +54,20 @@ var DEMO = {
 		directionalLight3.position.set(0, 0, 1000);
 		this.ms_Scene.add(directionalLight3);
 		//Back Light
-		// var directionalLight4 = new THREE.DirectionalLight(0x8F81A1, .5);
-		// directionalLight4.position.set(0, 600, -600);
-		// this.ms_Scene.add(directionalLight4);
+		var directionalLight4 = new THREE.DirectionalLight(0x8F81A1, .5);
+		directionalLight4.position.set(0, 600, -600);
+		this.ms_Scene.add(directionalLight4);
 		
 		// Create terrain
 		this.loadTerrain(inParameters);
 		
 		// Load textures		
 		var waterNormals = new THREE.ImageUtils.loadTexture('../assets/img/waternormals.jpg');
-		waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping; 
+		waterNormals.wrapS = waterNormals.wrapT = THREE.SphericalReflectionMapping; 
+
 		//Load cat
 		var cat = this.loadCat(inParameters);
 		this.ms_Scene.add(cat);
-		// Load filesdnd texture
-		new Konami(function() {
-			if(DEMO.ms_FilesDND == null)
-			{
-				var aTextureFDND = THREE.ImageUtils.loadTexture("assets/img/filesdnd_ad.png");
-				aTextureFDND.minFilter = THREE.LinearFilter;
-				DEMO.ms_FilesDND = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial({ map : aTextureFDND, transparent: true, side : THREE.DoubleSide }));
-
-				// Mesh callback
-				DEMO.ms_FilesDND.callback = function() { window.open("http://www.filesdnd.com"); }
-				DEMO.ms_Clickable.push(DEMO.ms_FilesDND);
-				
-				DEMO.ms_FilesDND.position.y = 1200;
-				DEMO.ms_Scene.add(DEMO.ms_FilesDND);
-			}
-		});
 		
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
@@ -104,13 +89,17 @@ var DEMO = {
 		this.ms_Scene.add(aMeshMirror);
 	
 		this.loadSkyBox();
+		this.loadGlaciers();
+		var audio = document.createElement('audio');
+	  var source = document.createElement('source');
+	  source.src = 'assets/sounds/sleep.mp3';
+	  audio.appendChild(source);
+	  audio.play();
 	},
 	
 	loadSkyBox: function loadSkyBox() {
 		var skyTexture = THREE.ImageUtils.loadTexture('assets/img/gradient_03.jpg');
-		skyTexture.wrapS = THREE.RepeatWrapping;
-		skyTexture.wrapT = THREE.RepeatWrapping;
-		skyTexture.mapping = THREE.SphericalReflectionMapping;
+		skyTexture.wrapS = skyTexture.wrapT = THREE.RepeatWrapping;
 
 		// var aSkyBoxMaterial = new THREE.ShaderMaterial({
 		//   fragmentShader: aShader.fragmentShader,
@@ -120,16 +109,14 @@ var DEMO = {
 		//   side: THREE.BackSide
 		// });
 
-		
-
 		var aSkybox = new THREE.Mesh(
-		  new THREE.SphereGeometry(500000, 32, 32),
+		  new THREE.SphereGeometry(10000, 32, 32),
 		  new THREE.MeshPhongMaterial({
 		  		map: skyTexture,
 		  		specularMap: skyTexture,
 					side: THREE.BackSide,
 					vertexColors: THREE.FaceColors,
-					shading: THREE.SmoothShading
+					shading: THREE.SmoothShading,
 				})
 		);
 		
@@ -138,8 +125,8 @@ var DEMO = {
 	modifyElement: function(el) {
 		el.material = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.SmoothShading, side: THREE.DoubleSide });
   	el.material.color = new THREE.Color( 0xffffff);
-  	// el.material.wireframe = true;
   	el.castShadow = true;
+  	el.receiveShadow = true;
   	el.geometry.computeFaceNormals();
   	el.geometry.computeVertexNormals();
 
@@ -164,11 +151,53 @@ var DEMO = {
 		terrain.position.z = -4000;
 		this.ms_Scene.add(terrain);
 	},
+	loadGlaciers: function loadGlaciers() {
+		var objLoader = new THREE.OBJMTLLoader();
+		var ms_Scene = this.ms_Scene;
+		objLoader.load('assets/landscape_assets/glacier_02.obj', 'assets/landscape_assets/glacier_01.mtl', function(glacier) {
+			console.log('glacier', glacier);
+			glacier.position.z = 1000;
+			glacier.position.x = 200;
+			glacier.scale.set(.2,.2,.2);
+			ms_Scene.add(glacier);
+		});
+	},
+	// loadCat: function loadCat(inParameters) {
+	// 	var ms_Scene = this.ms_Scene;
+	// 	var loader = new THREE.JSONLoader();
+	// 	loader.load( "assets/js/cat.js", function( geometry ) {
+	// 			console.log('ran', geometry);
+	// 				geometry.computeVertexNormals();
+	// 				geometry.computeMorphNormals();
+
+	// 				var material = new THREE.MeshPhongMaterial( {
+	// 					color: 0xffffff,
+	// 					morphTargets: true,
+	// 					morphNormals: true,
+	// 					vertexColors: THREE.FaceColors,
+	// 					shading: THREE.SmoothShading
+	// 				} );
+	// 				var mesh = new THREE.Mesh( geometry, material );
+
+	// 				mesh.position.x = 150;
+	// 				mesh.position.y = 150;
+	// 				mesh.scale.set( 1.5, 1.5, 1.5 );
+
+	// 				scene.add( mesh );
+
+	// 				var mixer = new THREE.AnimationMixer( mesh );
+	// 				mixer.addAction( new THREE.AnimationAction( geometry.animations[ 0 ] ).warpToDuration( 1 ) );
+
+	// 				mixers.push( mixer );
+
+	// 			} );
+
+	// },
 	loadCat: function loadCat(inParameters) {
 		var modifyElement = this.modifyElement;
 		var objLoader = new THREE.ObjectLoader();
 		var ms_Scene = this.ms_Scene;
-		objLoader.load( 'assets/js/cat.json', function ( object ) {
+		objLoader.load( 'assets/js/cat.js', function ( object ) {
       object.castShadow = true;
       object.position.x = 0;
       object.position.y = 0;
