@@ -93,6 +93,7 @@ var DEMO = {
 		var audio = document.createElement('audio');
 	  var source = document.createElement('source');
 	  source.src = 'assets/sounds/sleep.mp3';
+	  audio.loop = true;
 	  audio.appendChild(source);
 	  audio.play();
 	},
