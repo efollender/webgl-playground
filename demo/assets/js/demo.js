@@ -54,9 +54,9 @@ var DEMO = {
 		directionalLight3.position.set(0, 0, 1000);
 		this.ms_Scene.add(directionalLight3);
 		//Back Light
-		var directionalLight4 = new THREE.DirectionalLight(0x8F81A1, .5);
-		directionalLight4.position.set(0, 600, -600);
-		this.ms_Scene.add(directionalLight4);
+		// var directionalLight4 = new THREE.DirectionalLight(0x8F81A1, .5);
+		// directionalLight4.position.set(0, 600, -600);
+		// this.ms_Scene.add(directionalLight4);
 		
 		// Create terrain
 		this.loadTerrain(inParameters);
@@ -107,35 +107,35 @@ var DEMO = {
 	},
 	
 	loadSkyBox: function loadSkyBox() {
-		var aCubeMap = THREE.ImageUtils.loadTextureCube([
-		  'assets/img/gradient_03.jpg',
-		  'assets/img/gradient_03.jpg',
-		  'assets/img/gradient_03.jpg',
-		  'assets/img/gradient_03.jpg',
-		  'assets/img/gradient_03.jpg',
-		  'assets/img/gradient_03.jpg'
-		]);
-		aCubeMap.format = THREE.RGBFormat;
-		aCubeMap.mapping = THREE.SphericalReflectionMapping;
-		var aShader = THREE.ShaderLib['cube'];
-		aShader.uniforms['tCube'].value = aCubeMap;
+		var skyTexture = THREE.ImageUtils.loadTexture('assets/img/gradient_03.jpg');
+		skyTexture.wrapS = THREE.RepeatWrapping;
+		skyTexture.wrapT = THREE.RepeatWrapping;
+		skyTexture.mapping = THREE.SphericalReflectionMapping;
 
-		var aSkyBoxMaterial = new THREE.ShaderMaterial({
-		  fragmentShader: aShader.fragmentShader,
-		  vertexShader: aShader.vertexShader,
-		  uniforms: aShader.uniforms,
-		  depthWrite: false,
-		  side: THREE.BackSide
-		});
+		// var aSkyBoxMaterial = new THREE.ShaderMaterial({
+		//   fragmentShader: aShader.fragmentShader,
+		//   vertexShader: aShader.vertexShader,
+		//   uniforms: aShader.uniforms,
+		//   depthWrite: false,
+		//   side: THREE.BackSide
+		// });
+
+		
 
 		var aSkybox = new THREE.Mesh(
-		  new THREE.BoxGeometry(1000000, 1000000, 1000000),
-		  aSkyBoxMaterial
+		  new THREE.SphereGeometry(500000, 32, 32),
+		  new THREE.MeshPhongMaterial({
+		  		map: skyTexture,
+		  		specularMap: skyTexture,
+					side: THREE.BackSide,
+					vertexColors: THREE.FaceColors,
+					shading: THREE.SmoothShading
+				})
 		);
 		
 		this.ms_Scene.add(aSkybox);
 	},
-	modifyElement: function(el, object) {
+	modifyElement: function(el) {
 		el.material = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.SmoothShading, side: THREE.DoubleSide });
   	el.material.color = new THREE.Color( 0xffffff);
   	// el.material.wireframe = true;
@@ -158,14 +158,13 @@ var DEMO = {
 	loadTerrain: function loadTerrain(inParameters) {
 		var terrainGeo = TERRAINGEN.Get(inParameters);
 		var terrainMaterial = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.FlatShading, side: THREE.DoubleSide });
-		terrainMaterial.color = new THREE.Color( 0xFFCCFF );
+		terrainMaterial.color = new THREE.Color( 0xCCCCEE );
 		var terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
 		terrain.position.y = - inParameters.depth * 0.5;
 		terrain.position.z = -4000;
 		this.ms_Scene.add(terrain);
 	},
 	loadCat: function loadCat(inParameters) {
-		console.log('ran');
 		var modifyElement = this.modifyElement;
 		var objLoader = new THREE.ObjectLoader();
 		var ms_Scene = this.ms_Scene;
@@ -175,11 +174,10 @@ var DEMO = {
       object.position.y = 0;
       object.position.z = 0;
       object.scale.set(10,10,10);
-      console.log(object);
       [].slice.call(object.children).forEach(function(topEl) {
-      	el = modifyElement(topEl, object);
+      	el = modifyElement(topEl);
       	[].slice.call(topEl.children).forEach(function(el) {
-      		el = modifyElement(el, object);
+      		el = modifyElement(el);
 				});
       });
       ms_Scene.add(object);
