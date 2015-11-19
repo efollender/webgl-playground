@@ -69,9 +69,6 @@ var DEMO = {
 
 		//Load cat
 		var cat = this.loadCat(inParameters);
-<<<<<<< HEAD
-		this.ms_Scene.add(cat);
-=======
 		// this.ms_Scene.add(cat);
 		// Load filesdnd texture
 		new Konami(function() {
@@ -89,7 +86,6 @@ var DEMO = {
 				DEMO.ms_Scene.add(DEMO.ms_FilesDND);
 			}
 		});
->>>>>>> 0566b2a2d8f1adc9c71c92409e4576a6062fc682
 		
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
