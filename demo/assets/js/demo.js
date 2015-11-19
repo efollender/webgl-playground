@@ -1,3 +1,5 @@
+var mixers = [];
+var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
 	ms_Renderer: null,
@@ -66,7 +68,7 @@ var DEMO = {
 		waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping; 
 		//Load cat
 		var cat = this.loadCat(inParameters);
-		this.ms_Scene.add(cat);
+		// this.ms_Scene.add(cat);
 		// Load filesdnd texture
 		new Konami(function() {
 			if(DEMO.ms_FilesDND == null)
@@ -164,25 +166,46 @@ var DEMO = {
 		terrain.position.z = -4000;
 		this.ms_Scene.add(terrain);
 	},
+	//animated cat
 	loadCat: function loadCat(inParameters) {
-		var modifyElement = this.modifyElement;
-		var objLoader = new THREE.ObjectLoader();
-		var ms_Scene = this.ms_Scene;
-		objLoader.load( 'assets/js/cat.json', function ( object ) {
-      object.castShadow = true;
-      object.position.x = 0;
-      object.position.y = 0;
-      object.position.z = 0;
-      object.scale.set(10,10,10);
-      [].slice.call(object.children).forEach(function(topEl) {
-      	el = modifyElement(topEl);
-      	[].slice.call(topEl.children).forEach(function(el) {
-      		el = modifyElement(el);
-				});
-      });
-      ms_Scene.add(object);
-    });
+		// var jsonLoader = new THREE.JSONLoader();
+		// var ms_Scene = this.ms_Scene;
+		// jsonLoader.load('assets/js/cat_animated.js', function(geometry) {			
+		// 	var material = new THREE.MeshPhongMaterial( {
+		// 		color: 0xffffff,
+		// 		morphTargets: true,
+		// 		vertexColors: THREE.FaceColors,
+		// 		shading: THREE.FlatShading
+		// 	} );
+		// 	var mesh = new THREE.Mesh( geometry, material );
+		// 	mesh.position.x = - 150;
+		// 	mesh.position.y = 150;
+		// 	mesh.scale.set( 1.5, 1.5, 1.5 );
+		// 	ms_Scene.add( mesh );
+		// 	var mixer = new THREE.AnimationMixer( mesh );
+		// 	mixer.addAction( new THREE.AnimationAction( geometry.animations[ 0 ] ).warpToDuration( 1 ) );
+		// 	mixers.push( mixer );
+		// });
 	},
+	// loadCat: function loadCat(inParameters) {
+	// 	var modifyElement = this.modifyElement;
+	// 	var objLoader = new THREE.ObjectLoader();
+	// 	var ms_Scene = this.ms_Scene;
+	// 	objLoader.load( 'assets/js/cat.json', function ( object ) {
+ //      object.castShadow = true;
+ //      object.position.x = 0;
+ //      object.position.y = 0;
+ //      object.position.z = 0;
+ //      object.scale.set(10,10,10);
+ //      [].slice.call(object.children).forEach(function(topEl) {
+ //      	el = modifyElement(topEl);
+ //      	[].slice.call(topEl.children).forEach(function(el) {
+ //      		el = modifyElement(el);
+	// 			});
+ //      });
+ //      ms_Scene.add(object);
+ //    });
+	// },
 	display: function display() {
 		this.ms_Water.render();
 		this.ms_Renderer.render(this.ms_Scene, this.ms_Camera);
@@ -193,6 +216,10 @@ var DEMO = {
 			this.ms_FilesDND.rotation.y += 0.01;
 		}
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
+		var delta = clock.getDelta();
+		for ( var i = 0; i < mixers.length; i ++ ) {
+			mixers[ i ].update( delta );
+		}
 		this.ms_Controls.update();
 		this.display();
 	},
