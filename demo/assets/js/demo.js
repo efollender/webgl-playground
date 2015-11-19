@@ -187,6 +187,10 @@ var DEMO = {
 			console.log('materials', materials);
 			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
 		});
+		jsonLoader.load( "assets/js/cat_animated_hat.js", function ( geometry, materials ) {
+			console.log('materials', materials);
+			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
+		});
 	},
 	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
 		geometry.computeBoundingBox();
