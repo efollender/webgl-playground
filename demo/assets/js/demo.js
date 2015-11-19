@@ -185,7 +185,7 @@ var DEMO = {
 		var createScene = this.createScene;
 		jsonLoader.load( "assets/js/cat_animated.js", function ( geometry, materials ) {
 			console.log('materials', materials);
-			createScene( geometry, materials, 0, 0, 3000, 60, ms_Scene );
+			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
 		});
 	},
 	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
@@ -201,19 +201,19 @@ var DEMO = {
 			// m.specular.setHSL( 0, 0, 0.1 );
 
 			m.color.setHSL( 0.6, 0, 0.6 );
-
+			m.shading = THREE.SmoothShading;
 			//m.map = map;
 			//m.envMap = envMap;
 			//m.bumpMap = bumpMap;
 			//m.bumpScale = 2;
 
-			//m.combine = THREE.MixOperation;
-			//m.reflectivity = 0.75;
+			m.combine = THREE.MixOperation;
+			m.reflectivity = 0.75;
 
 		}
 
 		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );
-		cat_mesh.position.set( x, y - bb.min.y * s, z );
+		cat_mesh.position.set( x, y, z );
 		cat_mesh.scale.set( s, s, s );
 		scene.add( cat_mesh );
 
