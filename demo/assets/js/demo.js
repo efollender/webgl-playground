@@ -1,4 +1,4 @@
-var mixers = [];
+var animation, helper, mixer;
 var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
@@ -166,59 +166,88 @@ var DEMO = {
 		terrain.position.z = -4000;
 		this.ms_Scene.add(terrain);
 	},
+	animate: function animate(skinnedMesh) {
+    var materials = skinnedMesh.material.materials;
+ 
+    for (var k in materials) {
+        materials[k].skinning = true;
+    }
+ 
+    THREE.AnimationHandler.add(skinnedMesh.geometry.animation);
+    animation = new THREE.Animation(skinnedMesh, "ArmatureAction", THREE.AnimationHandler.CATMULLROM);
+    animation.play();
+	},
 	//animated cat
 	loadCat: function loadCat(inParameters) {
-		// var jsonLoader = new THREE.JSONLoader();
-		// var ms_Scene = this.ms_Scene;
-		// jsonLoader.load('assets/js/cat_animated.js', function(geometry) {			
-		// 	var material = new THREE.MeshPhongMaterial( {
-		// 		color: 0xffffff,
-		// 		morphTargets: true,
-		// 		vertexColors: THREE.FaceColors,
-		// 		shading: THREE.FlatShading
-		// 	} );
-		// 	var mesh = new THREE.Mesh( geometry, material );
-		// 	mesh.position.x = - 150;
-		// 	mesh.position.y = 150;
-		// 	mesh.scale.set( 1.5, 1.5, 1.5 );
-		// 	ms_Scene.add( mesh );
-		// 	var mixer = new THREE.AnimationMixer( mesh );
-		// 	mixer.addAction( new THREE.AnimationAction( geometry.animations[ 0 ] ).warpToDuration( 1 ) );
-		// 	mixers.push( mixer );
-		// });
+		var jsonLoader = new THREE.JSONLoader();
+		var ms_Scene = this.ms_Scene;
+		var animate = this.animate;
+		var createScene = this.createScene;
+		jsonLoader.load( "assets/js/cat_animated.js", function ( geometry, materials ) {
+			console.log('materials', materials);
+			createScene( geometry, materials, 0, 0, 3000, 60, ms_Scene );
+		});
 	},
-	// loadCat: function loadCat(inParameters) {
-	// 	var modifyElement = this.modifyElement;
-	// 	var objLoader = new THREE.ObjectLoader();
-	// 	var ms_Scene = this.ms_Scene;
-	// 	objLoader.load( 'assets/js/cat.json', function ( object ) {
- //      object.castShadow = true;
- //      object.position.x = 0;
- //      object.position.y = 0;
- //      object.position.z = 0;
- //      object.scale.set(10,10,10);
- //      [].slice.call(object.children).forEach(function(topEl) {
- //      	el = modifyElement(topEl);
- //      	[].slice.call(topEl.children).forEach(function(el) {
- //      		el = modifyElement(el);
-	// 			});
- //      });
- //      ms_Scene.add(object);
- //    });
-	// },
+	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
+		geometry.computeBoundingBox();
+		var bb = geometry.boundingBox;
+		console.log('scene', scene);
+		for ( var i = 0; i < materials.length; i ++ ) {
+
+			var m = materials[ i ];
+			m.skinning = true;
+			m.morphTargets = true;
+
+			// m.specular.setHSL( 0, 0, 0.1 );
+
+			m.color.setHSL( 0.6, 0, 0.6 );
+
+			//m.map = map;
+			//m.envMap = envMap;
+			//m.bumpMap = bumpMap;
+			//m.bumpScale = 2;
+
+			//m.combine = THREE.MixOperation;
+			//m.reflectivity = 0.75;
+
+		}
+
+		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );
+		cat_mesh.position.set( x, y - bb.min.y * s, z );
+		cat_mesh.scale.set( s, s, s );
+		scene.add( cat_mesh );
+
+		cat_mesh.castShadow = true;
+		cat_mesh.receiveShadow = true;
+
+		helper = new THREE.SkeletonHelper( cat_mesh );
+		helper.material.linewidth = 3;
+		helper.visible = false;
+		scene.add( helper );
+
+
+		var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', cat_mesh.geometry.morphTargets, 3 );
+		var clipBones = geometry.animations[0];
+
+		mixer = new THREE.AnimationMixer( cat_mesh );
+		mixer.addAction( new THREE.AnimationAction( clipMorpher ) );
+		mixer.addAction( new THREE.AnimationAction( clipBones ) );
+	},
 	display: function display() {
 		this.ms_Water.render();
 		this.ms_Renderer.render(this.ms_Scene, this.ms_Camera);
 	},
 	
 	update: function update() {
+
 		if (this.ms_FilesDND != null) {
 			this.ms_FilesDND.rotation.y += 0.01;
 		}
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
 		var delta = clock.getDelta();
-		for ( var i = 0; i < mixers.length; i ++ ) {
-			mixers[ i ].update( delta );
+		if( mixer ) {
+			mixer.update( delta );
+			helper.update();
 		}
 		this.ms_Controls.update();
 		this.display();
