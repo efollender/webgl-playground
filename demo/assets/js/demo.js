@@ -1,3 +1,5 @@
+var animation, helper, mixer;
+var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
 	ms_Renderer: null,
@@ -23,7 +25,7 @@ var DEMO = {
 		this.ms_Canvas = $('#'+inIdCanvas);
 		
 		// Initialize Renderer, Camera, Projector and Scene
-		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
+		this.ms_Renderer = this.enable ? new THREE.WebGLRenderer({ antialias: true }) : new THREE.CanvasRenderer();
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
 		this.ms_Scene = new THREE.Scene();
 		
@@ -163,55 +165,47 @@ var DEMO = {
 			ms_Scene.add(glacier);
 		});
 	},
-	// loadCat: function loadCat(inParameters) {
-	// 	var ms_Scene = this.ms_Scene;
-	// 	var loader = new THREE.JSONLoader();
-	// 	loader.load( "assets/js/cat.js", function( geometry ) {
-	// 			console.log('ran', geometry);
-	// 				geometry.computeVertexNormals();
-	// 				geometry.computeMorphNormals();
-
-	// 				var material = new THREE.MeshPhongMaterial( {
-	// 					color: 0xffffff,
-	// 					morphTargets: true,
-	// 					morphNormals: true,
-	// 					vertexColors: THREE.FaceColors,
-	// 					shading: THREE.SmoothShading
-	// 				} );
-	// 				var mesh = new THREE.Mesh( geometry, material );
-
-	// 				mesh.position.x = 150;
-	// 				mesh.position.y = 150;
-	// 				mesh.scale.set( 1.5, 1.5, 1.5 );
-
-	// 				scene.add( mesh );
-
-	// 				var mixer = new THREE.AnimationMixer( mesh );
-	// 				mixer.addAction( new THREE.AnimationAction( geometry.animations[ 0 ] ).warpToDuration( 1 ) );
-
-	// 				mixers.push( mixer );
-
-	// 			} );
-
-	// },
+	//animated cat
 	loadCat: function loadCat(inParameters) {
-		var modifyElement = this.modifyElement;
-		var objLoader = new THREE.ObjectLoader();
+		var jsonLoader = new THREE.JSONLoader();
 		var ms_Scene = this.ms_Scene;
-		objLoader.load( 'assets/js/cat.js', function ( object ) {
-      object.castShadow = true;
-      object.position.x = 0;
-      object.position.y = 0;
-      object.position.z = 0;
-      object.scale.set(10,10,10);
-      [].slice.call(object.children).forEach(function(topEl) {
-      	el = modifyElement(topEl);
-      	[].slice.call(topEl.children).forEach(function(el) {
-      		el = modifyElement(el);
-				});
-      });
-      ms_Scene.add(object);
-    });
+		var animate = this.animate;
+		var createScene = this.createScene;
+		jsonLoader.load( "assets/js/cat_animated.js", function ( geometry, materials ) {
+			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
+		});
+		jsonLoader.load( "assets/js/cat_animated_hat.js", function ( geometry, materials ) {
+			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
+		});
+	},
+	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
+		geometry.computeBoundingBox();
+		for ( var i = 0; i < materials.length; i ++ ) {
+			var m = materials[i];
+			m.skinning = true;
+			m.shading = THREE.SmoothShading;
+		}
+		console.log(materials);
+		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );
+		cat_mesh.position.set( x, y, z );
+		cat_mesh.scale.set( s, s, s );
+		scene.add( cat_mesh );
+
+		cat_mesh.castShadow = true;
+		cat_mesh.receiveShadow = true;
+
+		helper = new THREE.SkeletonHelper( cat_mesh );
+		helper.material.linewidth = 3;
+		helper.visible = false;
+		scene.add( helper );
+
+		console.log(geometry);
+		// var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'Action', cat_mesh.geometry.morphTargets, 3 );
+		var clipBones = geometry.animations[0];
+
+		mixer = new THREE.AnimationMixer( cat_mesh );
+		// mixer.addAction( new THREE.AnimationAction( clipMorpher ) );
+		mixer.addAction( new THREE.AnimationAction( clipBones ) );
 	},
 	display: function display() {
 		this.ms_Water.render();
@@ -219,10 +213,16 @@ var DEMO = {
 	},
 	
 	update: function update() {
+
 		if (this.ms_FilesDND != null) {
 			this.ms_FilesDND.rotation.y += 0.01;
 		}
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
+		var delta = clock.getDelta();
+		if( mixer ) {
+			mixer.update( delta );
+			helper.update();
+		}
 		this.ms_Controls.update();
 		this.display();
 	},
