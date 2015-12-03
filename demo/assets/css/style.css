@@ -19,10 +19,11 @@ body {
 }
 .the-button {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  z-index: 2;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -61,7 +62,25 @@ body {
 .the-button:active:before {
   top: 11.5%;
 }
-.plastic {
+.button-frame:before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  padding: 1em;
+  background: #cc0000;
+  display: block;
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+}
+.button-frame:before, .plastic {
   background: #b01e1e;
   /* Old browsers */
   
