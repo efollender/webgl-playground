@@ -1,5 +1,4 @@
-var animation, helper, mixer;
-var paused = false;
+var animation, helpers = [], mixers = [], paused = false;
 var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
@@ -67,10 +66,6 @@ var DEMO = {
 		// Load textures		
 		var waterNormals = new THREE.ImageUtils.loadTexture('../assets/img/waternormals.jpg');
 		waterNormals.wrapS = waterNormals.wrapT = THREE.SphericalReflectionMapping; 
-
-		//Load cat
-		var cat = this.loadCat(inParameters);
-		this.ms_Scene.add(cat);
 		
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
@@ -91,15 +86,21 @@ var DEMO = {
 		aMeshMirror.rotation.x = - Math.PI * 0.5;
 		this.ms_Scene.add(aMeshMirror);
 	
+		//Load objects	
 		this.loadSkyBox();
 		this.loadGlaciers();
-		this.pause();
+		this.loadCat();
+
+		//Listen for pause
+		this.handlePause();
+
+		//Audio
 		var audio = document.createElement('audio');
 	  var source = document.createElement('source');
 	  source.src = 'assets/sounds/sleep.mp3';
 	  audio.loop = true;
 	  audio.appendChild(source);
-	  audio.play();
+	  // audio.play();
 	},
 	
 	loadSkyBox: function loadSkyBox() {
@@ -148,21 +149,20 @@ var DEMO = {
 		});
 	},
 	//animated cat
-	loadCat: function loadCat(inParameters) {
+	loadCat: function loadCat() {
 		var jsonLoader = new THREE.JSONLoader();
 		var ms_Scene = this.ms_Scene;
-		var animate = this.animate;
-		var createScene = this.createScene;
-		var modify = this.modifyElement;
+		var loadAnimation = this.loadAnimation;
+
 		jsonLoader.load( "assets/js/cat_animated.js", function ( geometry, materials ) {
-			console.log(materials);
-			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
+			loadAnimation( geometry, materials, 0, 0, 1000, 15, ms_Scene );
 		});
 		jsonLoader.load( "assets/js/cat_animated_hat.js", function ( geometry, materials ) {
-			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
+			loadAnimation( geometry, materials, 0, 0, 1000, 15, ms_Scene );
 		});
 	},
-	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
+	loadAnimation: function loadAnimation( geometry, materials, x, y, z, s, scene ) {
+		var mixer;
 		geometry.computeFaceNormals();
   	geometry.computeVertexNormals();
   	geometry.dynamic = true
@@ -185,20 +185,24 @@ var DEMO = {
 		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );
 		cat_mesh.position.set( x, y, z );
 		cat_mesh.scale.set( s, s, s );
-		scene.add( cat_mesh );
-
 		cat_mesh.castShadow = true;
 		cat_mesh.receiveShadow = true;
+		scene.add( cat_mesh );
+
+		//Add bones
 		helper = new THREE.SkeletonHelper( cat_mesh );
 		helper.material.linewidth = 3;
 		helper.visible = false;
 		scene.add( helper );
+
 		// var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'Action', cat_mesh.geometry.morphTargets, 3 );
 		var clipBones = geometry.animations[0];
 
 		mixer = new THREE.AnimationMixer( cat_mesh );
 		// mixer.addAction( new THREE.AnimationAction( clipMorpher ) );
 		mixer.addAction( new THREE.AnimationAction( clipBones ) );
+		mixers.push(mixer);
+		helpers.push(helper);
 	},
 	display: function display() {
 		this.ms_Water.render();
@@ -211,15 +215,22 @@ var DEMO = {
 			this.ms_FilesDND.rotation.y += 0.01;
 		}
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
+
 		var delta = clock.getDelta();
-		if( mixer && !paused ) {
-			mixer.update( delta );
-			helper.update();
+
+		if( mixers.length && !paused ) {
+			for (var i=0; i<mixers.length; i++) {
+				mixers[i].update( delta );
+			}
+			for (var i=0; i<helpers.length; i++) {
+				helpers[i].update( delta );
+			}
 		}
+
 		this.ms_Controls.update();
 		this.display();
 	},
-	pause: function() {
+	handlePause: function handlePause() {
 		var button = document.getElementById('trigger');
 		button.addEventListener('click', function(event){
 			paused = !paused;
