@@ -1,4 +1,4 @@
-var animation, helpers = [], mixers = [], paused = false;
+var animation, helpers = [], mixers = [], pushed = false;
 var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
@@ -95,7 +95,7 @@ var DEMO = {
 		this.loadCat();
 
 		//Listen for pause
-		this.handlePause();
+		this.handleButton();
 
 		//Audio
 		var audio = document.createElement('audio');
@@ -219,20 +219,16 @@ var DEMO = {
 		cat_mesh.receiveShadow = true;
 		scene.add( cat_mesh );
 
-		//Add bones
-		helper = new THREE.SkeletonHelper( cat_mesh );
-		helper.material.linewidth = 3;
-		helper.visible = false;
-		scene.add( helper );
-
-		// var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'Action', cat_mesh.geometry.morphTargets, 3 );
+		var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'Action', cat_mesh.geometry.morphTargets, 3 );
 		var clipBones = geometry.animations[0];
-
+		var boneAction = new THREE.AnimationAction( clipBones );
+		boneAction.loop = THREE.LoopOnce;
+		boneAction.loopCount = 1;
+		boneAction.actionTime = 2;
 		mixer = new THREE.AnimationMixer( cat_mesh );
-		// mixer.addAction( new THREE.AnimationAction( clipMorpher ) );
-		mixer.addAction( new THREE.AnimationAction( clipBones ) );
+		mixer.addAction( new THREE.AnimationAction( clipMorpher ) );
+		mixer.addAction( boneAction );
 		mixers.push(mixer);
-		helpers.push(helper);
 	},
 	display: function display() {
 		this.ms_Water.render();
@@ -248,22 +244,27 @@ var DEMO = {
 
 		var delta = clock.getDelta();
 
-		if( mixers.length && !paused ) {
+		if( mixers.length ) {
 			for (var i=0; i<mixers.length; i++) {
-				mixers[i].update( delta );
-			}
-			for (var i=0; i<helpers.length; i++) {
-				helpers[i].update( delta );
+				mixers[i].update(delta);
 			}
 		}
 
 		this.ms_Controls.update();
 		this.display();
 	},
-	handlePause: function handlePause() {
+	handleButton: function handlePause() {
 		var button = document.getElementById('trigger');
 		button.addEventListener('click', function(event){
-			paused = !paused;
+			pushed = true;
+			for (var i=0; i<mixers.length; i++) {
+				for (var y=0;y<mixers[i].actions.length;y++) {
+					mixers[i].actions[y].enabled = true;
+					mixers[i].actions[y].loopCount = 0;
+					mixers[i].actions[y].loop = THREE.LoopOnce;
+					mixers[i].actions[y].actionTime = 0;
+				}
+			}
 		});
 	},
 	resize: function resize(inWidth, inHeight) {
