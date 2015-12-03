@@ -5,3 +5,81 @@ body {
 	color : #fff;
 	overflow: hidden;
 }
+.viewer {
+	position: relative;
+	z-index: 1;
+}
+#trigger {
+	width: 20%;
+	padding-top: 20%;
+	z-index: 2;
+	position: absolute;
+	left: 40%;
+	bottom: 4em;
+}
+.the-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  padding: 0;
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .25em .3em rgba(255, 255, 255, .3), inset 0 -.25em .3em rgba(0, 0, 0, .5);
+  font: inherit;
+  cursor: pointer;
+}
+
+.the-button:before {
+  content: " ";
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  width: 80%;
+  height: 80%;
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0.14)), color-stop(50%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 0)));
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -o-linear-gradient(top, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.the-button:active {
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .1em .3em rgba(0, 0, 0, .5), inset 0 -.1em .3em rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .1em .3em rgba(0, 0, 0, .5), inset 0 -.1em .3em rgba(0, 0, 0, .5);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, 1), inset 0 .1em .3em rgba(0, 0, 0, .5), inset 0 -.1em .3em rgba(0, 0, 0, .5);
+}
+
+.the-button:active:before {
+  top: 11.5%;
+}
+.plastic {
+  background: #b01e1e;
+  /* Old browsers */
+  
+  background: -moz-linear-gradient(top, #b01e1e 0%, #920f0f 100%);
+  /* FF3.6+ */
+  
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b01e1e), color-stop(100%, #920f0f));
+  /* Chrome,Safari4+ */
+  
+  background: -webkit-linear-gradient(top, #b01e1e 0%, #920f0f 100%);
+  /* Chrome10+,Safari5.1+ */
+  
+  background: -o-linear-gradient(top, #b01e1e 0%, #920f0f 100%);
+  /* Opera 11.10+ */
+  
+  background: -ms-linear-gradient(top, #b01e1e 0%, #920f0f 100%);
+  /* IE10+ */
+  
+  background: linear-gradient(to bottom, #b01e1e 0%, #920f0f 100%);
+  /* W3C */
+}

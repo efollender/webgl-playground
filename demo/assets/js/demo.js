@@ -1,4 +1,5 @@
 var animation, helper, mixer;
+var paused = false;
 var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
@@ -92,6 +93,7 @@ var DEMO = {
 	
 		this.loadSkyBox();
 		this.loadGlaciers();
+		this.pause();
 		var audio = document.createElement('audio');
 	  var source = document.createElement('source');
 	  source.src = 'assets/sounds/sleep.mp3';
@@ -210,14 +212,19 @@ var DEMO = {
 		}
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
 		var delta = clock.getDelta();
-		if( mixer ) {
+		if( mixer && !paused ) {
 			mixer.update( delta );
 			helper.update();
 		}
 		this.ms_Controls.update();
 		this.display();
 	},
-	
+	pause: function() {
+		var button = document.getElementById('trigger');
+		button.addEventListener('click', function(event){
+			paused = !paused;
+		});
+	},
 	resize: function resize(inWidth, inHeight) {
 		this.ms_Camera.aspect =  inWidth / inHeight;
 		this.ms_Camera.updateProjectionMatrix();
