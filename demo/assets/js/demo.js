@@ -161,6 +161,22 @@ var DEMO = {
 				glacier.scale.set(.1,.1,.1);
 				ms_Scene.add(glacier);
 		});
+		objLoader.load('assets/landscape_assets/glacier_02.obj', function(glacier) {
+
+				//load ice texture
+				for (var i=0; i<glacier.children.length;i++ ){
+					glacier.children[i].material = new THREE.MeshPhongMaterial({
+			  		map: iceTexture,
+			  		specularMap: iceTexture,
+						shading: THREE.SmoothShading,
+					});
+				}
+
+				glacier.position.z = 900;
+				glacier.position.x = -1000;
+				glacier.scale.set(.2,.2,.2);
+				ms_Scene.add(glacier);
+		});
 	},
 	//animated cat
 	loadCat: function loadCat() {
