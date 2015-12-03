@@ -130,7 +130,8 @@ var DEMO = {
 	},
 	loadTerrain: function loadTerrain(inParameters) {
 		var terrainGeo = TERRAINGEN.Get(inParameters);
-		var terrainMaterial = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.FlatShading, side: THREE.DoubleSide });
+		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
+		var terrainMaterial = new THREE.MeshPhongMaterial({ map: iceTexture, shading: THREE.FlatShading, side: THREE.DoubleSide });
 		terrainMaterial.color = new THREE.Color( 0xCCCCEE );
 		var terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
 		terrain.position.y = - inParameters.depth * 0.5;
@@ -138,10 +139,20 @@ var DEMO = {
 		this.ms_Scene.add(terrain);
 	},
 	loadGlaciers: function loadGlaciers() {
-		var objLoader = new THREE.OBJMTLLoader();
+		var objLoader = new THREE.OBJLoader();
 		var ms_Scene = this.ms_Scene;
-		objLoader.load('assets/landscape_assets/glacier_02.obj', 'assets/landscape_assets/glacier_01.mtl', function(glacier) {
-		    // glacier.material.map = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
+		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
+		objLoader.load('assets/landscape_assets/glacier_02.obj', function(glacier) {
+
+				//load ice texture
+				for (var i=0; i<glacier.children.length;i++ ){
+					glacier.children[i].material = new THREE.MeshPhongMaterial({
+			  		map: iceTexture,
+			  		specularMap: iceTexture,
+						shading: THREE.SmoothShading,
+					});
+				}
+
 				glacier.position.z = 1000;
 				glacier.position.x = 200;
 				glacier.scale.set(.2,.2,.2);
