@@ -17,13 +17,10 @@
 {
 	"DbgIndex" : 0,
 	"DbgName"  : "dummy",
-	"colorDiffuse" : [0.6400000190734865, 0.6400000190734865, 0.6400000190734865],
-	"colorSpecular" : [0.1, 0.1, 0.1],
 	"depthTest" : true,
 	"depthWrite" : true,
 	"shading" : "Phong",
-	"specularCoef" : 150,
-	"opacity" : 1.0,
+	"opacity" :	1,
 	"transparent" : false,
 	"vertexColors" : false
 }

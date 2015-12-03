@@ -125,26 +125,6 @@ var DEMO = {
 		
 		this.ms_Scene.add(aSkybox);
 	},
-	modifyElement: function(el) {
-		el.material = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.SmoothShading, side: THREE.DoubleSide });
-  	el.material.color = new THREE.Color( 0xffffff);
-  	el.castShadow = true;
-  	el.receiveShadow = true;
-  	el.geometry.computeFaceNormals();
-  	el.geometry.computeVertexNormals();
-
-  	el.geometry.dynamic = true
-		el.geometry.__dirtyVertices = true;
-		el.geometry.__dirtyNormals = true;
-
-		/* Flip normals*/               
-		for(var i = 0; i<el.geometry.faces.length; i++) {
-		    el.geometry.faces[i].normal.x = -1*el.geometry.faces[i].normal.x;
-		    el.geometry.faces[i].normal.y = -1*el.geometry.faces[i].normal.y;
-		    el.geometry.faces[i].normal.z = -1*el.geometry.faces[i].normal.z;
-		}
-		return el;
-	},
 	loadTerrain: function loadTerrain(inParameters) {
 		var terrainGeo = TERRAINGEN.Get(inParameters);
 		var terrainMaterial = new THREE.MeshPhongMaterial({ vertexColors: THREE.FaceColors, shading: THREE.FlatShading, side: THREE.DoubleSide });
@@ -158,11 +138,11 @@ var DEMO = {
 		var objLoader = new THREE.OBJMTLLoader();
 		var ms_Scene = this.ms_Scene;
 		objLoader.load('assets/landscape_assets/glacier_02.obj', 'assets/landscape_assets/glacier_01.mtl', function(glacier) {
-			console.log('glacier', glacier);
-			glacier.position.z = 1000;
-			glacier.position.x = 200;
-			glacier.scale.set(.2,.2,.2);
-			ms_Scene.add(glacier);
+		    // glacier.material.map = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
+				glacier.position.z = 1000;
+				glacier.position.x = 200;
+				glacier.scale.set(.2,.2,.2);
+				ms_Scene.add(glacier);
 		});
 	},
 	//animated cat
@@ -171,7 +151,9 @@ var DEMO = {
 		var ms_Scene = this.ms_Scene;
 		var animate = this.animate;
 		var createScene = this.createScene;
+		var modify = this.modifyElement;
 		jsonLoader.load( "assets/js/cat_animated.js", function ( geometry, materials ) {
+			console.log(materials);
 			createScene( geometry, materials, 0, 0, 1000, 15, ms_Scene );
 		});
 		jsonLoader.load( "assets/js/cat_animated_hat.js", function ( geometry, materials ) {
@@ -179,13 +161,25 @@ var DEMO = {
 		});
 	},
 	createScene: function createScene( geometry, materials, x, y, z, s, scene ) {
-		geometry.computeBoundingBox();
+		geometry.computeFaceNormals();
+  	geometry.computeVertexNormals();
+  	geometry.dynamic = true
+		geometry.__dirtyVertices = true;
+		geometry.__dirtyNormals = true;
+
+		//Flip normals
+		for(var i = 0; i<geometry.faces.length; i++) {
+		    geometry.faces[i].normal.x = -1*geometry.faces[i].normal.x;
+		    geometry.faces[i].normal.y = -1*geometry.faces[i].normal.y;
+		    geometry.faces[i].normal.z = -1*geometry.faces[i].normal.z;
+		}
+
 		for ( var i = 0; i < materials.length; i ++ ) {
 			var m = materials[i];
 			m.skinning = true;
 			m.shading = THREE.SmoothShading;
 		}
-		console.log(materials);
+		
 		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );
 		cat_mesh.position.set( x, y, z );
 		cat_mesh.scale.set( s, s, s );
@@ -193,13 +187,10 @@ var DEMO = {
 
 		cat_mesh.castShadow = true;
 		cat_mesh.receiveShadow = true;
-
 		helper = new THREE.SkeletonHelper( cat_mesh );
 		helper.material.linewidth = 3;
 		helper.visible = false;
 		scene.add( helper );
-
-		console.log(geometry);
 		// var clipMorpher = THREE.AnimationClip.CreateFromMorphTargetSequence( 'Action', cat_mesh.geometry.morphTargets, 3 );
 		var clipBones = geometry.animations[0];
 
