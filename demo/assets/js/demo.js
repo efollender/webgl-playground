@@ -40,26 +40,27 @@ var DEMO = {
 		this.ms_Controls.userPan = false;
 		this.ms_Controls.userPanSpeed = 0.0;
 		this.ms_Controls.maxDistance = 8000.0;
-		this.ms_Controls.maxPolarAngle = Math.PI * 0.495;
+		this.ms_Controls.enableKeys = false;
+		this.ms_Controls.maxPolarAngle = Math.PI * .495;
 	
 		// Add light
 
-		var ambient = new THREE.AmbientLight( 0x808080);
+		var ambient = new THREE.AmbientLight( 0x888888);
 		this.ms_Scene.add(ambient);
 		//Left Light
-		var directionalLight = new THREE.DirectionalLight(0x404040, 1);
+		var directionalLight = new THREE.DirectionalLight(0x888888, .9);
 		directionalLight.position.set(-600, 300, 600);
 		this.ms_Scene.add(directionalLight);
 		//Right light
-		var directionalLight2 = new THREE.DirectionalLight(0x8F81A1, 1);
+		var directionalLight2 = new THREE.DirectionalLight(0x888888, .8);
 		directionalLight2.position.set(600, 800, 600);
 		this.ms_Scene.add(directionalLight2);
 		//Bottom Light
-		var directionalLight3 = new THREE.DirectionalLight(0x8F81A1, .15);
+		var directionalLight3 = new THREE.DirectionalLight(0x888888, .15);
 		directionalLight3.position.set(0, 0, 1000);
 		this.ms_Scene.add(directionalLight3);
 		//Back Light
-		var directionalLight4 = new THREE.DirectionalLight(0x8F81A1, .5);
+		var directionalLight4 = new THREE.DirectionalLight(0x77D0FF, .5);
 		directionalLight4.position.set(0, 600, -600);
 		this.ms_Scene.add(directionalLight4);
 		
@@ -210,6 +211,7 @@ var DEMO = {
 			var m = materials[i];
 			m.skinning = true;
 			m.shading = THREE.SmoothShading;
+			m.shininess = 100;
 		}
 		
 		cat_mesh = new THREE.SkinnedMesh( geometry, new THREE.MeshFaceMaterial( materials ) );

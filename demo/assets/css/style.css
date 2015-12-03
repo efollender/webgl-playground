@@ -11,11 +11,13 @@ body {
 }
 #trigger {
 	width: 20%;
-	padding-top: 20%;
+	padding-top: 150px;
 	z-index: 2;
 	position: absolute;
 	left: 40%;
 	bottom: 4em;
+	max-width: 150px;
+	max-height: 100px;
 }
 .the-button {
   position: absolute;
