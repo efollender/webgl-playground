@@ -43,8 +43,11 @@ var DEMO = {
 		this.ms_Controls.maxPolarAngle = Math.PI * 0.495;
 	
 		// Add light
+
+		var ambient = new THREE.AmbientLight( 0x808080);
+		this.ms_Scene.add(ambient);
 		//Left Light
-		var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+		var directionalLight = new THREE.DirectionalLight(0x404040, 1);
 		directionalLight.position.set(-600, 300, 600);
 		this.ms_Scene.add(directionalLight);
 		//Right light
@@ -142,7 +145,7 @@ var DEMO = {
 		var objLoader = new THREE.OBJLoader();
 		var ms_Scene = this.ms_Scene;
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
-		objLoader.load('assets/landscape_assets/glacier_02.obj', function(glacier) {
+		objLoader.load('assets/landscape_assets/glacier_01.obj', function(glacier) {
 
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
@@ -155,7 +158,7 @@ var DEMO = {
 
 				glacier.position.z = 1000;
 				glacier.position.x = 200;
-				glacier.scale.set(.2,.2,.2);
+				glacier.scale.set(.1,.1,.1);
 				ms_Scene.add(glacier);
 		});
 	},
