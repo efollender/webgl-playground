@@ -3,8 +3,28 @@ body {
   margin: 0px;
   padding: 0px;
   color: #fff;
+  font-size: 16px;
+  line-height: 1.6;
   overflow: hidden;
   font-family: 'Futura PT', sans-serif;
+}
+@media screen and (max-width: 1050px) {
+  body {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+}
+h2 {
+  font-weight: bold;
+  font-size: 3em;
+}
+p {
+  font-size: 1.4em;
+  margin-bottom: 1.2rem;
 }
 svg {
   font-weight: bold;
@@ -16,6 +36,10 @@ svg {
   opacity: 0;
   animation: fade-in 1s ease-in-out forwards 10s;
 }
+.fade-out {
+  opacity: 1;
+  animation: fade-opacity 0.3s ease-in-out forwards !important;
+}
 .ui-container {
   position: absolute;
   top: 0;
@@ -25,6 +49,36 @@ svg {
   background: #6db0e0 /* Old browsers */;
   background: linear-gradient(to bottom, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   animation: fade-out 1s ease-in-out forwards 10s;
+}
+.welcome-screen {
+  padding: 2em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 30%;
+  right: 30%;
+  max-width: 550px;
+  margin: 0 auto;
+  background: rgba(109,176,224,0.8) /* Old browsers */;
+  background: linear-gradient(to bottom, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  z-index: 3;
+  opacity: 0;
+  animation: fade-in 1s ease-in-out forwards 11s;
+  text-align: center;
+}
+.welcome-screen h2 {
+  margin-top: 0;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.welcome-screen .start-button {
+  padding: 1em 2em;
+  background: #fff;
+  border-radius: 0.5em;
+  color: #3e5490;
+  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
 }
 .happy-holidays {
   position: absolute;
@@ -435,5 +489,37 @@ svg {
   }
   to {
     opacity: 1;
+  }
+}
+@-moz-keyframes fade-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fade-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-o-keyframes fade-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

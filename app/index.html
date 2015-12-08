@@ -11,6 +11,13 @@
 	<body class="tk-futura-pt">	
 		<div class="ui-container">
 			<div id="canvas-3d" class="viewer"></div>
+			<div class="welcome-screen">
+				<h2>Welcome to our<br/>winter wonderland!</h2>
+				<p>Oh, and please excuse the cat...this is the only place we could put him where he won't claw apart presents or tear down decor</p>
+				<div class="start-button">
+					<span class="text">Start</span>
+				</div>
+			</div>
 			<div class="border-animation">
 				<div class="border-top"></div>
 				<div class="border-right"></div>
@@ -97,6 +104,35 @@
 					</div>
 				</div>
 		</div>
+		<script type="x-shader/x-vertex" id="step07_vs">
+			uniform float radiusX;
+			uniform float radiusZ;
+			uniform float size;
+			uniform float scale;
+			uniform float height;
+			uniform float elapsedTime;
+			uniform float speedH;
+			uniform float speedV;
+			void main() {
+				vec3 pos = position;
+				pos.x += cos((elapsedTime + position.z) * 0.25 * speedH) * radiusX;
+				pos.y = mod(pos.y - elapsedTime * speedV, height);
+				pos.z += sin((elapsedTime + position.x) * 0.25 * speedH) * radiusZ;
+				vec4 mvPosition = modelViewMatrix * vec4( pos, 1.0 );
+				gl_PointSize = size * ( scale / length( mvPosition.xyz ) );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+		
+		<script type="x-shader/x-fragment" id="step09_fs">
+			uniform vec3 color;
+			uniform float opacity;
+			uniform sampler2D texture;
+			void main() {
+				vec4 texColor = texture2D( texture, gl_PointCoord );
+				gl_FragColor = texColor * vec4( color, opacity );
+			}
+		</script>
 		<script src="assets/libs/three/three.min.js"></script>
 		<!-- External libraries -->
 		<script src="assets/libs/RequestAnimationFrame.js"></script>
