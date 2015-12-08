@@ -479,8 +479,8 @@ $(function() {
 	const welcome = document.getElementsByClassName('welcome-screen')[0];
 	welcome.addEventListener('click', e => {
 		welcome.className += ' fade-out';
-		// setTimeout(()=>{
-		// 	welcome.parentNode.removeChild(welcome);
-		// }, 350);
+		setTimeout(()=>{
+			welcome.parentNode.removeChild(welcome);
+		}, 350);
 	});
 });
