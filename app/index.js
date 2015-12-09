@@ -139,8 +139,6 @@ class Demo {
 			'Foundry and the design and development teams at Brooklyn United. '+
 			'Using WebGL and a little bit of holiday magic, we joined forces to '+
 			'whip up a scene for you to enjoy and share with your friends.';
-		const startButton = happyHolidays.getElementsByClassName('start-button')[0];
-		// happyHolidays.removeChild(startButton);
 		let audio = document.createElement('audio');
 	  const source = document.createElement('source');
 	  source.src = 'assets/sounds/Visager_-_19_-_Village_Dreaming_Loop.mp3';
@@ -196,7 +194,7 @@ class Demo {
 			color: new THREE.Color( 0xCCCCEE )
 		});
 		this.ms_Terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-		this.ms_Terrain.position.y = - inParameters.depth;
+		this.ms_Terrain.position.y = - inParameters.depth * 2;
 		this.ms_Terrain.position.z = -4000;
 		this.ms_Terrain.callback = () => {
 			// console.log(this.ms_Terrain.position.y);

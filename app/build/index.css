@@ -68,6 +68,19 @@ svg {
 .welcome-screen.closing-screen {
   animation-delay: 0;
 }
+.welcome-screen.closing-screen .message-wrapper .start-button {
+  display: none;
+}
+.welcome-screen.closing-screen .message-wrapper .share-buttons {
+  display: inline-block;
+  width: 100%;
+}
+.welcome-screen.closing-screen .message-wrapper .share-buttons .replay {
+  border-right: 1px solid #fff;
+}
+.welcome-screen .share-buttons {
+  display: none;
+}
 .welcome-screen .message-wrapper {
   position: absolute;
   top: 50%;
