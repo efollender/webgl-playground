@@ -152,17 +152,16 @@ svg {
 }
 .happy-holidays {
   position: absolute;
-  top: 200%;
-  transform: translateY(-50%);
-  right: 30%;
-  left: 30%;
-  text-align: center;
+  top: 5em;
+  left: 5em;
+  right: 5em;
+  bottom: 7em;
+  transform: translateY(200%);
   animation: enter-bottom 4s ease-in-out forwards 3.75s;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.happy-holidays img {
-  max-width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../assets/img/happy-holidays.svg");
+  background-repeat: no-repeat;
 }
 .cat-controls {
   position: absolute;
@@ -577,58 +576,58 @@ svg {
 }
 @-moz-keyframes enter-bottom {
   0% {
-    top: 200%;
+    transform: translateY(200%);
   }
   60% {
-    top: 50%;
+    transform: translateY(0);
   }
   80% {
-    top: 50%;
+    transform: translateY(0);
   }
   100% {
-    top: -200%;
+    transform: translateY(-200%);
   }
 }
 @-webkit-keyframes enter-bottom {
   0% {
-    top: 200%;
+    transform: translateY(200%);
   }
   60% {
-    top: 50%;
+    transform: translateY(0);
   }
   80% {
-    top: 50%;
+    transform: translateY(0);
   }
   100% {
-    top: -200%;
+    transform: translateY(-200%);
   }
 }
 @-o-keyframes enter-bottom {
   0% {
-    top: 200%;
+    transform: translateY(200%);
   }
   60% {
-    top: 50%;
+    transform: translateY(0);
   }
   80% {
-    top: 50%;
+    transform: translateY(0);
   }
   100% {
-    top: -200%;
+    transform: translateY(-200%);
   }
 }
 @keyframes enter-bottom {
   0% {
-    top: 200%;
+    transform: translateY(200%);
   }
   60% {
-    top: 50%;
+    transform: translateY(0);
   }
   80% {
-    top: 50%;
+    transform: translateY(0);
   }
   100% {
-    top: -200%;
+    transform: translateY(-200%);
   }
 }
 @-moz-keyframes fade-out {
