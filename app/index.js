@@ -106,7 +106,13 @@ class Demo {
 		//Load objects	
 		this.loadSkyBox();
 		this.loadGlaciers();
-		this.loadIce();
+		for (var x = 3; x > 0; x--) {
+			this.loadIce(x, 1000, 0, 1);
+			this.loadIce(x, 400, x * 200, x);
+			this.loadIce(x, 2000, x * 600, 1);
+			this.loadIce(x, 2000, x * -700, 1);
+			this.loadIce(x, 800, x * -800, 1.4);
+		}
 		this.loadCat();
 		// this.loadSnow(inParameters);
 
@@ -224,33 +230,25 @@ class Demo {
 				ms_Scene.add(glacier);
 		});
 	}
-	loadIce() {
+	loadIce(index, z, x, scale) {
 		const objLoader = new THREE.OBJLoader();
 		const ms_Scene = this.ms_Scene;
 		const iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
-		for (var x = 3; x > 0; x--) {
-			objLoader.load(`assets/landscape_assets/floe_0${x}.obj`, glacier => {
-					//load ice texture
-					for (var i=0; i<glacier.children.length;i++ ){
-						glacier.children[i].material = new THREE.MeshPhongMaterial({
-				  		map: iceTexture,
-				  		specularMap: iceTexture,
-							shading: THREE.SmoothShading,
-						});
-					}
-					glacier.position.z = 1000;
-					glacier.position.x = 0;
-					glacier.receiveShadow = true;
-					glacier.scale.set(1,8,1);
-					// for (let y = 0; y < 4; y++){
-					// 	let glacierCopy = glacier.clone();
-					// 	glacierCopy.position.z = 500/y * Math.random();
-					// 	glacierCopy.position.x = 200 * y**x * Math.random();
-					// 	ms_Scene.add(glacierCopy);
-					// }
-					ms_Scene.add(glacier);
-			});
-		}
+		objLoader.load(`assets/landscape_assets/floe_0${index}.obj`, glacier => {
+				//load ice texture
+				for (var i=0; i<glacier.children.length;i++ ){
+					glacier.children[i].material = new THREE.MeshPhongMaterial({
+			  		map: iceTexture,
+			  		specularMap: iceTexture,
+						shading: THREE.SmoothShading,
+					});
+				}
+				glacier.position.z = z;
+				glacier.position.x = x;
+				glacier.receiveShadow = true;
+				glacier.scale.set(scale,8,scale);
+				ms_Scene.add(glacier);
+		});
 	}
 	loadSnow(inParameters) {
 		const rand = v => {

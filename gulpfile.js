@@ -9,18 +9,6 @@ var gulp = require('gulp'),
   path = require('path'),
   fs = require('fs');
 
-gulp.task('es6', function(){
-  var extensions = ['.js','.json','.es6'];
-  return browserify({ debug: true, extensions:extensions })
-    .transform(babelify.configure({
-      extensions: extensions
-    }))
-    .require("./app/index.js", { entry: true })
-    .bundle()
-    .on("error", function (err) { console.log("Error : " + err.message); })
-    .pipe(fs.createWriteStream("./app/build/bundle.js"))
-});
-
 gulp.task('compile', function() {
   var bundler = watchify(browserify('./app/index.js', { debug: true })
       .transform(
@@ -78,7 +66,7 @@ gulp.task('stylus', function () {
 gulp.task('watch', function () {
   gulp.watch(['./app/*.html'], ['html']);
   gulp.watch(['./app/assets/stylus/*.styl'], ['stylus']);
-  gulp.watch(['./app/assets/**/*.js'], ['compile'] );
+  gulp.watch(['./app/**/*.js'], ['compile'] );
 });
  
 gulp.task('default', ['connectDist', 'connectDev', 'watch']);
