@@ -24,7 +24,7 @@ svg
   position: relative
   z-index: 1
   opacity 0
-  animation fade-in 1s ease-in-out forwards 8.75s
+  animation fade-in 1s ease-in-out forwards 7.75s
 .fade-out
   opacity 1
   animation fade-opacity .3s ease-in-out forwards!important
@@ -37,7 +37,7 @@ svg
   background #6db0e0 /* Old browsers */
   background linear-gradient(to bottom,  #6db0e0 0%,#2989d8 32%,#3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   // background transparent
-  animation fade-out 1s ease-in-out forwards 8.75s
+  animation fade-out 1s ease-in-out forwards 7.75s
 .welcome-screen
   padding 2em
   position absolute
@@ -49,7 +49,7 @@ svg
   background linear-gradient(to bottom,  rgba(#6db0e0, .8) 0%,rgba(#2989d8, .8) 32%,rgba(#3e5490, .8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   z-index 4
   opacity 0
-  animation fade-in 1s ease-in-out forwards 9.75s
+  animation fade-in 1s ease-in-out forwards 8.75s
   text-align center
   .message-wrapper
     position absolute
@@ -71,6 +71,39 @@ svg
       display inline-block
       font-weight bold
       cursor pointer
+      width 50%
+      margin 0 auto
+      .fa
+        margin-right .25em
+        font-size 2em
+      .text
+        vertical-align top
+        display inline-block
+        padding-top .25em
+      &:before
+        content ''
+        display inline-block
+        position absolute
+        bottom -130px
+        left -78px
+        height 130px
+        width 78px
+        transform rotate(90deg)
+        background-image url('../assets/img/left-marquee.svg')
+        background-repeat no-repeat
+        background-size cover
+        background-position bottom
+      &:after
+        content ''
+        display inline-block
+        position absolute
+        top -65px
+        right -78px
+        height 0
+        max-height 130px
+        width .25em
+        background #fff
+        animation grow-height .5s ease-in-out forwards 8.8s
     &:before
       content ''
       display inline-block
@@ -102,7 +135,7 @@ svg
   right 30%
   left 30%
   text-align center
-  animation enter-bottom 4s ease-in-out forwards 4.75s
+  animation enter-bottom 4s ease-in-out forwards 3.75s
   max-width 500px
   margin 0 auto
   img
@@ -115,7 +148,7 @@ svg
   text-align center
   z-index 3
   opacity 0
-  animation fade-in 1s ease-in-out forwards 9.75s
+  animation fade-in 1s ease-in-out forwards 8.75s
   .key
     width 3em
     height 3em
@@ -148,7 +181,7 @@ svg
   right 30%
   left 30%
   text-align center
-  animation clear-right .75s ease-in-out forwards 5s
+  animation clear-right .75s ease-in-out forwards 4s
   span
     text-transform: uppercase
     font-size 1.5em
@@ -200,7 +233,7 @@ svg
         top 0
         bottom 0
         background-color #31ABBA
-        animation grow-width 3s ease-in-out forwards 2s
+        animation grow-width 3s ease-in-out forwards 1s
     .progress-text
       color #31ABBA
       text-transform uppercase
@@ -223,7 +256,7 @@ svg
     top 0
     width 0
     z-index 3
-    animation grow-width 1s ease-in forwards 2s
+    animation grow-width 1s ease-in forwards 1s
   .border-right
     height 0px
     width .25em
@@ -234,7 +267,7 @@ svg
     max-height calc(100% - 50px)
     overflow hidden
     z-index 3
-    animation grow-height 1s ease-in forwards 2s
+    animation grow-height 1s ease-in forwards 1s
   .border-bottom
     position absolute
     z-index 3
@@ -242,6 +275,25 @@ svg
     right 0
     left 0
     height .25em
+    .social-wrap
+      position absolute
+      top -1.75em
+      left 1em
+      padding 0 .25em
+      font-size 3em
+      span
+        position relative
+        width 1em
+        height 1em
+        &:before
+          position absolute
+          top 0
+          left 0
+          right 0
+          bottom 0
+          overflow hidden
+        &:not(:last-child)
+          margin-right .25em
     .logo-wrap
       position absolute
       right 10%
@@ -250,31 +302,34 @@ svg
       bottom 0
       background-image url('../assets/img/bottom-marquee.svg')
       background-repeat no-repeat
+      width 22%
+      padding-top 5%
+      height 0
     &:before
       position absolute
       content ''
       bottom 0
       top -50px
-      left 90%
+      left calc(90% + 1em)
       right 0
       height .25em
       width 0
       background white
-      animation grow-width .5s ease-in forwards 2s
+      animation grow-width .5s ease-in forwards 1s
     &:after
       position absolute
       content ''
       bottom 0
       top -50px
-      left 2em
+      left 11em
       right 32%
       height .25em
       width 0
-      max-width 65%
+      max-width calc(68% - 12em)
       background white
       display inline-block
       overflow hidden
-      animation grow-width .5s ease-in forwards 2.5s
+      animation grow-width .5s ease-in forwards 1.5s
   .border-left
     position absolute
     top 0
@@ -301,7 +356,7 @@ svg
       width .25em
       height 0
       background white
-      animation grow-height .5s ease-in forwards 2s
+      animation grow-height .5s ease-in forwards 1s
     &:after
       position absolute
       content ''
@@ -313,7 +368,7 @@ svg
       background white
       display inline-block
       overflow hidden
-      animation grow-left .5s ease-in forwards 2.5s
+      animation grow-left .5s ease-in forwards 1.5s
 @keyframes grow-width
   from 
     width 0

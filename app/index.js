@@ -132,7 +132,7 @@ class Demo {
 	  //allow zoom
 	  setTimeout(()=>{
 	  	ready = true;
-	  }, 10000);
+	  }, 7500);
 	}
 	loadSkyBox() {
 		let skyTexture = THREE.ImageUtils.loadTexture('assets/img/gradient_03.jpg');

@@ -34,7 +34,7 @@ svg {
   position: relative;
   z-index: 1;
   opacity: 0;
-  animation: fade-in 1s ease-in-out forwards 8.75s;
+  animation: fade-in 1s ease-in-out forwards 7.75s;
 }
 .fade-out {
   opacity: 1;
@@ -48,7 +48,7 @@ svg {
   bottom: 0;
   background: #6db0e0 /* Old browsers */;
   background: linear-gradient(to bottom, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
-  animation: fade-out 1s ease-in-out forwards 8.75s;
+  animation: fade-out 1s ease-in-out forwards 7.75s;
 }
 .welcome-screen {
   padding: 2em;
@@ -61,7 +61,7 @@ svg {
   background: linear-gradient(to bottom, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   z-index: 4;
   opacity: 0;
-  animation: fade-in 1s ease-in-out forwards 9.75s;
+  animation: fade-in 1s ease-in-out forwards 8.75s;
   text-align: center;
 }
 .welcome-screen .message-wrapper {
@@ -86,6 +86,43 @@ svg {
   display: inline-block;
   font-weight: bold;
   cursor: pointer;
+  width: 50%;
+  margin: 0 auto;
+}
+.welcome-screen .message-wrapper .start-button .fa {
+  margin-right: 0.25em;
+  font-size: 2em;
+}
+.welcome-screen .message-wrapper .start-button .text {
+  vertical-align: top;
+  display: inline-block;
+  padding-top: 0.25em;
+}
+.welcome-screen .message-wrapper .start-button:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: -130px;
+  left: -78px;
+  height: 130px;
+  width: 78px;
+  transform: rotate(90deg);
+  background-image: url("../assets/img/left-marquee.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+.welcome-screen .message-wrapper .start-button:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: -65px;
+  right: -78px;
+  height: 0;
+  max-height: 130px;
+  width: 0.25em;
+  background: #fff;
+  animation: grow-height 0.5s ease-in-out forwards 8.8s;
 }
 .welcome-screen .message-wrapper:before {
   content: '';
@@ -120,7 +157,7 @@ svg {
   right: 30%;
   left: 30%;
   text-align: center;
-  animation: enter-bottom 4s ease-in-out forwards 4.75s;
+  animation: enter-bottom 4s ease-in-out forwards 3.75s;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -135,7 +172,7 @@ svg {
   text-align: center;
   z-index: 3;
   opacity: 0;
-  animation: fade-in 1s ease-in-out forwards 9.75s;
+  animation: fade-in 1s ease-in-out forwards 8.75s;
 }
 .cat-controls .key {
   width: 3em;
@@ -173,7 +210,7 @@ svg {
   right: 30%;
   left: 30%;
   text-align: center;
-  animation: clear-right 0.75s ease-in-out forwards 5s;
+  animation: clear-right 0.75s ease-in-out forwards 4s;
 }
 .loading-message span {
   text-transform: uppercase;
@@ -230,7 +267,7 @@ svg {
   top: 0;
   bottom: 0;
   background-color: #31abba;
-  animation: grow-width 3s ease-in-out forwards 2s;
+  animation: grow-width 3s ease-in-out forwards 1s;
 }
 .loading-message .loading-progress .progress-text {
   color: #31abba;
@@ -256,7 +293,7 @@ svg {
   top: 0;
   width: 0;
   z-index: 3;
-  animation: grow-width 1s ease-in forwards 2s;
+  animation: grow-width 1s ease-in forwards 1s;
 }
 .border-animation .border-right {
   height: 0px;
@@ -268,7 +305,7 @@ svg {
   max-height: calc(100% - 50px);
   overflow: hidden;
   z-index: 3;
-  animation: grow-height 1s ease-in forwards 2s;
+  animation: grow-height 1s ease-in forwards 1s;
 }
 .border-animation .border-bottom {
   position: absolute;
@@ -278,6 +315,29 @@ svg {
   left: 0;
   height: 0.25em;
 }
+.border-animation .border-bottom .social-wrap {
+  position: absolute;
+  top: -1.75em;
+  left: 1em;
+  padding: 0 0.25em;
+  font-size: 3em;
+}
+.border-animation .border-bottom .social-wrap span {
+  position: relative;
+  width: 1em;
+  height: 1em;
+}
+.border-animation .border-bottom .social-wrap span:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+.border-animation .border-bottom .social-wrap span:not(:last-child) {
+  margin-right: 0.25em;
+}
 .border-animation .border-bottom .logo-wrap {
   position: absolute;
   right: 10%;
@@ -286,33 +346,36 @@ svg {
   bottom: 0;
   background-image: url("../assets/img/bottom-marquee.svg");
   background-repeat: no-repeat;
+  width: 22%;
+  padding-top: 5%;
+  height: 0;
 }
 .border-animation .border-bottom:before {
   position: absolute;
   content: '';
   bottom: 0;
   top: -50px;
-  left: 90%;
+  left: calc(90% + 1em);
   right: 0;
   height: 0.25em;
   width: 0;
   background: #fff;
-  animation: grow-width 0.5s ease-in forwards 2s;
+  animation: grow-width 0.5s ease-in forwards 1s;
 }
 .border-animation .border-bottom:after {
   position: absolute;
   content: '';
   bottom: 0;
   top: -50px;
-  left: 2em;
+  left: 11em;
   right: 32%;
   height: 0.25em;
   width: 0;
-  max-width: 65%;
+  max-width: calc(68% - 12em);
   background: #fff;
   display: inline-block;
   overflow: hidden;
-  animation: grow-width 0.5s ease-in forwards 2.5s;
+  animation: grow-width 0.5s ease-in forwards 1.5s;
 }
 .border-animation .border-left {
   position: absolute;
@@ -342,7 +405,7 @@ svg {
   width: 0.25em;
   height: 0;
   background: #fff;
-  animation: grow-height 0.5s ease-in forwards 2s;
+  animation: grow-height 0.5s ease-in forwards 1s;
 }
 .border-animation .border-left:after {
   position: absolute;
@@ -354,7 +417,7 @@ svg {
   background: #fff;
   display: inline-block;
   overflow: hidden;
-  animation: grow-left 0.5s ease-in forwards 2.5s;
+  animation: grow-left 0.5s ease-in forwards 1.5s;
 }
 @-moz-keyframes grow-width {
   from {
