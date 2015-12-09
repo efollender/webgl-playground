@@ -130,12 +130,27 @@ class Demo {
 		this.handleKeyDown();
 
 		//Audio
-		var audio = document.createElement('audio');
-	  var source = document.createElement('source');
-	  source.src = 'assets/sounds/sleep.mp3';
-	  audio.loop = true;
+		let happyHolidays = document.getElementsByClassName('welcome-screen')[0].cloneNode(true);
+		happyHolidays.className += ' closing-screen';
+		happyHolidays.getElementsByTagName('h2')[0].textContent = 'Happy Holidays\n' +
+			'from Brooklyn United + Brooklyn Digital Foundry';
+		happyHolidays.getElementsByTagName('p')[0].textContent = 'This is an experimental ' +
+			'collaboration between the visualization wizards at Brooklyn Digital '+
+			'Foundry and the design and development teams at Brooklyn United. '+
+			'Using WebGL and a little bit of holiday magic, we joined forces to '+
+			'whip up a scene for you to enjoy and share with your friends.';
+		const startButton = happyHolidays.getElementsByClassName('start-button')[0];
+		// happyHolidays.removeChild(startButton);
+		let audio = document.createElement('audio');
+	  const source = document.createElement('source');
+	  source.src = 'assets/sounds/Visager_-_19_-_Village_Dreaming_Loop.mp3';
+	  audio.loop = false;
 	  audio.appendChild(source);
-	  // audio.play();
+	  audio.play();
+	  audio.addEventListener('ended', (e) => {
+	  	console.log('ended');
+	  	document.getElementsByClassName('ui-container')[0].appendChild(happyHolidays);
+	  });
 
 	  //allow zoom
 	  setTimeout(()=>{
@@ -201,11 +216,11 @@ class Demo {
 		var ms_Scene = this.ms_Scene;
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 		objLoader.load(`assets/landscape_assets/glacier_0${index}.obj`, function(glacier) {
-				console.log('glacier', glacier);
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
-					// glacier.children[i].geometry.computeFaceNormals();
-					// glacier.children[i].geometry.computeVertexNormals();
+					glacier.children[i].geometry.computeFaceNormals();
+					glacier.children[i].geometry.computeVertexNormals();
+					console.log('glacier', glacier);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
 			  		map: iceTexture,
 						shading: THREE.FlatShading,
@@ -226,8 +241,12 @@ class Demo {
 		objLoader.load(`assets/landscape_assets/floe_0${index}.obj`, glacier => {
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
-					glacier.children[i].geometry.computeFaceNormals();
-					glacier.children[i].geometry.computeVertexNormals();
+					const geometry = glacier.children[i].geometry;
+					geometry.computeFaceNormals();
+					geometry.computeVertexNormals();
+					glacier.children[i].receiveShadow = true;
+					// console.log('ice', glacier);source
+					// MOUNTAINS_COLORS.Apply(geometry, this.ms_Parameters);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
 			  		map: iceTexture,
 						shading: THREE.FlatShading,
@@ -329,7 +348,7 @@ class Demo {
 			m.shading = THREE.FlatShading;
 			m.shininess = 100;
 			m.map = objTexture;
-			m.color = new THREE.Color( 0xdddddd );
+			m.color = new THREE.Color( 0xbbbbbb );
 			m.vertexColors = THREE.FaceColors;
 		}
 		

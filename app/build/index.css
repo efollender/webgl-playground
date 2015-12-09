@@ -61,8 +61,12 @@ svg {
   background: linear-gradient(to bottom, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   z-index: 4;
   opacity: 0;
-  animation: fade-in 1s ease-in-out forwards 8.75s;
+  animation: fade-in 1s ease-in-out forwards;
+  animation-delay: 8.75s;
   text-align: center;
+}
+.welcome-screen.closing-screen {
+  animation-delay: 0;
 }
 .welcome-screen .message-wrapper {
   position: absolute;
