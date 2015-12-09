@@ -105,7 +105,9 @@ class Demo {
 	
 		//Load objects	
 		this.loadSkyBox();
-		this.loadGlaciers();
+		this.loadGlaciers(1, 1000, 200, .1);
+		this.loadGlaciers(2, 900, -1000, .2);
+		this.loadGlaciers(2, 1500, -3000, .3);
 		for (var x = 3; x > 0; x--) {
 			this.loadIce(x, 1000, 0, 1);
 			this.loadIce(x, 400, x * 200, x);
@@ -193,11 +195,11 @@ class Demo {
 		// this.ms_Clickable.push(this.ms_Terrain);
 		this.ms_Scene.add(this.ms_Terrain);
 	}
-	loadGlaciers() {
+	loadGlaciers(index, z, x, scale) {
 		var objLoader = new THREE.OBJLoader();
 		var ms_Scene = this.ms_Scene;
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
-		objLoader.load('assets/landscape_assets/glacier_01.obj', function(glacier) {
+		objLoader.load(`assets/landscape_assets/glacier_0${index}.obj`, function(glacier) {
 
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
@@ -207,26 +209,9 @@ class Demo {
 						shading: THREE.SmoothShading,
 					});
 				}
-				// physics_glacier = new Physijs.BoxMesh(glacier.geometry, );
-				glacier.position.z = 1000;
-				glacier.position.x = 200;
-				glacier.scale.set(.1,.1,.1);
-				ms_Scene.add(glacier);
-		});
-		objLoader.load('assets/landscape_assets/glacier_02.obj', function(glacier) {
-
-				//load ice texture
-				for (var i=0; i<glacier.children.length;i++ ){
-					glacier.children[i].material = new THREE.MeshPhongMaterial({
-			  		map: iceTexture,
-			  		specularMap: iceTexture,
-						shading: THREE.SmoothShading,
-					});
-				}
-
-				glacier.position.z = 900;
-				glacier.position.x = -1000;
-				glacier.scale.set(.2,.2,.2);
+				glacier.position.z = z;
+				glacier.position.x = x;
+				glacier.scale.set(scale,scale,scale);
 				ms_Scene.add(glacier);
 		});
 	}

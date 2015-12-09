@@ -134,6 +134,9 @@ svg
   left 5em
   right 5em
   bottom 7em
+  max-width 500px
+  margin 0 auto
+  overflow hidden
   transform translateY(200%)
   animation enter-bottom 4s ease-in-out forwards 3.75s
   background-size contain
@@ -171,7 +174,7 @@ svg
         -webkit-appearance none
         width 58%
         position absolute
-        left 20%
+        left 19%
         top 50%
         transform translateY(-50%)
         height 2em
@@ -295,7 +298,7 @@ svg
     top 0
     width 0
     z-index 3
-    animation grow-width 1s ease-in forwards 1s
+    animation grow-width 1s ease-in forwards 1.5s
   .border-right
     height 0px
     width .25em
@@ -306,7 +309,7 @@ svg
     max-height calc(100% - 50px)
     overflow hidden
     z-index 3
-    animation grow-height 1s ease-in forwards 1s
+    animation grow-height 1s ease-in forwards 1.5s
   .border-bottom
     position absolute
     z-index 3
@@ -354,21 +357,21 @@ svg
       height .25em
       width 0
       background white
-      animation grow-width .5s ease-in forwards 1s
+      animation grow-width .5s ease-in forwards 1.5s
     &:after
       position absolute
       content ''
       bottom 0
       top -50px
-      left 11em
+      left 16em
       right 32%
       height .25em
       width 0
-      max-width calc(68% - 12em)
+      max-width calc(68% - 17em)
       background white
       display inline-block
       overflow hidden
-      animation grow-width .5s ease-in forwards 1.5s
+      animation grow-width .5s ease-in forwards 2s
   .border-left
     position absolute
     top 0
@@ -395,7 +398,7 @@ svg
       width .25em
       height 0
       background white
-      animation grow-height .5s ease-in forwards 1s
+      animation grow-height .5s ease-in forwards 1.5s
     &:after
       position absolute
       content ''
@@ -407,7 +410,7 @@ svg
       background white
       display inline-block
       overflow hidden
-      animation grow-left .5s ease-in forwards 1.5s
+      animation grow-left .5s ease-in forwards 2s
 @keyframes grow-width
   from 
     width 0
