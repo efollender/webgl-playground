@@ -162,9 +162,6 @@ class Demo {
 		var aSkybox = new THREE.Mesh(
 		  new THREE.SphereGeometry(10000, 32, 32),
 		  new THREE.MeshPhongMaterial({
-		  		fragmentShader: aShader.fragmentShader,
-				  vertexShader: aShader.vertexShader,
-				  uniforms: aShader.uniforms,
 		  		map: skyTexture,
 					side: THREE.BackSide,
 					vertexColors: THREE.FaceColors,
@@ -177,8 +174,12 @@ class Demo {
 	loadTerrain(inParameters) {
 		var terrainGeo = TERRAINGEN.Get(inParameters);
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
-		var terrainMaterial = new THREE.MeshPhongMaterial({ map: iceTexture, shading: THREE.FlatShading, side: THREE.DoubleSide });
-		terrainMaterial.color = new THREE.Color( 0xCCCCEE );
+		var terrainMaterial = new THREE.MeshPhongMaterial({ 
+			map: iceTexture, 
+			shading: THREE.FlatShading, 
+			side: THREE.DoubleSide,
+			color: new THREE.Color( 0xCCCCEE )
+		});
 		this.ms_Terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
 		this.ms_Terrain.position.y = - inParameters.depth;
 		this.ms_Terrain.position.z = -4000;
@@ -200,13 +201,16 @@ class Demo {
 		var ms_Scene = this.ms_Scene;
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 		objLoader.load(`assets/landscape_assets/glacier_0${index}.obj`, function(glacier) {
-
+				console.log('glacier', glacier);
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
+					// glacier.children[i].geometry.computeFaceNormals();
+					// glacier.children[i].geometry.computeVertexNormals();
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
 			  		map: iceTexture,
-			  		specularMap: iceTexture,
-						shading: THREE.SmoothShading,
+						shading: THREE.FlatShading,
+						color: new THREE.Color( 0xCCCCEE ),
+						side: THREE.DoubleSide
 					});
 				}
 				glacier.position.z = z;
@@ -222,10 +226,12 @@ class Demo {
 		objLoader.load(`assets/landscape_assets/floe_0${index}.obj`, glacier => {
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
+					glacier.children[i].geometry.computeFaceNormals();
+					glacier.children[i].geometry.computeVertexNormals();
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
 			  		map: iceTexture,
-			  		specularMap: iceTexture,
-						shading: THREE.SmoothShading,
+						shading: THREE.FlatShading,
+						color: new THREE.Color( 0xCCCCEE )
 					});
 				}
 				glacier.position.z = z;

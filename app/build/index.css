@@ -380,6 +380,7 @@ svg {
   right: 0;
   bottom: 0;
   overflow: hidden;
+  text-align: center;
 }
 .border-animation .border-bottom .social-wrap span:not(:last-child) {
   margin-right: 0.25em;
