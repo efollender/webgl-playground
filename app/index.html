@@ -12,16 +12,20 @@
 		<div class="ui-container">
 			<div id="canvas-3d" class="viewer"></div>
 			<div class="welcome-screen">
-				<h2>Welcome to our<br/>winter wonderland!</h2>
-				<p>Oh, and please excuse the cat...this is the only place we could put him where he won't claw apart presents or tear down decor</p>
-				<div class="start-button">
-					<span class="text">Start</span>
+				<div class="message-wrapper">
+					<h2>Welcome to our<br/>winter wonderland!</h2>
+					<p>Oh, and please excuse the cat...this is the only place we could put him where he won't claw apart presents or tear down decor</p>
+					<div class="start-button">
+						<span class="text">Start</span>
+					</div>
 				</div>
 			</div>
 			<div class="border-animation">
 				<div class="border-top"></div>
 				<div class="border-right"></div>
-				<div class="border-bottom"></div>
+				<div class="border-bottom">
+					<div class="logo-wrap"></div>
+				</div>
 				<div class="border-left">
 					<div class="marquee-wrap"></div>
 				</div>
@@ -93,14 +97,10 @@
 				</div>
 			</div>
 			<div class="cat-controls">
-					<div class="key trigger">
-						<span class="content">Q</span>
-					</div>
-					<div class="key trigger">
-						<span class="content">W</span>
-					</div>
-					<div class="key trigger">
-						<span class="content">E</span>
+					<div class="key trigger" id="mountains"></div>
+					<div class="key trigger" id="paw"></div>
+					<div class="key slider" id="slider">
+						<img src="assets/img/slider.svg"/>
 					</div>
 				</div>
 		</div>

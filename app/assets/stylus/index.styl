@@ -24,7 +24,7 @@ svg
   position: relative
   z-index: 1
   opacity 0
-  animation fade-in 1s ease-in-out forwards 10s
+  animation fade-in 1s ease-in-out forwards 8.75s
 .fade-out
   opacity 1
   animation fade-opacity .3s ease-in-out forwards!important
@@ -37,35 +37,64 @@ svg
   background #6db0e0 /* Old browsers */
   background linear-gradient(to bottom,  #6db0e0 0%,#2989d8 32%,#3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   // background transparent
-  animation fade-out 1s ease-in-out forwards 10s
+  animation fade-out 1s ease-in-out forwards 8.75s
 .welcome-screen
   padding 2em
   position absolute
-  top 50%
-  transform translateY(-50%)
-  left 30%
-  right 30%
-  max-width 550px
-  margin 0 auto
+  top 0
+  left 0
+  right 0
+  bottom 0
   background rgba(#6db0e0, .8) /* Old browsers */
   background linear-gradient(to bottom,  rgba(#6db0e0, .8) 0%,rgba(#2989d8, .8) 32%,rgba(#3e5490, .8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  // background transparent
-  z-index 3
+  z-index 4
   opacity 0
-  animation fade-in 1s ease-in-out forwards 11s
+  animation fade-in 1s ease-in-out forwards 9.75s
   text-align center
-  h2
-    margin-top 0
-    line-height 1.2
-    margin-bottom 1rem
-  .start-button
-    padding 1em 2em
-    background white
-    border-radius .5em
-    color #3e5490
-    display inline-block
-    font-weight bold
-    cursor pointer
+  .message-wrapper
+    position absolute
+    top 50%
+    transform translateY(-50%)
+    left 30%
+    right 30%
+    max-width 550px
+    margin 0 auto
+    h2
+      margin-top 0
+      line-height 1.2
+      margin-bottom 1rem
+    .start-button
+      padding 1em 2em
+      background white
+      border-radius .5em
+      color #3e5490
+      display inline-block
+      font-weight bold
+      cursor pointer
+    &:before
+      content ''
+      display inline-block
+      position absolute
+      top -130px
+      left -78px
+      height 130px
+      width 78px
+      transform rotate(-90deg)
+      background-image url('../assets/img/left-marquee.svg')
+      background-repeat no-repeat
+      background-size cover
+    &:after
+      content ''
+      display inline-block
+      position absolute
+      bottom -130px
+      right -78px
+      height 130px
+      width 78px
+      transform rotate(90deg)
+      background-image url('../assets/img/left-marquee.svg')
+      background-repeat no-repeat
+      background-size cover
 .happy-holidays
   position absolute
   top 200%
@@ -73,40 +102,44 @@ svg
   right 30%
   left 30%
   text-align center
-  animation enter-bottom 4s ease-in-out forwards 6.5s
+  animation enter-bottom 4s ease-in-out forwards 4.75s
   max-width 500px
   margin 0 auto
   img
     max-width 100%
 .cat-controls
   position absolute
-  bottom 4em
+  bottom calc(4em + 50px)
   left 0
   right 0
   text-align center
   z-index 3
   opacity 0
-  animation fade-in 1s ease-in-out forwards 10s
+  animation fade-in 1s ease-in-out forwards 9.75s
   .key
     width 3em
     height 3em
     border-radius 100%
-    background white
+    // background white
     position relative
     display inline-block
     cursor pointer
-    &:nth-child(2)
+    &.slider
+      width 12em
+      vertical-align top
+      height 3em
       margin 0 1em
-    .content
-      position absolute
-      top 50%
-      transform translateY(-50%)
-      left 0
-      right 0
-      text-align center
-      font-weight bold
-      font-size 1.75em
-      color #655469
+      img
+        max-width 100%
+        display block
+        top 50%
+        transform translateY(-50%)
+        position absolute
+  #paw
+    margin-left 1em
+    background-image url('../assets/img/paw.svg')
+  #mountains
+    background-image url('../assets/img/mountain.svg')
 .loading-message
   color white
   position absolute
@@ -115,7 +148,7 @@ svg
   right 30%
   left 30%
   text-align center
-  animation clear-right .75s ease-in-out forwards 4.5s
+  animation clear-right .75s ease-in-out forwards 5s
   span
     text-transform: uppercase
     font-size 1.5em
@@ -167,7 +200,7 @@ svg
         top 0
         bottom 0
         background-color #31ABBA
-        animation grow-width 3s ease-in-out forwards .5s
+        animation grow-width 3s ease-in-out forwards 2s
     .progress-text
       color #31ABBA
       text-transform uppercase
@@ -190,7 +223,7 @@ svg
     top 0
     width 0
     z-index 3
-    animation grow-width 1s ease-in forwards 4.5s
+    animation grow-width 1s ease-in forwards 2s
   .border-right
     height 0px
     width .25em
@@ -198,18 +231,50 @@ svg
     position absolute
     right 0
     top 0
+    max-height calc(100% - 50px)
+    overflow hidden
     z-index 3
-    animation grow-height 1s ease-in forwards 5.5s
+    animation grow-height 1s ease-in forwards 2s
   .border-bottom
     position absolute
     z-index 3
     bottom 0
     right 0
-    left 200%
-    width 0
+    left 0
     height .25em
-    background white
-    animation grow-bottom 1s ease-in forwards 6s
+    .logo-wrap
+      position absolute
+      right 10%
+      left 68%
+      top -100px
+      bottom 0
+      background-image url('../assets/img/bottom-marquee.svg')
+      background-repeat no-repeat
+    &:before
+      position absolute
+      content ''
+      bottom 0
+      top -50px
+      left 90%
+      right 0
+      height .25em
+      width 0
+      background white
+      animation grow-width .5s ease-in forwards 2s
+    &:after
+      position absolute
+      content ''
+      bottom 0
+      top -50px
+      left 2em
+      right 32%
+      height .25em
+      width 0
+      max-width 65%
+      background white
+      display inline-block
+      overflow hidden
+      animation grow-width .5s ease-in forwards 2.5s
   .border-left
     position absolute
     top 0
@@ -226,6 +291,29 @@ svg
       bottom 20%
       background-image url('../assets/img/left-marquee.svg')
       background-repeat no-repeat
+    &:before
+      position absolute
+      max-height 15%
+      content ''
+      bottom 85%
+      top 0
+      left 30px
+      width .25em
+      height 0
+      background white
+      animation grow-height .5s ease-in forwards 2s
+    &:after
+      position absolute
+      content ''
+      bottom 50px
+      top 100%
+      left 30px
+      // height 100%
+      width .25em
+      background white
+      display inline-block
+      overflow hidden
+      animation grow-left .5s ease-in forwards 2.5s
 @keyframes grow-width
   from 
     width 0
@@ -238,6 +326,11 @@ svg
   to
     width 100%
     left 2em
+@keyframes grow-left
+  from 
+    top 100%
+  to 
+    top 85%
 @keyframes grow-height
   from 
     height 0

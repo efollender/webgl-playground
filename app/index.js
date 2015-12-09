@@ -39,8 +39,8 @@ class Demo {
 		this.ms_Renderer = this.enable ? new THREE.WebGLRenderer({ antialias: true }) : new THREE.CanvasRenderer();
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
 		this.ms_Scene = new THREE.Scene();
-		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
-		this.ms_Camera.position.set(0, -Math.max(inParameters.width * 1.5, inParameters.height) / 8, inParameters.height);
+		this.ms_Camera = new THREE.PerspectiveCamera(45.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
+		this.ms_Camera.position.set(.2, -Math.max(inParameters.width * 1.5, inParameters.height) / 8, inParameters.height);
 		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		this.ms_Raycaster = new THREE.Raycaster();
@@ -52,6 +52,7 @@ class Demo {
 		this.ms_Controls.maxDistance = 4000.0;
 		this.ms_Controls.enableKeys = false;
 		this.ms_Controls.maxPolarAngle = Math.PI * .495;
+		this.ms_Controls.minPolarAngle = .5;
 		this.ms_Controls.maxAzimuthAngle = 1;
 		this.ms_Controls.minAzimuthAngle = -1;
 	
@@ -110,11 +111,13 @@ class Demo {
 		// this.loadSnow(inParameters);
 
 		//Listen for trigger
-		const buttons = document.getElementsByClassName('trigger');
-		[].slice.call(buttons).forEach( button => {
-			button.addEventListener('click', event => {
-				this.handleButton();
-			});
+		const mountains = document.getElementById('mountains');
+		const paw = document.getElementById('paw');
+		paw.addEventListener('click', () => {
+			this.handleButton();
+		});
+		mountains.addEventListener('click', () => {
+			this.ms_Terrain.callback();
 		});
 		this.handleKeyDown();
 
@@ -132,13 +135,18 @@ class Demo {
 	  }, 10000);
 	}
 	loadSkyBox() {
-		var skyTexture = THREE.ImageUtils.loadTexture('assets/img/gradient_03.jpg');
-		// skyTexture.wrapS = skyTexture.wrapT = THREE.RepeatWrapping;
+		let skyTexture = THREE.ImageUtils.loadTexture('assets/img/gradient_03.jpg');
+		skyTexture.wrapS = skyTexture.wrapT = THREE.RepeatWrapping;
+		skyTexture.repeat.set( 3, 3 );
+		skyTexture.format = THREE.RGBFormat;
+
+		let aShader = THREE.ShaderLib['phong'];
+		aShader.uniforms['map'].value = skyTexture;
 
 		// var aSkyBoxMaterial = new THREE.ShaderMaterial({
-		//   fragmentShader: aShader.fragmentShader,
-		//   vertexShader: aShader.vertexShader,
-		//   uniforms: aShader.uniforms,
+		  // fragmentShader: aShader.fragmentShader,
+		  // vertexShader: aShader.vertexShader,
+		  // uniforms: aShader.uniforms,
 		//   depthWrite: false,
 		//   side: THREE.BackSide
 		// });
@@ -146,10 +154,13 @@ class Demo {
 		var aSkybox = new THREE.Mesh(
 		  new THREE.SphereGeometry(10000, 32, 32),
 		  new THREE.MeshPhongMaterial({
+		  		fragmentShader: aShader.fragmentShader,
+				  vertexShader: aShader.vertexShader,
+				  uniforms: aShader.uniforms,
 		  		map: skyTexture,
 					side: THREE.BackSide,
 					vertexColors: THREE.FaceColors,
-					shading: THREE.SmoothShading,
+					shading: THREE.SmoothShading
 				})
 		);
 		
@@ -231,12 +242,12 @@ class Demo {
 					glacier.position.x = 0;
 					glacier.receiveShadow = true;
 					glacier.scale.set(1,8,1);
-					for (let y = 0; y < 4; y++){
-						let glacierCopy = glacier.clone();
-						glacierCopy.position.z = 500/y * Math.random();
-						glacierCopy.position.x = 200 * y**x * Math.random();
-						ms_Scene.add(glacierCopy);
-					}
+					// for (let y = 0; y < 4; y++){
+					// 	let glacierCopy = glacier.clone();
+					// 	glacierCopy.position.z = 500/y * Math.random();
+					// 	glacierCopy.position.x = 200 * y**x * Math.random();
+					// 	ms_Scene.add(glacierCopy);
+					// }
 					ms_Scene.add(glacier);
 			});
 		}
@@ -310,7 +321,7 @@ class Demo {
 	loadAnimation( geometry, materials, x, y, z, s, scene, texture ) {
 		let mixer;
 		const objTexture = THREE.ImageUtils.loadTexture(texture);
-		// geometry.computeFaceNormals();
+		geometry.computeFaceNormals();
   	// geometry.computeVertexNormals();
   	geometry.dynamic = true
 		geometry.__dirtyVertices = true;
@@ -334,6 +345,7 @@ class Demo {
 		}
 		
 		let cat_mesh = new THREE.SkinnedMesh( geometry, materials[0]);
+		// cat_mesh.rotation.x = Math.PI * -.5;
 		cat_mesh.position.set( x, y, z );
 		cat_mesh.scale.set( s, s, s );
 		cat_mesh.castShadow = true;
@@ -357,7 +369,7 @@ class Demo {
 		let fov = this.ms_Camera.fov;
 		let zoom = this.ms_Camera.zoom;
 		const inc = 0.01;
-		if (zoom < 1.5) {
+		if (zoom < 2) {
 			this.ms_Camera.zoom += inc;
 	    this.ms_Camera.updateProjectionMatrix();
 		} else {
