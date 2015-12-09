@@ -184,15 +184,59 @@ svg {
 .cat-controls .key.slider {
   width: 12em;
   vertical-align: top;
+  position: relative;
   height: 3em;
   margin: 0 1em;
+  background-image: url("../assets/img/slider.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-.cat-controls .key.slider img {
-  max-width: 100%;
-  display: block;
+.cat-controls .key.slider input[type=range] {
+  -webkit-appearance: none;
+  width: 58%;
+  position: absolute;
+  left: 20%;
   top: 50%;
   transform: translateY(-50%);
-  position: absolute;
+  height: 2em;
+  z-index: 3;
+  background: transparent;
+}
+.cat-controls .key.slider input[type=range]:focus {
+  outline: none;
+}
+.cat-controls .key.slider input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+.cat-controls .key.slider input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.cat-controls .key.slider input[type=range]::-moz-range-thumb {
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+  background: #ccc;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+.cat-controls .key.slider input[type=range]::-ms-thumb {
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+  background: #ccc;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 .cat-controls #paw {
   margin-left: 1em;

@@ -160,14 +160,53 @@ svg
     &.slider
       width 12em
       vertical-align top
+      position relative
       height 3em
       margin 0 1em
-      img
-        max-width 100%
-        display block
+      background-image url('../assets/img/slider.svg')
+      background-position center
+      background-repeat no-repeat
+      background-size contain
+      input[type=range]
+        -webkit-appearance none
+        width 58%
+        position absolute
+        left 20%
         top 50%
         transform translateY(-50%)
-        position absolute
+        height 2em
+        z-index 3
+        background transparent
+        &:focus
+          outline none
+        &::-ms-track
+          width: 100%
+          cursor: pointer
+          background: transparent
+          border-color: transparent
+          color: transparent
+        &::-webkit-slider-thumb
+          -webkit-appearance none
+          height 1em
+          width 1em
+          border-radius 100%
+          background #fff
+          box-shadow 0 0 3px rgba(black, .5)
+          cursor pointer
+        &::-moz-range-thumb
+          height 1em
+          width 1em
+          border-radius 100%
+          background #ccc
+          cursor pointer
+          box-shadow 0 0 3px rgba(black, .5)
+        &::-ms-thumb
+          height 1em
+          width 1em
+          border-radius 100%
+          background #ccc
+          cursor pointer
+          box-shadow 0 0 3px rgba(black, .5)
   #paw
     margin-left 1em
     background-image url('../assets/img/paw.svg')
