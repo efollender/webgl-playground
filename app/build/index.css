@@ -102,13 +102,17 @@ svg {
   width: 100%;
 }
 .welcome-screen.closing-screen .message-wrapper .share-buttons .callout {
-  width: 50%;
   display: inline-block;
   float: left;
 }
-.welcome-screen.closing-screen .message-wrapper .share-buttons .callout span {
-  font-weight: bold;
-  font-size: 1.2em;
+.welcome-screen.closing-screen .message-wrapper .share-buttons .callout.social-wrapper {
+  width: 75%;
+}
+.welcome-screen.closing-screen .message-wrapper .share-buttons .callout.replay {
+  width: 25%;
+}
+.welcome-screen.closing-screen .message-wrapper .share-buttons .callout .callout-title {
+  font-size: 1.5em;
 }
 .welcome-screen.closing-screen .message-wrapper .share-buttons .replay {
   border-right: 1px solid #fff;
@@ -315,6 +319,12 @@ svg {
 .cat-controls #mountains {
   background-image: url("../assets/img/mountain.svg");
 }
+.cat-controls #volume {
+  background-image: url("../assets/img/volume.svg");
+}
+.cat-controls #volume.vol-off {
+  background-image: url("../assets/img/vol-off.svg");
+}
 .loading-message {
   color: #fff;
   position: absolute;
@@ -427,7 +437,7 @@ svg {
 }
 .border-animation .border-bottom {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   bottom: 0;
   right: 0;
   left: 0;
@@ -437,35 +447,6 @@ svg {
   position: absolute;
   top: -1.75em;
   left: 1em;
-  padding: 0 0.25em;
-  font-size: 3em;
-}
-.border-animation .border-bottom .social-wrap a {
-  text-decoration: none;
-}
-.border-animation .border-bottom .social-wrap span {
-  position: relative;
-  width: 1em;
-  height: 1em;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: inline-block;
-}
-.border-animation .border-bottom .social-wrap span.email {
-  background-image: url("../assets/img/email.svg");
-}
-.border-animation .border-bottom .social-wrap span.facebook {
-  background-image: url("../assets/img/facebook.svg");
-}
-.border-animation .border-bottom .social-wrap span.twitter {
-  background-image: url("../assets/img/twitter.svg");
-}
-.border-animation .border-bottom .social-wrap span.github {
-  background-image: url("../assets/img/github.svg");
-}
-.border-animation .border-bottom .social-wrap span:not(:last-child) {
-  margin-right: 0.25em;
 }
 .border-animation .border-bottom .logo-wrap {
   position: absolute;
@@ -551,6 +532,40 @@ svg {
   overflow: hidden;
   -webkit-animation: grow-left 0.5s ease-in forwards 2s;
           animation: grow-left 0.5s ease-in forwards 2s;
+}
+.social-wrap {
+  padding: 0 0.25em;
+  font-size: 3em;
+}
+.social-wrap a {
+  text-decoration: none;
+}
+.social-wrap span {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+.social-wrap span.email {
+  background-image: url("../assets/img/email.svg");
+}
+.social-wrap span.facebook {
+  background-image: url("../assets/img/facebook.svg");
+}
+.social-wrap span.twitter {
+  background-image: url("../assets/img/twitter.svg");
+}
+.social-wrap span.github {
+  background-image: url("../assets/img/github.svg");
+}
+.social-wrap span.repeat {
+  background-image: url("../assets/img/replay.svg");
+}
+.social-wrap span:not(:last-child) {
+  margin-right: 0.25em;
 }
 @-webkit-keyframes grow-width {
   from {
