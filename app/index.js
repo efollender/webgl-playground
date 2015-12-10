@@ -192,7 +192,7 @@ class Demo {
 			color: new THREE.Color( 0xCCCCEE )
 		});
 		this.ms_Terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-		this.ms_Terrain.position.y = - inParameters.depth;
+		this.ms_Terrain.position.y = - (inParameters.depth * .85);
 		this.ms_Terrain.position.z = -4000;
 		this.ms_Terrain.callback = () => {
 			// console.log(this.ms_Terrain.position.y);
@@ -413,11 +413,11 @@ class Demo {
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
 
 		if (reducing) {
-			this.ms_Terrain.position.y -= 20;
+			this.ms_Terrain.position.y -= 30;
 			this.ms_Terrain.callback();
 		}
 		if ((this.ms_Terrain.position.y < -inParameters.depth * 0.5) && !reducing) {
-			this.ms_Terrain.position.y += 20;
+			this.ms_Terrain.position.y += 30;
 		}
 		let delta = clock.getDelta();
 		let elapsedTime = clock.getElapsedTime();
@@ -538,7 +538,7 @@ $(function() {
 	});
 
 	volume.addEventListener('click', event => {
-		holidayAudio.muted = !holidayAudio.muted;
+		holidayAudio.muted = !holidayAudio.muted ;
 		if (holidayAudio.muted) {
 			volume.className = "key trigger vol-off";
 		} else {
