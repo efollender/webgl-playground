@@ -1,3 +1,7 @@
+*
+*:after
+*:before
+  box-sizing border-box
 body
   background-color #000
   margin 0px
@@ -14,6 +18,13 @@ body
 h2
   font-weight bold
   font-size 3em
+a
+a:visited
+a:active
+  color white
+  transition opacity .2s ease-in-out
+  &:hover
+    opacity .8
 p
   font-size 1.4em
   margin-bottom 1.2rem
@@ -29,15 +40,17 @@ svg
   opacity 1
   animation fade-opacity .3s ease-in-out forwards!important
 .ui-container
-  position:  absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  background #6db0e0 /* Old browsers */
-  background linear-gradient(to bottom,  #6db0e0 0%,#2989d8 32%,#3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  // background linear-gradient(top, white, black)
+  background linear-gradient(to bottom,  #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   // background transparent
   animation fade-out 1s ease-in-out forwards 7.75s
+  // background-linear-gradient(bottom,  #6db0e0, 0%,#2989d8, 32%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  
 .welcome-screen
   padding 2em
   position absolute
@@ -45,7 +58,7 @@ svg
   left 0
   right 0
   bottom 0
-  background rgba(#6db0e0, .8) /* Old browsers */
+  // background linear-gradient(top, white, black)
   background linear-gradient(to bottom,  rgba(#6db0e0, .8) 0%,rgba(#2989d8, .8) 32%,rgba(#3e5490, .8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   z-index 4
   opacity 0
@@ -55,11 +68,22 @@ svg
   &.closing-screen
     animation-delay 0
     .message-wrapper
+      .welcome-text
+        display none
+      .closing-text
+        display block
       .start-button
         display none
       .share-buttons
         display inline-block
         width 100%
+        .callout
+          width 50%
+          display inline-block
+          float left
+          span
+            font-weight bold
+            font-size 1.2em
         .replay
           border-right 1px solid white
   .share-buttons
@@ -72,6 +96,10 @@ svg
     right 30%
     max-width 550px
     margin 0 auto
+    .welcome-text
+      display block
+    .closing-text
+      display none
     h2
       margin-top 0
       line-height 1.2
@@ -336,6 +364,8 @@ svg
       left 1em
       padding 0 .25em
       font-size 3em
+      a
+        text-decoration none
       span
         position relative
         width 1em

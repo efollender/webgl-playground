@@ -14,20 +14,39 @@
 			<div id="canvas-3d" class="viewer"></div>
 			<div class="welcome-screen">
 				<div class="message-wrapper">
-					<h2>A winter wonderland<br/>to call your own</h2>
-					<p>A little holiday spirit can move mountains!<br/>
-						Customize the scene for maximum joy.<br/><br/>
-						Featuring our office mascot, Kitty the Cat.</p>
+					<h2 class="welcome-text">Welcome to our<br/>winter wonderland</h2>
+					<h2 class="closing-text">Happy Holidays<br/> from Brooklyn United + Brooklyn Digital Foundry</h2>
+					<p class="welcome-text">
+						A little holiday spirit can move mountains! Customize the scene for maximum joy.<br/><br/>
+						Don’t mind our office cat, he’s just here to “chill.”
+					</p>
+					<p class="closing-text">
+						This is an experimental collaboration between the visualization wizards at 
+						Brooklyn Digital Foundry and the design and development teams at Brooklyn 
+						United. Using WebGL and a little bit of holiday magic, we joined forces to 
+						whip up a scene for you to enjoy and share with your friends. <br/><br/>
+						<a href="http://www.brooklynunited.com">
+							See what else we can do
+						</a>
+					</p>
 					<div class="start-button">
 						<span class="fa fa-play-circle"></span>
 						<span class="text">Start</span>
 					</div>
 					<div class="share-buttons">
-						<div class="replay">
+						<div class="replay callout">
 							<span>Replay</span>
+							<div class="icon-wrapper">
+								<span class="fa fa-repeat"></span>
+							</div>
 						</div>
-						<div class="social-wrap">
+						<div class="social-wrap callout">
 							<span>Share</span>
+							<div class="social-wrap icon-wrapper">
+								<span class="fa fa-facebook"></span>
+								<span class="fa fa-github"></span>
+								<span class="fa fa-twitter"></span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -37,9 +56,15 @@
 				<div class="border-right"></div>
 				<div class="border-bottom">
 					<div class="social-wrap">
-						<span class="fa fa-facebook"></span>
-						<span class="fa fa-github"></span>
-						<span class="fa fa-twitter"></span>
+						<a href="http://www.facebook.com/brooklynunited" target="_blank">
+							<span class="fa fa-facebook"></span>
+						</a>
+						<a href="http://www.github.com/brooklynunited" target="_blank">
+							<span class="fa fa-github"></span>
+						</a>
+						<a href="http://www.twitter.com/brooklynunited" target="_blank">
+							<span class="fa fa-twitter"></span>
+						</a>
 					</div>
 					<div class="logo-wrap"></div>
 				</div>
@@ -119,40 +144,65 @@
 					</div>
 				</div>
 		</div>
-		<script type="x-shader/x-vertex" id="step07_vs">
-			uniform float radiusX;
-			uniform float radiusZ;
-			uniform float size;
-			uniform float scale;
-			uniform float height;
-			uniform float elapsedTime;
-			uniform float speedH;
-			uniform float speedV;
-			void main() {
-				vec3 pos = position;
-				pos.x += cos((elapsedTime + position.z) * 0.25 * speedH) * radiusX;
-				pos.y = mod(pos.y - elapsedTime * speedV, height);
-				pos.z += sin((elapsedTime + position.x) * 0.25 * speedH) * radiusZ;
-				vec4 mvPosition = modelViewMatrix * vec4( pos, 1.0 );
-				gl_PointSize = size * ( scale / length( mvPosition.xyz ) );
-				gl_Position = projectionMatrix * mvPosition;
-			}
-		</script>
-		
-		<script type="x-shader/x-fragment" id="step09_fs">
-			uniform vec3 color;
-			uniform float opacity;
-			uniform sampler2D texture;
-			void main() {
-				vec4 texColor = texture2D( texture, gl_PointCoord );
-				gl_FragColor = texColor * vec4( color, opacity );
-			}
-		</script>
 		<!-- <script src="https://cdn.rawgit.com/nicolas-van/snoweffect/gh-pages/static/all.js"></script> -->
+		<script type="x-shader/x-vertex" id="vertexshader">
+
+			attribute float size;
+			attribute float time;
+			attribute vec3 customColor;
+			uniform float globalTime;
+
+			varying vec3 vColor;
+			varying float fAlpha;
+
+			void main() {
+
+				vColor = customColor;
+
+				vec3 pos = position; 
+
+				// time
+				float localTime = time + globalTime;
+				float modTime = mod( localTime, 1.0 );
+				float accTime = modTime * modTime;
+
+				pos.x += cos(modTime*10.0 + (position.z))*70.0; 
+				pos.z += sin(modTime*6.0 + (position.x))*100.0; 
+
+				fAlpha = (pos.z)/1800.0;
+
+				vec3 animated = vec3( pos.x, pos.y * accTime, pos.z );
+
+				vec4 mvPosition = modelViewMatrix * vec4( animated, 1.0 );
+
+				gl_PointSize = min(150.0, size * ( 150.0 / length( mvPosition.xyz ) ) );
+
+				gl_Position = projectionMatrix * mvPosition;
+
+			}
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+
+			uniform vec3 color;
+			uniform sampler2D texture;
+
+			varying vec3 vColor;
+			varying float fAlpha;
+
+			void main() {
+
+				gl_FragColor = vec4( color * vColor, fAlpha );
+				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+
+			}
+
+		</script>
 		<script src="assets/libs/three/three.min.js"></script>
 		<!-- External libraries -->
 		<script src="assets/libs/RequestAnimationFrame.js"></script>
-		<script src="assets/libs/jquery.min.js"></script>\
+		<script src="assets/libs/jquery.min.js"></script>
 		<script src="assets/libs/three/OBJLoader.js"></script>
 		<script src="assets/libs/three/OrbitControls.js"></script>
 		<script src="assets/libs/FastBlur.js"></script>

@@ -22,6 +22,8 @@ class Demo {
 		this.ms_Clickable = [];
 		this.ms_Parameters = null;
 		this.ms_particleSystem = null;
+		this.ms_geometry = null;
+		this.ms_audio = null;
 	}
 	enable() {
         try {
@@ -105,9 +107,9 @@ class Demo {
 	
 		//Load objects	
 		this.loadSkyBox();
-		this.loadGlaciers(1, 1000, 200, .1);
+		this.loadGlaciers(1, 1000, 200, .3);
 		this.loadGlaciers(2, 900, -1000, .2);
-		this.loadGlaciers(2, 1500, -3000, .3);
+		this.loadGlaciers(1, 900, -2000, .4);
 		for (var x = 3; x > 0; x--) {
 			this.loadIce(x, 1000, 0, 1);
 			this.loadIce(x, 400, x * 200, x);
@@ -116,7 +118,7 @@ class Demo {
 			this.loadIce(x, 800, x * -800, 1.4);
 		}
 		this.loadCat();
-		// this.loadSnow(inParameters);
+		this.loadSnow(inParameters);
 
 		//Listen for trigger
 		const mountains = document.getElementById('mountains');
@@ -132,20 +134,13 @@ class Demo {
 		//Audio
 		let happyHolidays = document.getElementsByClassName('welcome-screen')[0].cloneNode(true);
 		happyHolidays.className += ' closing-screen';
-		happyHolidays.getElementsByTagName('h2')[0].textContent = 'Happy Holidays\n' +
-			'from Brooklyn United + Brooklyn Digital Foundry';
-		happyHolidays.getElementsByTagName('p')[0].textContent = 'This is an experimental ' +
-			'collaboration between the visualization wizards at Brooklyn Digital '+
-			'Foundry and the design and development teams at Brooklyn United. '+
-			'Using WebGL and a little bit of holiday magic, we joined forces to '+
-			'whip up a scene for you to enjoy and share with your friends.';
-		let audio = document.createElement('audio');
+		this.ms_audio = document.createElement('audio');
 	  const source = document.createElement('source');
 	  source.src = 'assets/sounds/Visager_-_19_-_Village_Dreaming_Loop.mp3';
-	  audio.loop = false;
-	  audio.appendChild(source);
-	  audio.play();
-	  audio.addEventListener('ended', (e) => {
+	  this.ms_audio.loop = false;
+	  // this.ms_audio.muted = true;
+	  this.ms_audio.appendChild(source);
+	  this.ms_audio.addEventListener('ended', (e) => {
 	  	console.log('ended');
 	  	document.getElementsByClassName('ui-container')[0].appendChild(happyHolidays);
 	  });
@@ -178,7 +173,8 @@ class Demo {
 		  		map: skyTexture,
 					side: THREE.BackSide,
 					vertexColors: THREE.FaceColors,
-					shading: THREE.SmoothShading
+					shading: THREE.SmoothShading,
+					fog: true
 				})
 		);
 		
@@ -220,9 +216,9 @@ class Demo {
 					glacier.children[i].geometry.computeVertexNormals();
 					console.log('glacier', glacier);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
-			  		map: iceTexture,
+			  		// map: iceTexture,
 						shading: THREE.FlatShading,
-						color: new THREE.Color( 0xCCCCEE ),
+						color: new THREE.Color( 0x6ECBF9 ),
 						side: THREE.DoubleSide
 					});
 				}
@@ -235,7 +231,7 @@ class Demo {
 	loadIce(index, z, x, scale) {
 		const objLoader = new THREE.OBJLoader();
 		const ms_Scene = this.ms_Scene;
-		const iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
+		// const iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 		objLoader.load(`assets/landscape_assets/floe_0${index}.obj`, glacier => {
 				//load ice texture
 				for (var i=0; i<glacier.children.length;i++ ){
@@ -246,9 +242,9 @@ class Demo {
 					// console.log('ice', glacier);source
 					// MOUNTAINS_COLORS.Apply(geometry, this.ms_Parameters);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
-			  		map: iceTexture,
+			  		// map: iceTexture,
 						shading: THREE.FlatShading,
-						color: new THREE.Color( 0xCCCCEE )
+						color: new THREE.Color( 0x7BF8FF )
 					});
 				}
 				glacier.position.z = z;
@@ -259,61 +255,81 @@ class Demo {
 		});
 	}
 	loadSnow(inParameters) {
-		const rand = v => {
-			return (v * (Math.random() - 0.5));
-		}
-		const texture = THREE.TextureLoader('assets/img/snowflake.png');
-		let numParticles = 100000;
-		let width = inParameters.width;
-		let height = inParameters.height/3;
-		let depth = 10000;
-		let parameters = {
-				color: 0xFFFFFF,
-				height: 80000,
-				radiusX: 10,
-				radiusZ: 10,
-				size: 100,
-				scale: 1.0,
-				opacity: 0.8,
-				speedH: .1,
-				speedV: .1
-			};
-			let systemGeometry = new THREE.Geometry();
-			let systemMaterial = new THREE.ShaderMaterial({
-				uniforms: {
-					color:  { type: 'c', value: new THREE.Color( parameters.color ) },
-					height: { type: 'f', value: parameters.height },
-					elapsedTime: { type: 'f', value: 0 },
-					radiusX: { type: 'f', value: parameters.radiusX },
-					radiusZ: { type: 'f', value: parameters.radiusZ },
-					size: { type: 'f', value: parameters.size },
-					scale: { type: 'f', value: parameters.scale },
-					texture: { type: 't', value: texture },
-					opacity: { type: 'f', value: parameters.opacity },
-					speedH: { type: 'f', value: parameters.speedH },
-					speedV: { type: 'f', value: parameters.speedV }
-				},
-				vertexShader: document.getElementById( 'step07_vs' ).textContent,
-				fragmentShader: document.getElementById( 'step09_fs' ).textContent,
-				blending: THREE.AdditiveBlending,
-				transparent: true,
-				depthTest: false
-			});
+		// particles
+		let map = THREE.ImageUtils.loadTexture( "../assets/img/snowflake.png" );
+
+		this.ms_geometry = new THREE.BufferGeometry();
+
+		let particles = 1000;
+		let uniforms = {
+
+			color:      { type: "c", value: new THREE.Color( 0x777777 ) },
+			texture:    { type: "t", value: 0, texture: map },
+			globalTime:	{ type: "f", value: 0.0 },
+
+		};
+
+		let shaderMaterial = new THREE.ShaderMaterial( {
+
+			uniforms: 		uniforms,
+			vertexShader:   document.getElementById( 'vertexshader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+
+			blending: 		THREE.AdditiveBlending,
+			depthTest: 		false,
+			transparent:	true,
 			
-		for( var i = 0; i < numParticles; i++ ) {
-			var vertex = new THREE.Vector3(
-					rand( width ),
-					Math.random() * height,
-					rand( depth )
-				);
+		});
+			var radius = WINDOW.ms_Width;
 
-			systemGeometry.vertices.push( vertex );
+			var positions = new Float32Array( particles * 3 );
+			var colors = new Float32Array( particles * 3 );
+			var sizes = new Float32Array( particles );
+
+			var color = new THREE.Color();
+
+			for ( var i = 0, i3 = 0; i < particles; i ++, i3 += 3 ) {
+
+				positions[ i3 + 0 ] = ( Math.random() * 2 - 1 ) * radius;
+				positions[ i3 + 1 ] = ( Math.random() * 2 - 1 ) * radius;
+				positions[ i3 + 2 ] = ( Math.random() * 2 - 1 ) * radius;
+
+				color.setHSL( i / particles, 1.0, 0.5 );
+
+				colors[ i3 + 0 ] = color.r;
+				colors[ i3 + 1 ] = color.g;
+				colors[ i3 + 2 ] = color.b;
+
+				sizes[ i ] = 100;
+
+			}
+
+			this.ms_geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+			this.ms_geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+			this.ms_geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+
+		this.ms_particleSystem = new THREE.Points( this.ms_geometry, shaderMaterial );
+
+		this.ms_particleSystem.position.y = 1500;
+		this.ms_particleSystem.position.z = 1000;
+		this.ms_particleSystem.rotation.x = Math.PI * .5;
+		this.ms_Scene.add( this.ms_particleSystem );
+
+	}
+	updateSnow(delta){
+		const radius = WINDOW.ms_Width;
+
+		var positions = this.ms_geometry.attributes.position.array;
+
+		for ( var i = 0, i3 = 0; i < 1000; i ++, i3 += 3 ) {
+
+				positions[ i3 + 0 ] += .01;
+				positions[ i3 + 1 ] -= .01;
+				positions[ i3 + 2 ] += .01;
+
 		}
 
-
-		this.ms_particleSystem = new THREE.Points( systemGeometry, systemMaterial );
-		this.ms_particleSystem.position.y = -height/2;
-		this.ms_Scene.add( this.ms_particleSystem );
+		this.ms_geometry.attributes.position.needsUpdate = true;
 	}
 	loadCat() {
 		const jsonLoader = new THREE.JSONLoader();
@@ -346,7 +362,7 @@ class Demo {
 			m.shading = THREE.FlatShading;
 			m.shininess = 100;
 			m.map = objTexture;
-			m.color = new THREE.Color( 0xbbbbbb );
+			m.color = new THREE.Color( 0xcccccc );
 			m.vertexColors = THREE.FaceColors;
 		}
 		
@@ -375,7 +391,7 @@ class Demo {
 		let fov = this.ms_Camera.fov;
 		let zoom = this.ms_Camera.zoom;
 		const inc = 0.01;
-		if (zoom < 2) {
+		if (zoom < 1.1) {
 			this.ms_Camera.zoom += inc;
 	    this.ms_Camera.updateProjectionMatrix();
 		} else {
@@ -396,15 +412,12 @@ class Demo {
 		let delta = clock.getDelta();
 		let elapsedTime = clock.getElapsedTime();
 
-		if(this.ms_particleSystem) {
-			this.ms_particleSystem.material.uniforms.elapsedTime.value = elapsedTime * 10;
-		}
-
 		if( mixers.length ) {
 			for (var i=0; i<mixers.length; i++) {
 				mixers[i].update(delta);
 			}
 		}
+		if (this.ms_particleSystem) this.updateSnow(delta);
 		if (ready) this.initialZoom();
 		this.ms_Controls.update();
 		this.display();
@@ -495,9 +508,11 @@ $(function() {
 	//CSS animations
 
 	const welcome = document.getElementsByClassName('welcome-screen')[0];
+	const holidayAudio = DEMO.ms_audio;
 	welcome.addEventListener('click', e => {
 		welcome.className += ' fade-out';
 		setTimeout(()=>{
+			holidayAudio.play();
 			welcome.parentNode.removeChild(welcome);
 		}, 350);
 	});
