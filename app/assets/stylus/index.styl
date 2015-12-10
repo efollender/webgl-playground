@@ -259,6 +259,7 @@ svg
   #mountains
     background-image url('../assets/img/mountain.svg')
   #volume
+    margin-right 1em
     background-image url('../assets/img/volume.svg')
     &.vol-off
       background-image url('../assets/img/vol-off.svg')
@@ -336,6 +337,8 @@ svg
   right 2em
   bottom 2em
   overflow hidden
+  @media screen and (max-width: 768px)
+    display none
   .border-top
     height .25em
     background white

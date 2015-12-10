@@ -527,6 +527,7 @@ $(function() {
 	//CSS animations
 
 	const welcome = document.getElementsByClassName('welcome-screen')[0];
+	const volume = document.getElementById('volume');
 	const holidayAudio = DEMO.ms_audio;
 	welcome.addEventListener('click', e => {
 		welcome.className += ' fade-out';
@@ -534,5 +535,14 @@ $(function() {
 			holidayAudio.play();
 			welcome.parentNode.removeChild(welcome);
 		}, 350);
+	});
+
+	volume.addEventListener('click', event => {
+		holidayAudio.muted = !holidayAudio.muted;
+		if (holidayAudio.muted) {
+			volume.className = "key trigger vol-off";
+		} else {
+			volume.className = "key trigger";
+		}
 	});
 });

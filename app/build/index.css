@@ -320,6 +320,7 @@ svg {
   background-image: url("../assets/img/mountain.svg");
 }
 .cat-controls #volume {
+  margin-right: 1em;
   background-image: url("../assets/img/volume.svg");
 }
 .cat-controls #volume.vol-off {
@@ -409,6 +410,11 @@ svg {
   right: 2em;
   bottom: 2em;
   overflow: hidden;
+}
+@media screen and (max-width: 768px) {
+  .border-animation {
+    display: none;
+  }
 }
 .border-animation .border-top {
   height: 0.25em;
