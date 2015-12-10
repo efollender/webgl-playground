@@ -7,6 +7,11 @@ var gulp = require('gulp'),
   watchify = require('watchify'),
   babel = require('babelify'),
   path = require('path'),
+  nib = require('nib'),
+  normalize = require('stylus-normalize'),
+  postcss      = require('gulp-postcss'),
+  sourcemaps   = require('gulp-sourcemaps'),
+  autoprefixer = require('autoprefixer');
   fs = require('fs');
 
 gulp.task('compile', function() {
@@ -59,14 +64,17 @@ gulp.task('html', function () {
 gulp.task('stylus', function () {
   gulp.src('./app/assets/stylus/*.styl')
     .pipe(stylus())
+    .pipe(sourcemaps.init())
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./app/build'))
     .pipe(connect.reload());
 });
- 
+
 gulp.task('watch', function () {
   gulp.watch(['./app/*.html'], ['html']);
   gulp.watch(['./app/assets/stylus/*.styl'], ['stylus']);
-  gulp.watch(['./app/**/*.js'], ['compile'] );
+  gulp.watch(['./app/index.js'], ['compile'] );
 });
  
 gulp.task('default', ['connectDist', 'connectDev', 'watch']);

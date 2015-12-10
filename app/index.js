@@ -22,6 +22,7 @@ class Demo {
 		this.ms_Clickable = [];
 		this.ms_Parameters = null;
 		this.ms_particleSystem = null;
+		this.ms_numParticles = 1000;
 		this.ms_geometry = null;
 		this.ms_audio = null;
 	}
@@ -107,9 +108,10 @@ class Demo {
 	
 		//Load objects	
 		this.loadSkyBox();
-		this.loadGlaciers(1, 1000, 200, .3);
+		// this.loadGlaciers(1, 1000, 1000, .4);
 		this.loadGlaciers(2, 900, -1000, .2);
-		this.loadGlaciers(1, 900, -2000, .4);
+		this.loadGlaciers(1, 600, -500, .2);
+		this.loadGlaciers(1, 600, -6000, .2);
 		for (var x = 3; x > 0; x--) {
 			this.loadIce(x, 1000, 0, 1);
 			this.loadIce(x, 400, x * 200, x);
@@ -190,7 +192,7 @@ class Demo {
 			color: new THREE.Color( 0xCCCCEE )
 		});
 		this.ms_Terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-		this.ms_Terrain.position.y = - inParameters.depth * 2;
+		this.ms_Terrain.position.y = - inParameters.depth;
 		this.ms_Terrain.position.z = -4000;
 		this.ms_Terrain.callback = () => {
 			// console.log(this.ms_Terrain.position.y);
@@ -260,12 +262,15 @@ class Demo {
 
 		this.ms_geometry = new THREE.BufferGeometry();
 
-		let particles = 1000;
+		let particles = this.ms_numParticles;
+
 		let uniforms = {
 
 			color:      { type: "c", value: new THREE.Color( 0x777777 ) },
 			texture:    { type: "t", value: 0, texture: map },
 			globalTime:	{ type: "f", value: 0.0 },
+			near : { type: 'f', value : this.ms_Camera.near },
+      far  : { type: 'f', value : this.ms_Camera.far }
 
 		};
 
@@ -282,17 +287,19 @@ class Demo {
 		});
 			var radius = WINDOW.ms_Width;
 
-			var positions = new Float32Array( particles * 3 );
+			var positions = new Float32Array( this.ms_numParticles * 3 );
 			var colors = new Float32Array( particles * 3 );
 			var sizes = new Float32Array( particles );
 
 			var color = new THREE.Color();
 
-			for ( var i = 0, i3 = 0; i < particles; i ++, i3 += 3 ) {
+			for ( var i = 0, i3 = 0; i < this.ms_numParticles; i ++, i3 += 3 ) {
 
 				positions[ i3 + 0 ] = ( Math.random() * 2 - 1 ) * radius;
-				positions[ i3 + 1 ] = ( Math.random() * 2 - 1 ) * radius;
-				positions[ i3 + 2 ] = ( Math.random() * 2 - 1 ) * radius;
+				positions[ i3 + 1 ] = ( Math.random() * 2 - 1 ) * 4000;
+				positions[ i3 + 2 ] = ( Math.random() * 2 - 1 ) * 4000;
+
+				// console.log(this.)ms_particleSystem;
 
 				color.setHSL( i / particles, 1.0, 0.5 );
 
@@ -312,6 +319,7 @@ class Demo {
 
 		this.ms_particleSystem.position.y = 1500;
 		this.ms_particleSystem.position.z = 1000;
+		this.ms_particleSystem.scale.y = 4;
 		this.ms_particleSystem.rotation.x = Math.PI * .5;
 		this.ms_Scene.add( this.ms_particleSystem );
 
@@ -321,7 +329,7 @@ class Demo {
 
 		var positions = this.ms_geometry.attributes.position.array;
 
-		for ( var i = 0, i3 = 0; i < 1000; i ++, i3 += 3 ) {
+		for ( var i = 0, i3 = 0; i < this.ms_numParticles; i++ , i3 += 3 ) {
 
 				positions[ i3 + 0 ] += .01;
 				positions[ i3 + 1 ] -= .01;
@@ -389,10 +397,12 @@ class Demo {
 	}
 	initialZoom() {
 		let fov = this.ms_Camera.fov;
-		let zoom = this.ms_Camera.zoom;
-		const inc = 0.01;
-		if (zoom < 1.1) {
-			this.ms_Camera.zoom += inc;
+		let zoom = this.ms_Camera.position.z;
+		let cameraX = this.ms_Camera.position.x;
+		let cameraY = this.ms_Camera.position.y;
+		const inc = 5;
+		if (zoom > 3000) {
+			this.ms_Camera.position.set(cameraX, cameraY, zoom - inc);
 	    this.ms_Camera.updateProjectionMatrix();
 		} else {
 			ready = false;
@@ -421,6 +431,11 @@ class Demo {
 		if (ready) this.initialZoom();
 		this.ms_Controls.update();
 		this.display();
+	}
+	handleRange(value) {
+		this.ms_numParticles = value * 200;
+		this.ms_Scene.remove(this.ms_particleSystem);
+		this.loadSnow(this.ms_Parameters);
 	}
 	handleButton() {
 		pushed = true;
@@ -465,7 +480,7 @@ function mainLoop() {
 }
 
 function onDocumentMouseDown(event) {
-    event.preventDefault();
+    // event.preventDefault();
     var mouse = new THREE.Vector2(
         ( event.clientX / window.innerWidth ) * 2 - 1, 
         - ( event.clientY / window.innerHeight ) * 2 + 1 );
@@ -476,6 +491,10 @@ function onDocumentMouseDown(event) {
     if (intersects.length > 0) {  
         intersects[0].object.callback();
     }                
+}
+
+window.onRange = function(value) {
+	DEMO.handleRange(value);
 }
 
 $(function() {

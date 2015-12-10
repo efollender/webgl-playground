@@ -370,14 +370,18 @@ svg
         position relative
         width 1em
         height 1em
-        &:before
-          position absolute
-          top 0
-          left 0
-          right 0
-          bottom 0
-          overflow hidden
-          text-align center
+        background-size contain
+        background-position center center
+        background-repeat no-repeat
+        display inline-block
+        &.email
+          background-image url('../assets/img/__email.svg')
+        &.facebook
+          background-image url('../assets/img/__facebook.svg')
+        &.twitter
+          background-image url('../assets/img/__twitter.svg')
+        &.github
+          background-image url('../assets/img/__github.svg')
         &:not(:last-child)
           margin-right .25em
     .logo-wrap
@@ -407,11 +411,11 @@ svg
       content ''
       bottom 0
       top -50px
-      left 16em
+      left 20em
       right 32%
       height .25em
       width 0
-      max-width calc(68% - 17em)
+      max-width calc(68% - 21em)
       background white
       display inline-block
       overflow hidden

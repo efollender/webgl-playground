@@ -447,15 +447,22 @@ svg {
   position: relative;
   width: 1em;
   height: 1em;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
 }
-.border-animation .border-bottom .social-wrap span:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  text-align: center;
+.border-animation .border-bottom .social-wrap span.email {
+  background-image: url("../assets/img/__email.svg");
+}
+.border-animation .border-bottom .social-wrap span.facebook {
+  background-image: url("../assets/img/__facebook.svg");
+}
+.border-animation .border-bottom .social-wrap span.twitter {
+  background-image: url("../assets/img/__twitter.svg");
+}
+.border-animation .border-bottom .social-wrap span.github {
+  background-image: url("../assets/img/__github.svg");
 }
 .border-animation .border-bottom .social-wrap span:not(:last-child) {
   margin-right: 0.25em;
@@ -490,11 +497,11 @@ svg {
   content: '';
   bottom: 0;
   top: -50px;
-  left: 16em;
+  left: 20em;
   right: 32%;
   height: 0.25em;
   width: 0;
-  max-width: calc(68% - 17em);
+  max-width: calc(68% - 21em);
   background: #fff;
   display: inline-block;
   overflow: hidden;
