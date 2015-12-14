@@ -47,8 +47,8 @@ class Demo {
 		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		this.ms_Raycaster = new THREE.Raycaster();
-		
-		// Initialize Orbit control		
+
+		// Initialize Orbit control
 		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
 		this.ms_Controls.userPan = false;
 		this.ms_Controls.userPanSpeed = 0.0;
@@ -58,7 +58,7 @@ class Demo {
 		this.ms_Controls.minPolarAngle = .5;
 		this.ms_Controls.maxAzimuthAngle = 1;
 		this.ms_Controls.minAzimuthAngle = -1;
-	
+
 		// Add light
 
 		var ambient = new THREE.AmbientLight( 0x888888);
@@ -79,17 +79,17 @@ class Demo {
 		var directionalLight4 = new THREE.DirectionalLight(0x77D0FF, .5);
 		directionalLight4.position.set(0, 600, -600);
 		this.ms_Scene.add(directionalLight4);
-		
+
 		// Create terrain
 		this.loadTerrain(inParameters);
-		
-		// Load textures		
+
+		// Load textures
 		var waterNormals = new THREE.ImageUtils.loadTexture('../assets/img/waternormals.jpg');
-		waterNormals.wrapS = waterNormals.wrapT = THREE.SphericalReflectionMapping; 
-		
+		waterNormals.wrapS = waterNormals.wrapT = THREE.SphericalReflectionMapping;
+
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
-			textureWidth: 512, 
+			textureWidth: 512,
 			textureHeight: 512,
 			waterNormals: waterNormals,
 			alpha: 	1.0,
@@ -99,14 +99,14 @@ class Demo {
 			distortionScale: 20.0
 		});
 		var aMeshMirror = new THREE.Mesh(
-			new THREE.PlaneBufferGeometry(inParameters.width * 500, inParameters.height * 500, 10, 10), 
+			new THREE.PlaneBufferGeometry(inParameters.width * 500, inParameters.height * 500, 10, 10),
 			this.ms_Water.material
 		);
 		aMeshMirror.add(this.ms_Water);
 		aMeshMirror.rotation.x = - Math.PI * 0.5;
 		this.ms_Scene.add(aMeshMirror);
-	
-		//Load objects	
+
+		//Load objects
 		this.loadSkyBox();
 		// this.loadGlaciers(1, 1000, 1000, .4);
 		this.loadGlaciers(2, 900, -1000, .2);
@@ -124,10 +124,10 @@ class Demo {
 
 		//Listen for trigger
 		const mountains = document.getElementById('mountains');
-		const paw = document.getElementById('paw');
-		paw.addEventListener('click', () => {
-			this.handleButton();
-		});
+		// const paw = document.getElementById('paw');
+		// paw.addEventListener('click', () => {
+		// 	this.handleButton();
+		// });
 		mountains.addEventListener('click', () => {
 			this.ms_Terrain.callback();
 		});
@@ -179,15 +179,15 @@ class Demo {
 					fog: true
 				})
 		);
-		
+
 		this.ms_Scene.add(aSkybox);
 	}
 	loadTerrain(inParameters) {
 		var terrainGeo = TERRAINGEN.Get(inParameters);
 		var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
-		var terrainMaterial = new THREE.MeshPhongMaterial({ 
-			map: iceTexture, 
-			shading: THREE.FlatShading, 
+		var terrainMaterial = new THREE.MeshPhongMaterial({
+			map: iceTexture,
+			shading: THREE.FlatShading,
 			side: THREE.DoubleSide,
 			color: new THREE.Color( 0xCCCCEE )
 		});
@@ -283,7 +283,7 @@ class Demo {
 			blending: 		THREE.AdditiveBlending,
 			depthTest: 		false,
 			transparent:	true,
-			
+
 		});
 			var radius = WINDOW.ms_Width;
 
@@ -373,7 +373,7 @@ class Demo {
 			m.color = new THREE.Color( 0xcccccc );
 			m.vertexColors = THREE.FaceColors;
 		}
-		
+
 		let cat_mesh = new THREE.SkinnedMesh( geometry, materials[0]);
 		// cat_mesh.rotation.x = Math.PI * -.5;
 		cat_mesh.position.set( x, y, z );
@@ -482,15 +482,15 @@ function mainLoop() {
 function onDocumentMouseDown(event) {
     // event.preventDefault();
     var mouse = new THREE.Vector2(
-        ( event.clientX / window.innerWidth ) * 2 - 1, 
+        ( event.clientX / window.innerWidth ) * 2 - 1,
         - ( event.clientY / window.innerHeight ) * 2 + 1 );
 
     DEMO.ms_Raycaster.setFromCamera( mouse, DEMO.ms_Camera );
-    var intersects = DEMO.ms_Raycaster.intersectObjects( DEMO.ms_Clickable );    
+    var intersects = DEMO.ms_Raycaster.intersectObjects( DEMO.ms_Clickable );
 
-    if (intersects.length > 0) {  
+    if (intersects.length > 0) {
         intersects[0].object.callback();
-    }                
+    }
 }
 
 window.onRange = function(value) {
@@ -501,7 +501,7 @@ $(function() {
 	WINDOW.initialize();
 
 	document.addEventListener('click', onDocumentMouseDown, false);
-	
+
 	var parameters = {
 		alea: RAND_MT,
 		generator: PN_GENERATOR,
@@ -516,12 +516,12 @@ $(function() {
 		postgen: [ MOUNTAINS_COLORS ],
 		effect: [ DESTRUCTURE_EFFECT ]
 	};
-	
+
 	DEMO.initialize('canvas-3d', parameters);
-	
+
 	WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
 	DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
-	
+
 	mainLoop();
 
 	//CSS animations

@@ -8,8 +8,12 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<meta property="og:title" content="Happy Holidays"/>
+		<meta property="og:url" content="http://www.brooklynunited.com/holidays-2015"/>
+		<meta property="og:description" content="A winter wonderland in WebGL from Brooklyn United and Brooklyn Digital Foundry." />
 	</head>
-	<body class="tk-futura-pt">	
+	<body class="tk-futura-pt">
 		<div class="ui-container">
 			<div id="canvas-3d" class="viewer"></div>
 			<div class="welcome-screen">
@@ -21,9 +25,9 @@
 						Don’t mind our office cat, he’s just here to “chill.”
 					</p>
 					<p class="closing-text">
-						This is an experimental collaboration between the visualization wizards at 
-						Brooklyn Digital Foundry and the design and development teams at Brooklyn 
-						United. Using WebGL and a little bit of holiday magic, we joined forces to 
+						This is an experimental collaboration between the visualization wizards at
+						Brooklyn Digital Foundry and the design and development teams at Brooklyn
+						United. Using WebGL and a little bit of holiday magic, we joined forces to
 						whip up a scene for you to enjoy and share with your friends. <br/><br/>
 						<a href="http://www.brooklynunited.com" target="_blank">
 							See what else we can do
@@ -45,16 +49,16 @@
 						<div class="social-wrapper callout">
 							<span class="callout-title">Share</span>
 							<div class="social-wrap icon-wrapper">
-								<a href="mailto:?subject=Happy+Holidays+from+Brooklyn+United" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Email’);">
+								<a href="mailto:?Subject=Happy%20Holidays%20from%20Brooklyn%20United%20and%20Brooklyn%20Digital%20Foundry&Body=Check%20out%20this%20winter%20wonderland%20coded%20in%20WebGL%20from%20Brooklyn%20United%20and%20Brooklyn%20Digital%20Foundry:%20www.brooklynunited.com/holidays-2015" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Email’);">
 									<span class="email"></span>
 								</a>
-								<a href="http://www.facebook.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Facebook’);" target="_blank">
+								<a href="#" onClick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.brooklynunited.com/holidays-2015','share','resizable,height=360,width=470'); return false;">
 									<span class="facebook"></span>
 								</a>
 								<a href="http://www.github.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Github’);" target="_blank">
 									<span class="github"></span>
 								</a>
-								<a href="http://www.twitter.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Twitter’);" target="_blank">
+								<a href="#" onClick="window.open('https://twitter.com/intent/tweet?text=A%20winter%20wonderland%20in%20%23WebGL&via=brooklynunited&url=http://www.brooklynunited.com/holidays-2015')">
 									<span class="twitter"></span>
 								</a>
 							</div>
@@ -67,16 +71,16 @@
 				<div class="border-right"></div>
 				<div class="border-bottom">
 					<div class="social-wrap">
-						<a href="mailto:?subject=Happy+Holidays+from+Brooklyn+United" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Email’);">
+						<a href="mailto:?Subject=Happy%20Holidays%20from%20Brooklyn%20United%20and%20Brooklyn%20Digital%20Foundry&Body=Check%20out%20this%20winter%20wonderland%20coded%20in%20WebGL%20from%20Brooklyn%20United%20and%20Brooklyn%20Digital%20Foundry:%20www.brooklynunited.com/holidays-2015" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Email’);">
 							<span class="email"></span>
 						</a>
-						<a href="http://www.facebook.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Facebook’);" target="_blank">
+						<a href="#" onClick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.brooklynunited.com/holidays-2015','share','resizable,height=360,width=470'); return false;">
 							<span class="facebook"></span>
 						</a>
 						<a href="http://www.github.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Github’);" target="_blank">
 							<span class="github"></span>
 						</a>
-						<a href="http://www.twitter.com/brooklynunited" onClick="ga('send', 'event', ‘Holiday Card 2015’, ‘Holiday Card Share’, ‘Twitter’);" target="_blank">
+						<a href="#" onClick="window.open('https://twitter.com/intent/tweet?text=A%20winter%20wonderland%20in%20%23WebGL&via=brooklynunited&url=http://www.brooklynunited.com/holidays-2015')">
 							<span class="twitter"></span>
 						</a>
 					</div>
@@ -140,7 +144,7 @@
 						<line class="st11" x1="134.5" y1="14.6" x2="146.8" y2="37.7"/>
 						<polyline class="st7" points="169.7,0 169.7,15.4 185.1,15.4 		"/>
 						<line class="st12" x1="362.5" y1="11.8" x2="416.8" y2="11.8"/>
-						
+
 					</g>
 				</g>
 				</svg>
@@ -153,7 +157,7 @@
 			<div class="cat-controls">
 					<div class="key trigger" id="volume"></div>
 					<div class="key trigger" id="mountains"></div>
-					<div class="key trigger" id="paw"></div>
+					<!-- <div class="key trigger" id="paw"></div> -->
 					<div class="key slider" id="slider">
 						<input type="range" min="0" max="100" value="50" id="fader" step="1" oninput="onRange(value)">
 					</div>
@@ -174,15 +178,15 @@
 
 				vColor = customColor;
 
-				vec3 pos = position; 
+				vec3 pos = position;
 
 				// time
 				float localTime = time + globalTime;
 				float modTime = mod( localTime, 1.0 );
 				float accTime = modTime * modTime;
 
-				pos.x += cos(modTime*10.0 + (position.z))*70.0; 
-				pos.z += sin(modTime*6.0 + (position.x))*100.0; 
+				pos.x += cos(modTime*10.0 + (position.z))*70.0;
+				pos.z += sin(modTime*6.0 + (position.x))*100.0;
 
 				fAlpha = (pos.z)/1800.0;
 
@@ -221,7 +225,7 @@
 		<script src="assets/libs/three/OBJLoader.js"></script>
 		<script src="assets/libs/three/OrbitControls.js"></script>
 		<script src="assets/libs/FastBlur.js"></script>
-		
+
 		<!-- Terrain generator -->
 		<script src="assets/libs/terrain-generator/mersenne-twister.js"></script>
 		<script src="assets/libs/terrain-generator/blur.js"></script>
@@ -230,10 +234,10 @@
 		<script src="assets/libs/terrain-generator/perlinnoise.js"></script>
 		<script src="assets/libs/terrain-generator/terraingen.js"></script>
 		<script src="assets/libs/terrain-generator/circle.js"></script>
-		
+
 		<!-- Water shader -->
 		<script src="assets/js/water-material.js"></script>
-		
+
 		<!-- Demo files -->
 		<script src="assets/js/window.js"></script>
 		<script src="build/build.js"></script>
