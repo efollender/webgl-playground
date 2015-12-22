@@ -152,7 +152,34 @@
 					</div>
 				</div>
 		</div>
-		
+		<script type="x-shader/x-vertex" id="vertexshader">
+		    attribute float alpha;
+		    attribute float size;
+		    attribute vec3 ca;
+		    varying vec3 vColor;
+		    varying float vAlpha;
+
+		    void main() {
+		        vColor = ca;
+		        vAlpha = alpha;
+		        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+		        gl_PointSize = size * (1.0+ 300.0 / length( mvPosition.xyz ) );
+		        gl_Position = projectionMatrix * mvPosition;
+		    }
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+		    uniform vec3 color;
+		    uniform sampler2D texture;
+		    varying vec3 vColor;
+		    varying float vAlpha;
+
+		    void main() {
+		        gl_FragColor = vec4( vColor, vAlpha );
+		        gl_FragColor = vAlpha * texture2D( texture, gl_PointCoord );
+		    }
+		</script>
 		<script src="assets/libs/three/three.min.js"></script>
 		<!-- External libraries -->
 		<script src="assets/libs/RequestAnimationFrame.js"></script>

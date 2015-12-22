@@ -1,6 +1,8 @@
 *,
 *:after,
 *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 body {
@@ -13,12 +15,12 @@ body {
   overflow: hidden;
   font-family: 'Futura PT', sans-serif;
 }
-@media screen and (max-width: 1050px) {
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
   body {
     font-size: 14px;
   }
 }
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 400px) {
   body {
     font-size: 12px;
   }
@@ -35,12 +37,18 @@ a,
 a:visited,
 a:active {
   color: #fff;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  -ms-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
 a:hover,
 a:visited:hover,
 a:active:hover {
   opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
 }
 p {
   font-size: 1.4em;
@@ -54,13 +62,23 @@ svg {
   position: relative;
   z-index: 1;
   opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
   -webkit-animation: fade-in 1s ease-in-out forwards 7.75s;
-          animation: fade-in 1s ease-in-out forwards 7.75s;
+  -moz-animation: fade-in 1s ease-in-out forwards 7.75s;
+  -o-animation: fade-in 1s ease-in-out forwards 7.75s;
+  -ms-animation: fade-in 1s ease-in-out forwards 7.75s;
+  animation: fade-in 1s ease-in-out forwards 7.75s;
 }
 .fade-out {
   opacity: 1;
+  -ms-filter: none;
+  filter: none;
   -webkit-animation: fade-opacity 0.3s ease-in-out forwards !important;
-          animation: fade-opacity 0.3s ease-in-out forwards !important;
+  -moz-animation: fade-opacity 0.3s ease-in-out forwards !important;
+  -o-animation: fade-opacity 0.3s ease-in-out forwards !important;
+  -ms-animation: fade-opacity 0.3s ease-in-out forwards !important;
+  animation: fade-opacity 0.3s ease-in-out forwards !important;
 }
 .ui-container {
   position: absolute;
@@ -68,9 +86,16 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
+  background: -webkit-linear-gradient(top, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -moz-linear-gradient(top, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -o-linear-gradient(top, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -ms-linear-gradient(top, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   background: linear-gradient(to bottom, #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   -webkit-animation: fade-out 1s ease-in-out forwards 7.75s;
-          animation: fade-out 1s ease-in-out forwards 7.75s;
+  -moz-animation: fade-out 1s ease-in-out forwards 7.75s;
+  -o-animation: fade-out 1s ease-in-out forwards 7.75s;
+  -ms-animation: fade-out 1s ease-in-out forwards 7.75s;
+  animation: fade-out 1s ease-in-out forwards 7.75s;
 }
 .welcome-screen {
   padding: 2em;
@@ -79,18 +104,33 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
+  background: -webkit-linear-gradient(top, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -moz-linear-gradient(top, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -o-linear-gradient(top, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
+  background: -ms-linear-gradient(top, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   background: linear-gradient(to bottom, rgba(109,176,224,0.8) 0%, rgba(41,137,216,0.8) 32%, rgba(62,84,144,0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */;
   z-index: 4;
   opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
   -webkit-animation: fade-in 1s ease-in-out forwards;
-          animation: fade-in 1s ease-in-out forwards;
+  -moz-animation: fade-in 1s ease-in-out forwards;
+  -o-animation: fade-in 1s ease-in-out forwards;
+  -ms-animation: fade-in 1s ease-in-out forwards;
+  animation: fade-in 1s ease-in-out forwards;
   -webkit-animation-delay: 8.75s;
-          animation-delay: 8.75s;
+  -moz-animation-delay: 8.75s;
+  -o-animation-delay: 8.75s;
+  -ms-animation-delay: 8.75s;
+  animation-delay: 8.75s;
   text-align: center;
 }
 .welcome-screen.closing-screen {
-  -webkit-animation-delay: 0;
-          animation-delay: 0;
+  -webkit-animation-delay: 0s !important;
+  -moz-animation-delay: 0s !important;
+  -o-animation-delay: 0s !important;
+  -ms-animation-delay: 0s !important;
+  animation-delay: 0s !important;
 }
 .welcome-screen.closing-screen .message-wrapper h2 {
   margin-bottom: 0;
@@ -127,7 +167,10 @@ svg {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   left: 30%;
   right: 30%;
   max-width: 550px;
@@ -153,6 +196,7 @@ svg {
 .welcome-screen .message-wrapper .start-button {
   padding: 1em 2em;
   background: #fff;
+  -webkit-border-radius: 0.5em;
   border-radius: 0.5em;
   color: #3e5490;
   display: inline-block;
@@ -180,9 +224,17 @@ svg {
   margin: 0 auto;
   overflow: hidden;
   -webkit-transform: translateY(200%);
-          transform: translateY(200%);
+  -moz-transform: translateY(200%);
+  -o-transform: translateY(200%);
+  -ms-transform: translateY(200%);
+  transform: translateY(200%);
   -webkit-animation: enter-bottom 4s ease-in-out forwards 3.75s;
-          animation: enter-bottom 4s ease-in-out forwards 3.75s;
+  -moz-animation: enter-bottom 4s ease-in-out forwards 3.75s;
+  -o-animation: enter-bottom 4s ease-in-out forwards 3.75s;
+  -ms-animation: enter-bottom 4s ease-in-out forwards 3.75s;
+  animation: enter-bottom 4s ease-in-out forwards 3.75s;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
   background-size: contain;
   background-position: center;
   background-image: url("../assets/img/happy-holidays.svg");
@@ -196,8 +248,13 @@ svg {
   text-align: center;
   z-index: 3;
   opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
   -webkit-animation: fade-in 1s ease-in-out forwards 8.75s;
-          animation: fade-in 1s ease-in-out forwards 8.75s;
+  -moz-animation: fade-in 1s ease-in-out forwards 8.75s;
+  -o-animation: fade-in 1s ease-in-out forwards 8.75s;
+  -ms-animation: fade-in 1s ease-in-out forwards 8.75s;
+  animation: fade-in 1s ease-in-out forwards 8.75s;
 }
 @media only screen and (min-width: 400px) and (max-width: 1050px) {
   .cat-controls {
@@ -207,6 +264,7 @@ svg {
 .cat-controls .key {
   width: 3em;
   height: 3em;
+  -webkit-border-radius: 100%;
   border-radius: 100%;
   position: relative;
   display: inline-block;
@@ -221,6 +279,8 @@ svg {
   background-image: url("../assets/img/slider.svg");
   background-position: center;
   background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
   background-size: contain;
 }
 .cat-controls .key.slider input[type=range] {
@@ -230,7 +290,10 @@ svg {
   left: 19%;
   top: calc(50% + 0.2em);
   -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   height: 3em;
   z-index: 3;
   background: transparent;
@@ -249,25 +312,31 @@ svg {
   -webkit-appearance: none;
   height: 1em;
   width: 1em;
+  -webkit-border-radius: 100%;
   border-radius: 100%;
   background: #fff;
+  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
   cursor: pointer;
 }
 .cat-controls .key.slider input[type=range]::-moz-range-thumb {
   height: 1em;
   width: 1em;
+  -webkit-border-radius: 100%;
   border-radius: 100%;
   background: #ccc;
   cursor: pointer;
+  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 .cat-controls .key.slider input[type=range]::-ms-thumb {
   height: 1em;
   width: 1em;
+  -webkit-border-radius: 100%;
   border-radius: 100%;
   background: #ccc;
   cursor: pointer;
+  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 .cat-controls #paw {
@@ -289,12 +358,18 @@ svg {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   right: 30%;
   left: 30%;
   text-align: center;
   -webkit-animation: clear-right 0.75s ease-in-out forwards 4s;
-          animation: clear-right 0.75s ease-in-out forwards 4s;
+  -moz-animation: clear-right 0.75s ease-in-out forwards 4s;
+  -o-animation: clear-right 0.75s ease-in-out forwards 4s;
+  -ms-animation: clear-right 0.75s ease-in-out forwards 4s;
+  animation: clear-right 0.75s ease-in-out forwards 4s;
 }
 .loading-message span {
   text-transform: uppercase;
@@ -317,6 +392,8 @@ svg {
 }
 .loading-message span:before {
   background-image: url("../assets/img/loading-asset.svg");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
   background-size: contain;
   background-repeat: no-repeat;
   content: '';
@@ -352,7 +429,10 @@ svg {
   bottom: 0;
   background-color: #31abba;
   -webkit-animation: grow-width 3s ease-in-out forwards 1s;
-          animation: grow-width 3s ease-in-out forwards 1s;
+  -moz-animation: grow-width 3s ease-in-out forwards 1s;
+  -o-animation: grow-width 3s ease-in-out forwards 1s;
+  -ms-animation: grow-width 3s ease-in-out forwards 1s;
+  animation: grow-width 3s ease-in-out forwards 1s;
 }
 .loading-message .loading-progress .progress-text {
   color: #31abba;
@@ -385,7 +465,10 @@ svg {
   width: 0;
   z-index: 3;
   -webkit-animation: grow-width 1s ease-in forwards 1.5s;
-          animation: grow-width 1s ease-in forwards 1.5s;
+  -moz-animation: grow-width 1s ease-in forwards 1.5s;
+  -o-animation: grow-width 1s ease-in forwards 1.5s;
+  -ms-animation: grow-width 1s ease-in forwards 1.5s;
+  animation: grow-width 1s ease-in forwards 1.5s;
 }
 .border-animation .border-right {
   position: absolute;
@@ -408,7 +491,10 @@ svg {
   overflow: hidden;
   z-index: 3;
   -webkit-animation: grow-height 1s ease-in forwards 1.5s;
-          animation: grow-height 1s ease-in forwards 1.5s;
+  -moz-animation: grow-height 1s ease-in forwards 1.5s;
+  -o-animation: grow-height 1s ease-in forwards 1.5s;
+  -ms-animation: grow-height 1s ease-in forwards 1.5s;
+  animation: grow-height 1s ease-in forwards 1.5s;
 }
 @media only screen and (min-width: 400px) and (max-width: 1050px) {
   .border-animation .border-right:after {
@@ -425,6 +511,8 @@ svg {
   background-image: url("../assets/img/marquee1.svg");
   background-repeat: no-repeat;
   background-position: right;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
   background-size: contain;
 }
 .border-animation .border-bottom {
@@ -471,7 +559,10 @@ svg {
   width: 0;
   background: #fff;
   -webkit-animation: grow-width 0.5s ease-in forwards 1.5s;
-          animation: grow-width 0.5s ease-in forwards 1.5s;
+  -moz-animation: grow-width 0.5s ease-in forwards 1.5s;
+  -o-animation: grow-width 0.5s ease-in forwards 1.5s;
+  -ms-animation: grow-width 0.5s ease-in forwards 1.5s;
+  animation: grow-width 0.5s ease-in forwards 1.5s;
 }
 @media only screen and (min-width: 400px) and (max-width: 1050px) {
   .border-animation .border-bottom:before {
@@ -509,7 +600,10 @@ svg {
   height: 0;
   background: #fff;
   -webkit-animation: grow-height 0.5s ease-in forwards 1.5s;
-          animation: grow-height 0.5s ease-in forwards 1.5s;
+  -moz-animation: grow-height 0.5s ease-in forwards 1.5s;
+  -o-animation: grow-height 0.5s ease-in forwards 1.5s;
+  -ms-animation: grow-height 0.5s ease-in forwards 1.5s;
+  animation: grow-height 0.5s ease-in forwards 1.5s;
 }
 .social-wrap {
   padding: 0 0.25em;
@@ -522,6 +616,8 @@ svg {
   position: relative;
   width: 1em;
   height: 1em;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -545,7 +641,23 @@ svg {
 .social-wrap span:not(:last-child) {
   margin-right: 0.25em;
 }
+@-moz-keyframes grow-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
 @-webkit-keyframes grow-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-o-keyframes grow-width {
   from {
     width: 0;
   }
@@ -561,7 +673,27 @@ svg {
     width: 100%;
   }
 }
+@-moz-keyframes grow-bottom {
+  from {
+    width: 0;
+    left: 200%;
+  }
+  to {
+    width: 100%;
+    left: 2em;
+  }
+}
 @-webkit-keyframes grow-bottom {
+  from {
+    width: 0;
+    left: 200%;
+  }
+  to {
+    width: 100%;
+    left: 2em;
+  }
+}
+@-o-keyframes grow-bottom {
   from {
     width: 0;
     left: 200%;
@@ -581,7 +713,23 @@ svg {
     left: 2em;
   }
 }
+@-moz-keyframes grow-left {
+  from {
+    top: 100%;
+  }
+  to {
+    top: 85%;
+  }
+}
 @-webkit-keyframes grow-left {
+  from {
+    top: 100%;
+  }
+  to {
+    top: 85%;
+  }
+}
+@-o-keyframes grow-left {
   from {
     top: 100%;
   }
@@ -597,7 +745,23 @@ svg {
     top: 85%;
   }
 }
+@-moz-keyframes grow-height {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
 @-webkit-keyframes grow-height {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+@-o-keyframes grow-height {
   from {
     height: 0;
   }
@@ -613,7 +777,17 @@ svg {
     height: 100%;
   }
 }
+@-moz-keyframes clear-right {
+  to {
+    left: 1000%;
+  }
+}
 @-webkit-keyframes clear-right {
+  to {
+    left: 1000%;
+  }
+}
+@-o-keyframes clear-right {
   to {
     left: 1000%;
   }
@@ -623,43 +797,137 @@ svg {
     left: 1000%;
   }
 }
-@-webkit-keyframes enter-bottom {
+@-moz-keyframes enter-bottom {
   0% {
     -webkit-transform: translateY(200%);
-            transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    -o-transform: translateY(200%);
+    -ms-transform: translateY(200%);
+    transform: translateY(200%);
   }
   60% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
   }
   80% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
   }
   100% {
     -webkit-transform: translateY(-200%);
-            transform: translateY(-200%);
+    -moz-transform: translateY(-200%);
+    -o-transform: translateY(-200%);
+    -ms-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+}
+@-webkit-keyframes enter-bottom {
+  0% {
+    -webkit-transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    -o-transform: translateY(200%);
+    -ms-transform: translateY(200%);
+    transform: translateY(200%);
+  }
+  60% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  80% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-200%);
+    -moz-transform: translateY(-200%);
+    -o-transform: translateY(-200%);
+    -ms-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+}
+@-o-keyframes enter-bottom {
+  0% {
+    -webkit-transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    -o-transform: translateY(200%);
+    -ms-transform: translateY(200%);
+    transform: translateY(200%);
+  }
+  60% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  80% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-200%);
+    -moz-transform: translateY(-200%);
+    -o-transform: translateY(-200%);
+    -ms-transform: translateY(-200%);
+    transform: translateY(-200%);
   }
 }
 @keyframes enter-bottom {
   0% {
     -webkit-transform: translateY(200%);
-            transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    -o-transform: translateY(200%);
+    -ms-transform: translateY(200%);
+    transform: translateY(200%);
   }
   60% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
   }
   80% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
   }
   100% {
     -webkit-transform: translateY(-200%);
-            transform: translateY(-200%);
+    -moz-transform: translateY(-200%);
+    -o-transform: translateY(-200%);
+    -ms-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+}
+@-moz-keyframes fade-out {
+  to {
+    background: transparent;
   }
 }
 @-webkit-keyframes fade-out {
+  to {
+    background: transparent;
+  }
+}
+@-o-keyframes fade-out {
   to {
     background: transparent;
   }
@@ -669,36 +937,100 @@ svg {
     background: transparent;
   }
 }
-@-webkit-keyframes fade-in {
+@-moz-keyframes fade-in {
   from {
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
   }
   to {
     opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-o-keyframes fade-in {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
   }
 }
 @keyframes fade-in {
   from {
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
   }
   to {
     opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+@-moz-keyframes fade-opacity {
+  from {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+  to {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
   }
 }
 @-webkit-keyframes fade-opacity {
   from {
     opacity: 1;
+    -ms-filter: none;
+    filter: none;
   }
   to {
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+}
+@-o-keyframes fade-opacity {
+  from {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+  to {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
   }
 }
 @keyframes fade-opacity {
   from {
     opacity: 1;
+    -ms-filter: none;
+    filter: none;
   }
   to {
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
   }
 }
 

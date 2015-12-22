@@ -11,7 +11,7 @@ var gulp = require('gulp'),
   postcss      = require('gulp-postcss'),
   sourcemaps   = require('gulp-sourcemaps'),
   rupture = require('rupture'),
-  autoprefixer = require('autoprefixer');
+  nib = require('nib'),
   fs = require('fs');
 
 gulp.task('compile', function() {
@@ -63,9 +63,8 @@ gulp.task('html', function () {
  
 gulp.task('stylus', function () {
   gulp.src('./app/assets/stylus/*.styl')
-    .pipe(stylus({use: [rupture()] }))
+    .pipe(stylus({use: [rupture(), nib()] }))
     .pipe(sourcemaps.init())
-    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./app/build'))
     .pipe(connect.reload());

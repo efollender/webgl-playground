@@ -1,3 +1,4 @@
+@import 'nib'
 @import 'rupture'
 
 *
@@ -13,9 +14,9 @@ body
   line-height 1.6
   overflow hidden
   font-family 'Futura PT', sans-serif
-  @media screen and (max-width: 1050px)
+  +tablet()
     font-size 14px
-  @media screen and (max-width: 768px)
+  +mobile()
     font-size 12px
 h2
   font-weight bold
@@ -71,7 +72,7 @@ svg
   animation-delay 8.75s
   text-align center
   &.closing-screen
-    animation-delay 0
+    animation-delay 0s!important
     .message-wrapper
       h2
         margin-bottom 0
