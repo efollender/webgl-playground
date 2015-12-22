@@ -1,3 +1,5 @@
+@import 'rupture'
+
 *
 *:after
 *:before
@@ -18,6 +20,9 @@ body
 h2
   font-weight bold
   font-size 3em
+h4
+  font-weight normal
+  font-size 1.4em
 a
 a:visited
 a:active
@@ -68,6 +73,10 @@ svg
   &.closing-screen
     animation-delay 0
     .message-wrapper
+      h2
+        margin-bottom 0
+      h4
+        margin-top 0    
       .welcome-text
         display none
       .closing-text
@@ -79,15 +88,10 @@ svg
         width 100%
         .callout
           display inline-block
-          float left
-          &.social-wrapper
-            width 75%
           &.replay
-            width 25%
+            margin-right 4em
           .callout-title
             font-size 1.5em
-        .replay
-          border-right 1px solid white
   .share-buttons
     display none
   .message-wrapper
@@ -98,6 +102,9 @@ svg
     right 30%
     max-width 550px
     margin 0 auto
+    +tablet()
+      left 15%
+      right 15%
     .welcome-text
       display block
     .closing-text
@@ -117,60 +124,12 @@ svg
       width 50%
       margin 0 auto
       .fa
-        margin-right .25em
-        font-size 2em
+        margin-left .25em
+        font-size 1em
+        line-height 2em
+        float right
       .text
-        vertical-align top
-        display inline-block
-        padding-top .25em
-      &:before
-        content ''
-        display inline-block
-        position absolute
-        bottom -130px
-        left -78px
-        height 130px
-        width 78px
-        transform rotate(90deg)
-        background-image url('../assets/img/left-marquee.svg')
-        background-repeat no-repeat
-        background-size cover
-        background-position bottom
-      &:after
-        content ''
-        display inline-block
-        position absolute
-        top -65px
-        right -78px
-        height 0
-        max-height 130px
-        width .25em
-        background #fff
-        animation grow-height .5s ease-in-out forwards 8.8s
-    &:before
-      content ''
-      display inline-block
-      position absolute
-      top -130px
-      left -78px
-      height 130px
-      width 78px
-      transform rotate(-90deg)
-      background-image url('../assets/img/left-marquee.svg')
-      background-repeat no-repeat
-      background-size cover
-    &:after
-      content ''
-      display inline-block
-      position absolute
-      bottom -130px
-      right -78px
-      height 130px
-      width 78px
-      transform rotate(90deg)
-      background-image url('../assets/img/left-marquee.svg')
-      background-repeat no-repeat
-      background-size cover
+        line-height 2em
 .happy-holidays
   position absolute
   top 5em
@@ -195,6 +154,8 @@ svg
   z-index 3
   opacity 0
   animation fade-in 1s ease-in-out forwards 8.75s
+  +tablet()
+    bottom calc(6em + 50px)
   .key
     width 3em
     height 3em
@@ -218,9 +179,9 @@ svg
         width 58%
         position absolute
         left 19%
-        top 50%
+        top calc(50% + .2em)
         transform translateY(-50%)
-        height 2em
+        height 3em
         z-index 3
         background transparent
         &:focus
@@ -340,33 +301,56 @@ svg
   @media screen and (max-width: 768px)
     display none
   .border-top
-    height .25em
+    height .15em
     background white
     position relative
-    left 2em
-    right 0
+    left 30px
+    right 2em
     top 0
+    max-width calc(100% - 2em - 30px)
     width 0
     z-index 3
     animation grow-width 1s ease-in forwards 1.5s
   .border-right
-    height 0px
-    width .25em
-    background white
     position absolute
-    right 0
     top 0
-    max-height calc(100% - 50px)
-    overflow hidden
+    bottom 0
+    right 0
     z-index 3
-    animation grow-height 1s ease-in forwards 1.5s
+    height 100%
+    width 100px
+    &:after
+      content ''
+      height 0px
+      width .15em
+      background white
+      position absolute
+      right 2em
+      top 0
+      max-height calc(100% - 50px)
+      overflow hidden
+      z-index 3
+      animation grow-height 1s ease-in forwards 1.5s
+      +tablet()
+        max-height calc(100% - 40px)
+    .marquee-wrap
+      position absolute
+      left 0
+      right 0
+      top 70%
+      bottom 20%
+      z-index 4
+      background-image url('../assets/img/marquee1.svg')
+      background-repeat no-repeat
+      background-position right
+      background-size contain
   .border-bottom
     position absolute
-    z-index 4
+    z-index 3
     bottom 0
     right 0
     left 0
-    height .25em
+    height .15em
     .social-wrap
       position absolute
       top -1.75em
@@ -374,39 +358,34 @@ svg
     .logo-wrap
       position absolute
       right 10%
-      left 68%
-      top -100px
+      left 79%
+      top -105px
       bottom 0
-      background-image url('../assets/img/bottom-marquee.svg')
+      background-image url('../assets/img/BU_logo.svg')
       background-repeat no-repeat
-      width 22%
-      padding-top 5%
+      width 174px
+      max-width 174px
+      padding-top 81px
       height 0
+      +tablet()
+        left 64%
+        top -95px
     &:before
       position absolute
       content ''
       bottom 0
       top -50px
-      left calc(90% + 1em)
-      right 0
-      height .25em
+      left 79%
+      right 2em
+      height .15em
+      max-width calc(21% - 2em)
       width 0
       background white
       animation grow-width .5s ease-in forwards 1.5s
-    &:after
-      position absolute
-      content ''
-      bottom 0
-      top -50px
-      left 16em
-      right 32%
-      height .25em
-      width 0
-      max-width calc(68% - 19em)
-      background white
-      display inline-block
-      overflow hidden
-      animation grow-width .5s ease-in forwards 2s
+      +tablet()
+        max-width calc(36% - 2em)
+        left 64%
+        top -40px
   .border-left
     position absolute
     top 0
@@ -421,7 +400,7 @@ svg
       right 0
       top 20%
       bottom 20%
-      background-image url('../assets/img/left-marquee.svg')
+      background-image url('../assets/img/marquee2.svg')
       background-repeat no-repeat
     &:before
       position absolute
@@ -430,22 +409,22 @@ svg
       bottom 85%
       top 0
       left 30px
-      width .25em
+      width .15em
       height 0
       background white
       animation grow-height .5s ease-in forwards 1.5s
-    &:after
-      position absolute
-      content ''
-      bottom 50px
-      top 100%
-      left 30px
-      // height 100%
-      width .25em
-      background white
-      display inline-block
-      overflow hidden
-      animation grow-left .5s ease-in forwards 2s
+    // &:after
+    //   position absolute
+    //   content ''
+    //   bottom 50px
+    //   top 100%
+    //   left 30px
+    //   // height 100%
+    //   width .15em
+    //   background white
+    //   display inline-block
+    //   overflow hidden
+    //   animation grow-left .5s ease-in forwards 2s
 .social-wrap
   padding 0 .25em
   font-size 3em

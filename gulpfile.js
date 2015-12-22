@@ -7,10 +7,10 @@ var gulp = require('gulp'),
   watchify = require('watchify'),
   babel = require('babelify'),
   path = require('path'),
-  nib = require('nib'),
   normalize = require('stylus-normalize'),
   postcss      = require('gulp-postcss'),
   sourcemaps   = require('gulp-sourcemaps'),
+  rupture = require('rupture'),
   autoprefixer = require('autoprefixer');
   fs = require('fs');
 
@@ -63,7 +63,7 @@ gulp.task('html', function () {
  
 gulp.task('stylus', function () {
   gulp.src('./app/assets/stylus/*.styl')
-    .pipe(stylus())
+    .pipe(stylus({use: [rupture()] }))
     .pipe(sourcemaps.init())
     .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
     .pipe(sourcemaps.write('.'))

@@ -27,6 +27,10 @@ h2 {
   font-weight: bold;
   font-size: 3em;
 }
+h4 {
+  font-weight: normal;
+  font-size: 1.4em;
+}
 a,
 a:visited,
 a:active {
@@ -88,6 +92,12 @@ svg {
   -webkit-animation-delay: 0;
           animation-delay: 0;
 }
+.welcome-screen.closing-screen .message-wrapper h2 {
+  margin-bottom: 0;
+}
+.welcome-screen.closing-screen .message-wrapper h4 {
+  margin-top: 0;
+}
 .welcome-screen.closing-screen .message-wrapper .welcome-text {
   display: none;
 }
@@ -103,19 +113,12 @@ svg {
 }
 .welcome-screen.closing-screen .message-wrapper .share-buttons .callout {
   display: inline-block;
-  float: left;
-}
-.welcome-screen.closing-screen .message-wrapper .share-buttons .callout.social-wrapper {
-  width: 75%;
 }
 .welcome-screen.closing-screen .message-wrapper .share-buttons .callout.replay {
-  width: 25%;
+  margin-right: 4em;
 }
 .welcome-screen.closing-screen .message-wrapper .share-buttons .callout .callout-title {
   font-size: 1.5em;
-}
-.welcome-screen.closing-screen .message-wrapper .share-buttons .replay {
-  border-right: 1px solid #fff;
 }
 .welcome-screen .share-buttons {
   display: none;
@@ -129,6 +132,12 @@ svg {
   right: 30%;
   max-width: 550px;
   margin: 0 auto;
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .welcome-screen .message-wrapper {
+    left: 15%;
+    right: 15%;
+  }
 }
 .welcome-screen .message-wrapper .welcome-text {
   display: block;
@@ -153,69 +162,13 @@ svg {
   margin: 0 auto;
 }
 .welcome-screen .message-wrapper .start-button .fa {
-  margin-right: 0.25em;
-  font-size: 2em;
+  margin-left: 0.25em;
+  font-size: 1em;
+  line-height: 2em;
+  float: right;
 }
 .welcome-screen .message-wrapper .start-button .text {
-  vertical-align: top;
-  display: inline-block;
-  padding-top: 0.25em;
-}
-.welcome-screen .message-wrapper .start-button:before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  bottom: -130px;
-  left: -78px;
-  height: 130px;
-  width: 78px;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  background-image: url("../assets/img/left-marquee.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom;
-}
-.welcome-screen .message-wrapper .start-button:after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  top: -65px;
-  right: -78px;
-  height: 0;
-  max-height: 130px;
-  width: 0.25em;
-  background: #fff;
-  -webkit-animation: grow-height 0.5s ease-in-out forwards 8.8s;
-          animation: grow-height 0.5s ease-in-out forwards 8.8s;
-}
-.welcome-screen .message-wrapper:before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  top: -130px;
-  left: -78px;
-  height: 130px;
-  width: 78px;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-  background-image: url("../assets/img/left-marquee.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.welcome-screen .message-wrapper:after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  bottom: -130px;
-  right: -78px;
-  height: 130px;
-  width: 78px;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  background-image: url("../assets/img/left-marquee.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  line-height: 2em;
 }
 .happy-holidays {
   position: absolute;
@@ -246,6 +199,11 @@ svg {
   -webkit-animation: fade-in 1s ease-in-out forwards 8.75s;
           animation: fade-in 1s ease-in-out forwards 8.75s;
 }
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .cat-controls {
+    bottom: calc(6em + 50px);
+  }
+}
 .cat-controls .key {
   width: 3em;
   height: 3em;
@@ -270,10 +228,10 @@ svg {
   width: 58%;
   position: absolute;
   left: 19%;
-  top: 50%;
+  top: calc(50% + 0.2em);
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  height: 2em;
+  height: 3em;
   z-index: 3;
   background: transparent;
 }
@@ -417,23 +375,34 @@ svg {
   }
 }
 .border-animation .border-top {
-  height: 0.25em;
+  height: 0.15em;
   background: #fff;
   position: relative;
-  left: 2em;
-  right: 0;
+  left: 30px;
+  right: 2em;
   top: 0;
+  max-width: calc(100% - 2em - 30px);
   width: 0;
   z-index: 3;
   -webkit-animation: grow-width 1s ease-in forwards 1.5s;
           animation: grow-width 1s ease-in forwards 1.5s;
 }
 .border-animation .border-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  height: 100%;
+  width: 100px;
+}
+.border-animation .border-right:after {
+  content: '';
   height: 0px;
-  width: 0.25em;
+  width: 0.15em;
   background: #fff;
   position: absolute;
-  right: 0;
+  right: 2em;
   top: 0;
   max-height: calc(100% - 50px);
   overflow: hidden;
@@ -441,13 +410,30 @@ svg {
   -webkit-animation: grow-height 1s ease-in forwards 1.5s;
           animation: grow-height 1s ease-in forwards 1.5s;
 }
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .border-animation .border-right:after {
+    max-height: calc(100% - 40px);
+  }
+}
+.border-animation .border-right .marquee-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70%;
+  bottom: 20%;
+  z-index: 4;
+  background-image: url("../assets/img/marquee1.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+}
 .border-animation .border-bottom {
   position: absolute;
-  z-index: 4;
+  z-index: 3;
   bottom: 0;
   right: 0;
   left: 0;
-  height: 0.25em;
+  height: 0.15em;
 }
 .border-animation .border-bottom .social-wrap {
   position: absolute;
@@ -457,43 +443,42 @@ svg {
 .border-animation .border-bottom .logo-wrap {
   position: absolute;
   right: 10%;
-  left: 68%;
-  top: -100px;
+  left: 79%;
+  top: -105px;
   bottom: 0;
-  background-image: url("../assets/img/bottom-marquee.svg");
+  background-image: url("../assets/img/BU_logo.svg");
   background-repeat: no-repeat;
-  width: 22%;
-  padding-top: 5%;
+  width: 174px;
+  max-width: 174px;
+  padding-top: 81px;
   height: 0;
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .border-animation .border-bottom .logo-wrap {
+    left: 64%;
+    top: -95px;
+  }
 }
 .border-animation .border-bottom:before {
   position: absolute;
   content: '';
   bottom: 0;
   top: -50px;
-  left: calc(90% + 1em);
-  right: 0;
-  height: 0.25em;
+  left: 79%;
+  right: 2em;
+  height: 0.15em;
+  max-width: calc(21% - 2em);
   width: 0;
   background: #fff;
   -webkit-animation: grow-width 0.5s ease-in forwards 1.5s;
           animation: grow-width 0.5s ease-in forwards 1.5s;
 }
-.border-animation .border-bottom:after {
-  position: absolute;
-  content: '';
-  bottom: 0;
-  top: -50px;
-  left: 16em;
-  right: 32%;
-  height: 0.25em;
-  width: 0;
-  max-width: calc(68% - 19em);
-  background: #fff;
-  display: inline-block;
-  overflow: hidden;
-  -webkit-animation: grow-width 0.5s ease-in forwards 2s;
-          animation: grow-width 0.5s ease-in forwards 2s;
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .border-animation .border-bottom:before {
+    max-width: calc(36% - 2em);
+    left: 64%;
+    top: -40px;
+  }
 }
 .border-animation .border-left {
   position: absolute;
@@ -510,7 +495,7 @@ svg {
   right: 0;
   top: 20%;
   bottom: 20%;
-  background-image: url("../assets/img/left-marquee.svg");
+  background-image: url("../assets/img/marquee2.svg");
   background-repeat: no-repeat;
 }
 .border-animation .border-left:before {
@@ -520,24 +505,11 @@ svg {
   bottom: 85%;
   top: 0;
   left: 30px;
-  width: 0.25em;
+  width: 0.15em;
   height: 0;
   background: #fff;
   -webkit-animation: grow-height 0.5s ease-in forwards 1.5s;
           animation: grow-height 0.5s ease-in forwards 1.5s;
-}
-.border-animation .border-left:after {
-  position: absolute;
-  content: '';
-  bottom: 50px;
-  top: 100%;
-  left: 30px;
-  width: 0.25em;
-  background: #fff;
-  display: inline-block;
-  overflow: hidden;
-  -webkit-animation: grow-left 0.5s ease-in forwards 2s;
-          animation: grow-left 0.5s ease-in forwards 2s;
 }
 .social-wrap {
   padding: 0 0.25em;

@@ -1,13 +1,28 @@
 "use strict";
 
-let animation, helpers = [], mixers = [], pushed = false;
-let clock = new THREE.Clock();
-let ready = false;
-let reducing = false;
-let isFrameStepping = false;
-let timeToStep = 0;
-
-
+let animation, 
+		helpers = [], 
+		mixers = [], 
+		pushed = false,
+		clock = new THREE.Clock(),
+		ready = false,
+		reducing = false,
+		isFrameStepping = false,
+		timeToStep = 0,
+		//snow vars
+		snow_boxW = 1000, 
+		snow_boxH = 1000,
+		snow_boxD = 1000,
+		snow_noiseScale = 114,
+		snow_particleSystem,
+		snow_particleGeometry,
+		snow_particles = [],
+		snow_perlin,
+		snow_mouse2D,
+		snow_windDir = 0,
+		snow_params,
+		snow_gui,
+		snow_box;
 
 class Demo {
 	constructor() {
@@ -120,7 +135,7 @@ class Demo {
 			this.loadIce(x, 800, x * -800, 1.4);
 		}
 		this.loadCat();
-		this.loadSnow(inParameters);
+		// this.loadSnow(inParameters);
 
 		//Listen for trigger
 		const mountains = document.getElementById('mountains');
@@ -257,139 +272,27 @@ class Demo {
 		});
 	}
 	loadSnow(inParameters) {
-		// particles
-		let map = THREE.ImageUtils.loadTexture( "../assets/img/snowflake.png" );
-
-		this.ms_geometry = new THREE.BufferGeometry();
-
-		let particles = this.ms_numParticles;
-
-		let uniforms = {
-
-			color:      { type: "c", value: new THREE.Color( 0x777777 ) },
-			texture:    { type: "t", value: 0, texture: map },
-			globalTime:	{ type: "f", value: 0.0 },
-			near : { type: 'f', value : this.ms_Camera.near },
-      far  : { type: 'f', value : this.ms_Camera.far }
-
-		};
-
-		let shaderMaterial = new THREE.ShaderMaterial( {
-
-			uniforms: 		uniforms,
-			vertexShader:   document.getElementById( 'vertexshader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-
-			blending: 		THREE.AdditiveBlending,
-			depthTest: 		false,
-			transparent:	true,
-
-		});
-			var radius = WINDOW.ms_Width;
-
-			var positions = new Float32Array( this.ms_numParticles * 3 );
-			var colors = new Float32Array( particles * 3 );
-			var sizes = new Float32Array( particles );
-
-			var color = new THREE.Color();
-
-			for ( var i = 0, i3 = 0; i < this.ms_numParticles; i ++, i3 += 3 ) {
-
-				positions[ i3 + 0 ] = ( Math.random() * 2 - 1 ) * radius;
-				positions[ i3 + 1 ] = ( Math.random() * 2 - 1 ) * 4000;
-				positions[ i3 + 2 ] = ( Math.random() * 2 - 1 ) * 4000;
-
-				// console.log(this.)ms_particleSystem;
-
-				color.setHSL( i / particles, 1.0, 0.5 );
-
-				colors[ i3 + 0 ] = color.r;
-				colors[ i3 + 1 ] = color.g;
-				colors[ i3 + 2 ] = color.b;
-
-				sizes[ i ] = 100;
-
-			}
-
-			this.ms_geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-			this.ms_geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
-			this.ms_geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
-
-		this.ms_particleSystem = new THREE.Points( this.ms_geometry, shaderMaterial );
-
-		this.ms_particleSystem.position.y = 1500;
-		this.ms_particleSystem.position.z = 1000;
-		this.ms_particleSystem.scale.y = 4;
-		this.ms_particleSystem.rotation.x = Math.PI * .5;
-		this.ms_Scene.add( this.ms_particleSystem );
-
-	}
-	updateSnow(delta){
-		const radius = WINDOW.ms_Width;
-
-		var positions = this.ms_geometry.attributes.position.array;
-
-		for ( var i = 0, i3 = 0; i < this.ms_numParticles; i++ , i3 += 3 ) {
-
-				positions[ i3 + 0 ] += .01;
-				positions[ i3 + 1 ] -= .01;
-				positions[ i3 + 2 ] += .01;
-
-		}
-
-		this.ms_geometry.attributes.position.needsUpdate = true;
+	////////////////
 	}
 	loadCat() {
 		const jsonLoader = new THREE.JSONLoader();
 		jsonLoader.load( "assets/js/cat_animated.js",  ( geometry, materials ) => {
-			this.loadAnimation( geometry, materials, 0, 30, 1000, 15, this.ms_Scene, "assets/img/cat_diffuse.jpg" );
+			const objTexture = THREE.ImageUtils.loadTexture("assets/img/catWithGlasses_diffuse.jpg");
+			for ( let i = 0; i < materials.length; i ++ ) {
+				let m = materials[i];
+				m.shading = THREE.FlatShading;
+				m.shininess = 100;
+				m.map = objTexture;
+				m.color = new THREE.Color( 0xcccccc );
+				m.vertexColors = THREE.FaceColors;
+			}
+			var material = new THREE.MeshFaceMaterial( materials );
+			var object = new THREE.Mesh( geometry, material );
+			object.position.set(0, 30, 1000);
+			object.scale.set(15, 15, 15);
+			object.rotation.x = Math.PI * -.5;
+			this.ms_Scene.add( object );
 		});
-		jsonLoader.load( "assets/js/cat_animated_hat.js",  ( geometry, materials )  => {
-			this.loadAnimation( geometry, materials, 0, 30, 1000, 15, this.ms_Scene, "assets/img/hat_diffuse.jpg" );
-		});
-	}
-	loadAnimation( geometry, materials, x, y, z, s, scene, texture ) {
-		let mixer;
-		const objTexture = THREE.ImageUtils.loadTexture(texture);
-		geometry.computeFaceNormals();
-  	// geometry.computeVertexNormals();
-  	geometry.dynamic = true
-		geometry.__dirtyVertices = true;
-		geometry.__dirtyNormals = true;
-
-		//Flip normals
-		for(var i = 0; i<geometry.faces.length; i++) {
-		    geometry.faces[i].normal.x = -1*geometry.faces[i].normal.x;
-		    geometry.faces[i].normal.y = -1*geometry.faces[i].normal.y;
-		    geometry.faces[i].normal.z = -1*geometry.faces[i].normal.z;
-		}
-
-		for ( let i = 0; i < materials.length; i ++ ) {
-			let m = materials[i];
-			m.skinning = true;
-			m.shading = THREE.FlatShading;
-			m.shininess = 100;
-			m.map = objTexture;
-			m.color = new THREE.Color( 0xcccccc );
-			m.vertexColors = THREE.FaceColors;
-		}
-
-		let cat_mesh = new THREE.SkinnedMesh( geometry, materials[0]);
-		// cat_mesh.rotation.x = Math.PI * -.5;
-		cat_mesh.position.set( x, y, z );
-		cat_mesh.scale.set( s, s, s );
-		cat_mesh.castShadow = true;
-		cat_mesh.receiveShadow = true;
-		scene.add( cat_mesh );
-
-		let clipBones = geometry.animations[0];
-		let boneAction = new THREE.AnimationAction( clipBones );
-		boneAction.loop = THREE.LoopOnce;
-		boneAction.loopCount = 1;
-		boneAction.actionTime = 2;
-		mixer = new THREE.AnimationMixer( cat_mesh );
-		mixer.addAction( boneAction );
-		mixers.push(mixer);
 	}
 	display() {
 		this.ms_Water.render();
@@ -427,15 +330,12 @@ class Demo {
 				mixers[i].update(delta);
 			}
 		}
-		if (this.ms_particleSystem) this.updateSnow(delta);
 		if (ready) this.initialZoom();
 		this.ms_Controls.update();
 		this.display();
 	}
 	handleRange(value) {
-		this.ms_numParticles = value * 200;
-		this.ms_Scene.remove(this.ms_particleSystem);
-		this.loadSnow(this.ms_Parameters);
+		///////
 	}
 	handleButton() {
 		pushed = true;

@@ -1,7 +1,13 @@
 "use strict";
 
-let animation, helpers = [], mixers = [], pushed = false;
-let clock = new THREE.Clock();
+let animation, 
+		helpers = [], 
+		mixers = [], 
+		pushed = false,
+		clock = new THREE.Clock(),
+		//snow variables
+		
+
 export default class Demo {
 	static DEMO = {
 	ms_Canvas: null,
