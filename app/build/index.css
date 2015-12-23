@@ -194,8 +194,8 @@ svg {
 }
 @media only screen and (max-width: 481px) {
   .welcome-screen .message-wrapper {
-    left: 0.25em;
-    right: 0.25em;
+    left: 0.5em;
+    right: 0.5em;
   }
 }
 .welcome-screen .message-wrapper .welcome-text {
@@ -275,6 +275,11 @@ svg {
 @media only screen and (max-width: 1050px) {
   .cat-controls {
     bottom: calc(6em + 50px);
+  }
+}
+@media only screen and (max-width: 481px) {
+  .cat-controls {
+    bottom: 1em;
   }
 }
 .cat-controls .key {
@@ -391,6 +396,12 @@ svg {
   -o-animation: clear-right 0.75s ease-in-out forwards 4s;
   -ms-animation: clear-right 0.75s ease-in-out forwards 4s;
   animation: clear-right 0.75s ease-in-out forwards 4s;
+}
+@media only screen and (max-width: 481px) {
+  .loading-message {
+    left: 1em;
+    right: 1em;
+  }
 }
 .loading-message span {
   text-transform: uppercase;

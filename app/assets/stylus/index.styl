@@ -104,8 +104,8 @@ svg
       left 15%
       right 15%
     +below(481px)
-      left .25em
-      right .25em
+      left .5em
+      right .5em
     .welcome-text
       display block
     .closing-text
@@ -157,6 +157,8 @@ svg
   bottom calc(4em + 50px)
   +below(1050px)
     bottom calc(6em + 50px)
+  +below(481px)
+    bottom 1em
   .key
     width 3em
     height 3em
@@ -235,6 +237,9 @@ svg
   left 30%
   text-align center
   animation clear-right .75s ease-in-out forwards 4s
+  +below(481px)
+    left 1em
+    right 1em
   span
     text-transform: uppercase
     font-size 1.5em
