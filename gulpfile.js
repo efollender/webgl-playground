@@ -15,12 +15,11 @@ var gulp = require('gulp'),
   fs = require('fs');
 
 gulp.task('compile', function() {
-  var bundler = watchify(browserify('./app/index.js', { debug: true })
+  var bundler = watchify(browserify('./app/index.js')
       .transform(
         babel.configure({
           sourceMapRelative: path.resolve(__dirname, 'app'),
-          presets: ['stage-0'],
-          sourceType: 'module'
+          presets: ['es2015']
         })
       ));
 
