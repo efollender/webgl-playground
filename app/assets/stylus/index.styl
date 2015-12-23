@@ -14,6 +14,7 @@ body
   line-height 1.6
   overflow hidden
   font-family 'Futura PT', sans-serif
+  transform-style preserve-3d
   +tablet()
     font-size 14px
   +mobile()
@@ -51,12 +52,8 @@ svg
   left 0
   right 0
   bottom 0
-  // background linear-gradient(top, white, black)
   background linear-gradient(to bottom,  #6db0e0 0%, #2989d8 32%, #3e5490 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  // background transparent
   animation fade-out 1s ease-in-out forwards 7.75s
-  // background-linear-gradient(bottom,  #6db0e0, 0%,#2989d8, 32%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  
 .welcome-screen
   padding 2em
   position absolute
@@ -64,13 +61,13 @@ svg
   left 0
   right 0
   bottom 0
-  // background linear-gradient(top, white, black)
   background linear-gradient(to bottom,  rgba(#6db0e0, .8) 0%,rgba(#2989d8, .8) 32%,rgba(#3e5490, .8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   z-index 4
   opacity 0
   animation fade-in 1s ease-in-out forwards
   animation-delay 8.75s
   text-align center
+  transform-style preserve-3d
   &.closing-screen
     animation-delay 0s!important
     .message-wrapper
@@ -106,6 +103,9 @@ svg
     +tablet()
       left 15%
       right 15%
+    +mobile()
+      left .25em
+      right .25em
     .welcome-text
       display block
     .closing-text
@@ -175,6 +175,7 @@ svg
       background-position center
       background-repeat no-repeat
       background-size contain
+      transform-style preserve-3d
       input[type=range]
         -webkit-appearance none
         width 58%
@@ -299,7 +300,7 @@ svg
   right 2em
   bottom 2em
   overflow hidden
-  @media screen and (max-width: 768px)
+  +mobile()
     display none
   .border-top
     height .15em
