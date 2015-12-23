@@ -186,13 +186,13 @@ svg {
   max-width: 550px;
   margin: 0 auto;
 }
-@media only screen and (min-width: 400px) and (max-width: 1050px) {
+@media only screen and (max-width: 1050px) {
   .welcome-screen .message-wrapper {
     left: 15%;
     right: 15%;
   }
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 481px) {
   .welcome-screen .message-wrapper {
     left: 0.25em;
     right: 0.25em;
@@ -258,7 +258,6 @@ svg {
 }
 .cat-controls {
   position: absolute;
-  bottom: calc(4em + 50px);
   left: 0;
   right: 0;
   text-align: center;
@@ -271,8 +270,9 @@ svg {
   -o-animation: fade-in 1s ease-in-out forwards 8.75s;
   -ms-animation: fade-in 1s ease-in-out forwards 8.75s;
   animation: fade-in 1s ease-in-out forwards 8.75s;
+  bottom: calc(4em + 50px);
 }
-@media only screen and (min-width: 400px) and (max-width: 1050px) {
+@media only screen and (max-width: 1050px) {
   .cat-controls {
     bottom: calc(6em + 50px);
   }
@@ -470,7 +470,7 @@ svg {
   bottom: 2em;
   overflow: hidden;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 481px) {
   .border-animation {
     display: none;
   }
