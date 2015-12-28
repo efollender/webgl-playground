@@ -311,9 +311,9 @@ svg {
 }
 .cat-controls .key.slider input[type=range] {
   -webkit-appearance: none;
-  width: 58%;
+  width: 61%;
   position: absolute;
-  left: 19%;
+  left: 10%;
   top: calc(50% + 0.2em);
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);

@@ -8,21 +8,8 @@ let animation,
 		ready = false,
 		reducing = false,
 		isFrameStepping = false,
-		timeToStep = 0,
-		//snow vars
-		snow_boxW = 1000, 
-		snow_boxH = 1000,
-		snow_boxD = 1000,
-		snow_noiseScale = 114,
-		snow_particleSystem,
-		snow_particleGeometry,
-		snow_particles = [],
-		snow_perlin,
-		snow_mouse2D,
-		snow_windDir = 0,
-		snow_params,
-		snow_gui,
-		snow_box;
+		timeToStep = 0;
+		
 
 class Demo {
 	constructor() {
@@ -36,10 +23,10 @@ class Demo {
 		this.ms_Raycaster = null;
 		this.ms_Clickable = [];
 		this.ms_Parameters = null;
-		this.ms_particleSystem = null;
-		this.ms_numParticles = 1000;
 		this.ms_geometry = null;
 		this.ms_audio = null;
+		this.particles = [];
+		this.particleCount = 20000;
 	}
 	enable() {
         try {
@@ -135,8 +122,11 @@ class Demo {
 			this.loadIce(x, 800, x * -800, 1.4);
 		}
 		this.loadCat();
-		// this.loadSnow(inParameters);
-
+		// this.ms_Snow = new Snow(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
+		// 	width: inParameters.width,
+		// 	height: inParameters.height
+		// });
+		this.loadSnow();
 		//Listen for trigger
 		const mountains = document.getElementById('mountains');
 		// const paw = document.getElementById('paw');
@@ -271,8 +261,62 @@ class Demo {
 				ms_Scene.add(glacier);
 		});
 	}
-	loadSnow(inParameters) {
-	////////////////
+	loadSnow() {
+
+		const sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
+
+		let geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
+
+    let particleCount = this.particleCount; /* Leagues under the sea */
+    let {width, height} = this.ms_Parameters;
+    for (let i = 0; i < particleCount; i++) {
+
+        let vertex = new THREE.Vector3();
+        vertex.x = Math.random() * width - 1000;
+        vertex.y = Math.random() * height - 1000;
+        vertex.z = Math.random() * 8000;
+
+        geometry.vertices.push(vertex);
+    }
+    let parameters = [
+            [
+                [1, 1, 0.5], 5
+            ],
+            [
+                [0.95, 1, 0.5], 4
+            ],
+            [
+                [0.90, 1, 0.5], 3
+            ],
+            [
+                [0.85, 1, 0.5], 2
+            ],
+            [
+                [0.80, 1, 0.5], 1
+            ]
+        ];
+    let parameterCount = parameters.length;
+    let materials = [];
+    for (let i = 0; i < parameterCount; i++) {
+
+        let color = parameters[i][0];
+        let size = parameters[i][1];
+
+        materials[i] = new THREE.PointsMaterial({
+            size : size
+        });
+
+        this.particles[i] = new THREE.Points(geometry, materials[i]);
+        // this.particles[i].rotation.x = Math.random() * 6;
+        this.particles[i].rotation.y = (i * 90) * (Math.PI/180);
+        // this.particles[i].rotation.z = Math.random() * 6;
+        // create a velocity vector
+				this.particles[i].velocity = new THREE.Vector3(
+				  0,              // x
+				  -Math.random(), // y: random vel
+				  0);
+        this.ms_Scene.add(this.particles[i]);
+    }
 	}
 	loadCat() {
 		const jsonLoader = new THREE.JSONLoader();
@@ -324,18 +368,37 @@ class Demo {
 		}
 		let delta = clock.getDelta();
 		let elapsedTime = clock.getElapsedTime();
-
-		if( mixers.length ) {
-			for (var i=0; i<mixers.length; i++) {
-				mixers[i].update(delta);
-			}
-		}
 		if (ready) this.initialZoom();
-		this.ms_Controls.update();
+		for (let i = 0; i < this.ms_Scene.children.length; i++) {
+        var object = this.ms_Scene.children[i];
+        if (object instanceof THREE.Points) {
+            object.rotation.y += (Math.PI/180)/4;
+            // object.position.y -= 15;
+            // if (object.position.y < 0){
+            // 		object.position.y = 5000;
+            // 		// object.velocity.y = 0;
+            // }
+            // object.velocity.y -= Math.random() * .1;
+            for (let y = 0; y < object.geometry.vertices.length; y++ ){
+            	let vertex = object.geometry.vertices[y];
+            	vertex.y -= 200;
+            	vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0; 
+            	vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
+            	if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
+            }
+          object.__dirtyVertices = true;
+        }
+    }
+    this.ms_Controls.update();
 		this.display();
 	}
 	handleRange(value) {
-		///////
+		
+		for (let i = 0; i < this.particleCount; i++) {
+			this.ms_Scene.remove(this.particles[i]);
+		}
+		this.particleCount = value;
+		this.loadSnow();
 	}
 	handleButton() {
 		pushed = true;

@@ -3,8 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<title>BU Holiday</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link href="build/index.css" rel="stylesheet">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -13,6 +11,8 @@
 		<meta property="og:url" content="http://www.brooklynunited.com/holidays-2015"/>
 		<meta property="og:description" content="A winter wonderland in WebGL from Brooklyn United and Brooklyn Digital Foundry." />
 		<meta property="og:image" content="http://s23.postimg.org/kgdxut7mz/Screen_Shot_2015_12_15_at_10_54_43_AM.png" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link href="build/index.css" rel="stylesheet">
 	</head>
 	<body class="tk-futura-pt">
 		<div id="canvas-3d" class="viewer"></div>
@@ -148,38 +148,10 @@
 					<div class="key trigger" id="mountains"></div>
 					<!-- <div class="key trigger" id="paw"></div> -->
 					<div class="key slider" id="slider">
-						<input type="range" min="0" max="100" value="50" id="fader" step="1" oninput="onRange(value)">
+						<input type="range" min="0" max="40000" value="20000" id="fader" step="1" oninput="onRange(value)">
 					</div>
 				</div>
 		</div>
-		<script type="x-shader/x-vertex" id="vertexshader">
-		    attribute float alpha;
-		    attribute float size;
-		    attribute vec3 ca;
-		    varying vec3 vColor;
-		    varying float vAlpha;
-
-		    void main() {
-		        vColor = ca;
-		        vAlpha = alpha;
-		        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-
-		        gl_PointSize = size * (1.0+ 300.0 / length( mvPosition.xyz ) );
-		        gl_Position = projectionMatrix * mvPosition;
-		    }
-		</script>
-
-		<script type="x-shader/x-fragment" id="fragmentshader">
-		    uniform vec3 color;
-		    uniform sampler2D texture;
-		    varying vec3 vColor;
-		    varying float vAlpha;
-
-		    void main() {
-		        gl_FragColor = vec4( vColor, vAlpha );
-		        gl_FragColor = vAlpha * texture2D( texture, gl_PointCoord );
-		    }
-		</script>
 		<script src="assets/libs/three/three.min.js"></script>
 		<!-- External libraries -->
 		<script src="assets/libs/RequestAnimationFrame.js"></script>
