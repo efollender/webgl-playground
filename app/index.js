@@ -221,7 +221,6 @@ class Demo {
 				for (var i=0; i<glacier.children.length;i++ ){
 					glacier.children[i].geometry.computeFaceNormals();
 					glacier.children[i].geometry.computeVertexNormals();
-					console.log('glacier', glacier);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
 			  		// map: iceTexture,
 						shading: THREE.FlatShading,
@@ -272,9 +271,9 @@ class Demo {
     for (let i = 0; i < particleCount; i++) {
 
         let vertex = new THREE.Vector3();
-        vertex.x = Math.random() * width - 1000;
-        vertex.y = Math.random() * height - 1000;
-        vertex.z = Math.random() * 8000;
+        vertex.x = Math.random() * width;
+        vertex.y = Math.random() * height;
+        vertex.z = Math.random() * 4000;
 
         geometry.vertices.push(vertex);
     }
@@ -308,15 +307,12 @@ class Demo {
 
         this.particles[i] = new THREE.Points(geometry, materials[i]);
         // this.particles[i].rotation.x = Math.random() * 6;
-        this.particles[i].rotation.y = (i * 90) * (Math.PI/180);
+        this.particles[i].rotation.y = (i * 45) * (Math.PI/180);
         // this.particles[i].rotation.z = Math.random() * 6;
-        // create a velocity vector
-				this.particles[i].velocity = new THREE.Vector3(
-				  0,              // x
-				  -Math.random(), // y: random vel
-				  0);
         this.ms_Scene.add(this.particles[i]);
+        
     }
+    console.log('points', this.particles);
 	}
 	loadCat() {
 		const jsonLoader = new THREE.JSONLoader();
@@ -372,13 +368,7 @@ class Demo {
 		for (let i = 0; i < this.ms_Scene.children.length; i++) {
         var object = this.ms_Scene.children[i];
         if (object instanceof THREE.Points) {
-            object.rotation.y += (Math.PI/180)/4;
-            // object.position.y -= 15;
-            // if (object.position.y < 0){
-            // 		object.position.y = 5000;
-            // 		// object.velocity.y = 0;
-            // }
-            // object.velocity.y -= Math.random() * .1;
+            object.rotation.y += ((Math.PI/180)/10 * (i%2 === 1 ? -1 : 1))
             for (let y = 0; y < object.geometry.vertices.length; y++ ){
             	let vertex = object.geometry.vertices[y];
             	vertex.y -= 200;
