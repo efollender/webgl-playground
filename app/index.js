@@ -26,7 +26,7 @@ class Demo {
 		this.ms_geometry = null;
 		this.ms_audio = null;
 		this.particles = [];
-		this.particleCount = 20000;
+		this.particleCount = 60000;
 	}
 	enable() {
         try {
@@ -122,17 +122,10 @@ class Demo {
 			this.loadIce(x, 800, x * -800, 1.4);
 		}
 		this.loadCat();
-		// this.ms_Snow = new Snow(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
-		// 	width: inParameters.width,
-		// 	height: inParameters.height
-		// });
 		this.loadSnow();
+
 		//Listen for trigger
 		const mountains = document.getElementById('mountains');
-		// const paw = document.getElementById('paw');
-		// paw.addEventListener('click', () => {
-		// 	this.handleButton();
-		// });
 		mountains.addEventListener('click', () => {
 			this.ms_Terrain.callback();
 		});
@@ -142,15 +135,15 @@ class Demo {
 		let happyHolidays = document.getElementsByClassName('welcome-screen')[0].cloneNode(true);
 		happyHolidays.className += ' closing-screen';
 		this.ms_audio = document.createElement('audio');
-	  const source = document.createElement('source');
-	  source.src = 'assets/sounds/Visager_-_19_-_Village_Dreaming_Loop.mp3';
-	  this.ms_audio.loop = false;
-	  // this.ms_audio.muted = true;
-	  this.ms_audio.appendChild(source);
-	  this.ms_audio.addEventListener('ended', (e) => {
-	  	console.log('ended');
-	  	document.getElementsByClassName('ui-container')[0].appendChild(happyHolidays);
-	  });
+	  	const source = document.createElement('source');
+	  	source.src = 'assets/sounds/Visager_-_19_-_Village_Dreaming_Loop.mp3';
+	  	this.ms_audio.loop = false;
+	  	// this.ms_audio.muted = true;
+	  	this.ms_audio.appendChild(source);
+	  	this.ms_audio.addEventListener('ended', (e) => {
+	  		console.log('ended');
+	  		document.getElementsByClassName('ui-container')[0].appendChild(happyHolidays);
+	  	});
 
 	  //allow zoom
 	  setTimeout(()=>{
@@ -317,6 +310,7 @@ class Demo {
 	loadCat() {
 		const jsonLoader = new THREE.JSONLoader();
 		jsonLoader.load( "assets/js/cat_animated.js",  ( geometry, materials ) => {
+			console.log('sds', geometry, materials);
 			const objTexture = THREE.ImageUtils.loadTexture("assets/img/catWithGlasses_diffuse.jpg");
 			for ( let i = 0; i < materials.length; i ++ ) {
 				let m = materials[i];
@@ -366,20 +360,21 @@ class Demo {
 		let elapsedTime = clock.getElapsedTime();
 		if (ready) this.initialZoom();
 		for (let i = 0; i < this.ms_Scene.children.length; i++) {
-        var object = this.ms_Scene.children[i];
-        if (object instanceof THREE.Points) {
-            object.rotation.y += ((Math.PI/180)/10 * (i%2 === 1 ? -1 : 1))
-            for (let y = 0; y < object.geometry.vertices.length; y++ ){
-            	let vertex = object.geometry.vertices[y];
-            	vertex.y -= 200;
-            	vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0; 
-            	vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
-            	if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
-            }
-          object.__dirtyVertices = true;
-        }
-    }
-    this.ms_Controls.update();
+	        var object = this.ms_Scene.children[i];
+	        if (object instanceof THREE.Points) {
+	            object.rotation.y += ((Math.PI/180)/10 * (i%2 === 1 ? -1 : 1));
+	            for (let y = 0; y < object.geometry.vertices.length; y++ ){
+	            	let vertex = object.geometry.vertices[y];
+	            	vertex.y -= Math.random();
+	            	// vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0; 
+	            	// vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
+	            	if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
+	            }
+	        	object.geometry.__dirtyVertices = true;
+	        	object.geometry.verticesNeedUpdate = true;
+	        }
+	    }
+    	this.ms_Controls.update();
 		this.display();
 	}
 	handleRange(value) {

@@ -32,7 +32,7 @@ var Demo = (function () {
 		this.ms_geometry = null;
 		this.ms_audio = null;
 		this.particles = [];
-		this.particleCount = 20000;
+		this.particleCount = 60000;
 	}
 
 	_createClass(Demo, [{
@@ -131,17 +131,10 @@ var Demo = (function () {
 				this.loadIce(x, 800, x * -800, 1.4);
 			}
 			this.loadCat();
-			// this.ms_Snow = new Snow(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
-			// 	width: inParameters.width,
-			// 	height: inParameters.height
-			// });
 			this.loadSnow();
+
 			//Listen for trigger
 			var mountains = document.getElementById('mountains');
-			// const paw = document.getElementById('paw');
-			// paw.addEventListener('click', () => {
-			// 	this.handleButton();
-			// });
 			mountains.addEventListener('click', function () {
 				_this.ms_Terrain.callback();
 			});
@@ -325,6 +318,7 @@ var Demo = (function () {
 
 			var jsonLoader = new THREE.JSONLoader();
 			jsonLoader.load("assets/js/cat_animated.js", function (geometry, materials) {
+				console.log('sds', geometry, materials);
 				var objTexture = THREE.ImageUtils.loadTexture("assets/img/catWithGlasses_diffuse.jpg");
 				for (var i = 0; i < materials.length; i++) {
 					var m = materials[i];
@@ -385,12 +379,13 @@ var Demo = (function () {
 					object.rotation.y += Math.PI / 180 / 10 * (i % 2 === 1 ? -1 : 1);
 					for (var y = 0; y < object.geometry.vertices.length; y++) {
 						var vertex = object.geometry.vertices[y];
-						vertex.y -= 200;
-						vertex.x += Math.cos(delta * 8.0 + vertex.z) * 70.0;
-						vertex.z += Math.sin(delta * 6.0 + vertex.x) * 100.0;
+						vertex.y -= Math.random();
+						// vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0;
+						// vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
 						if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
 					}
-					object.__dirtyVertices = true;
+					object.geometry.__dirtyVertices = true;
+					object.geometry.verticesNeedUpdate = true;
 				}
 			}
 			this.ms_Controls.update();
