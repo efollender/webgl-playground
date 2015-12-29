@@ -273,8 +273,8 @@ var Demo = (function () {
 		key: 'loadSnow',
 		value: function loadSnow() {
 
-			var sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
-
+			var sprite = THREE.ImageUtils.loadTexture("assets/img/snow-02.png");
+			sprite.format = THREE.AlphaFormat;
 			var geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
 
 			var particleCount = this.particleCount; /* Leagues under the sea */
@@ -291,7 +291,7 @@ var Demo = (function () {
 
 				geometry.vertices.push(vertex);
 			}
-			var parameters = [[[1, 1, 0.5], 5], [[0.95, 1, 0.5], 4], [[0.90, 1, 0.5], 3], [[0.85, 1, 0.5], 2], [[0.80, 1, 0.5], 1]];
+			var parameters = [[[1, 1, 0.5], 5], [[0.95, 2, 0.5], 4], [[0.90, 3, 0.5], 3], [[0.85, 5, 0.5], 2], [[0.80, 1, 0.5], 1]];
 			var parameterCount = parameters.length;
 			var materials = [];
 			for (var i = 0; i < parameterCount; i++) {

@@ -255,8 +255,8 @@ class Demo {
 	}
 	loadSnow() {
 
-		const sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
-
+		let sprite = THREE.ImageUtils.loadTexture("assets/img/snow-02.png");
+		sprite.format = THREE.AlphaFormat;
 		let geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
 
     let particleCount = this.particleCount; /* Leagues under the sea */
@@ -275,13 +275,13 @@ class Demo {
                 [1, 1, 0.5], 5
             ],
             [
-                [0.95, 1, 0.5], 4
+                [0.95, 2, 0.5], 4
             ],
             [
-                [0.90, 1, 0.5], 3
+                [0.90, 3, 0.5], 3
             ],
             [
-                [0.85, 1, 0.5], 2
+                [0.85, 5, 0.5], 2
             ],
             [
                 [0.80, 1, 0.5], 1
@@ -295,7 +295,7 @@ class Demo {
         let size = parameters[i][1];
 
         materials[i] = new THREE.PointsMaterial({
-            size : size
+            size: size
         });
 
         this.particles[i] = new THREE.Points(geometry, materials[i]);

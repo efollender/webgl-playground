@@ -141,6 +141,11 @@ svg {
   -o-animation-delay: 0s !important;
   -ms-animation-delay: 0s !important;
   animation-delay: 0s !important;
+  background: -webkit-linear-gradient(top, rgba(109,176,224,0.96) 0%, rgba(41,137,216,0.96) 32%, rgba(62,84,144,0.96) 100%) !important;
+  background: -moz-linear-gradient(top, rgba(109,176,224,0.96) 0%, rgba(41,137,216,0.96) 32%, rgba(62,84,144,0.96) 100%) !important;
+  background: -o-linear-gradient(top, rgba(109,176,224,0.96) 0%, rgba(41,137,216,0.96) 32%, rgba(62,84,144,0.96) 100%) !important;
+  background: -ms-linear-gradient(top, rgba(109,176,224,0.96) 0%, rgba(41,137,216,0.96) 32%, rgba(62,84,144,0.96) 100%) !important;
+  background: linear-gradient(to bottom, rgba(109,176,224,0.96) 0%, rgba(41,137,216,0.96) 32%, rgba(62,84,144,0.96) 100%) !important;
 }
 .welcome-screen.closing-screen .message-wrapper h2 {
   margin-bottom: 0;
