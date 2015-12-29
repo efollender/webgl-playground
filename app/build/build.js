@@ -332,7 +332,7 @@ var Demo = (function () {
 				var object = new THREE.Mesh(geometry, material);
 				object.position.set(0, 30, 1000);
 				object.scale.set(15, 15, 15);
-				object.rotation.x = Math.PI * -.5;
+				// object.rotation.x = Math.PI * .5;
 				_this3.ms_Scene.add(object);
 			});
 		}
