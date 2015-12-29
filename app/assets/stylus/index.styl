@@ -205,6 +205,19 @@ svg
           background #fff
           box-shadow 0 0 3px rgba(black, .5)
           cursor pointer
+          position relative
+          +below(480px)
+            width 3em
+            height 3em
+            &:before
+              content ''
+              position absolute
+              top -3px
+              right -3px
+              left -3px
+              bottom -3px
+              border 1px solid white
+              border-radius 100%
         &::-moz-range-thumb
           height 1em
           width 1em
@@ -212,6 +225,19 @@ svg
           background #ccc
           cursor pointer
           box-shadow 0 0 3px rgba(black, .5)
+          position relative
+          +below(480px)
+            width 3em
+            height 3em
+            &:before
+              content ''
+              position absolute
+              top -3px
+              right -3px
+              left -3px
+              bottom -3px
+              border 1px solid white
+              border-radius 100%
         &::-ms-thumb
           height 1em
           width 1em
@@ -219,6 +245,19 @@ svg
           background #ccc
           cursor pointer
           box-shadow 0 0 3px rgba(black, .5)
+          position relative
+          +below(480px)
+            width 3em
+            height 3em
+            &:before
+              content ''
+              position absolute
+              top -3px
+              right -3px
+              left -3px
+              bottom -3px
+              border 1px solid white
+              border-radius 100%
   #paw
     margin-left 1em
     background-image url('../assets/img/paw.svg')

@@ -349,6 +349,24 @@ svg {
   -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
   cursor: pointer;
+  position: relative;
+}
+@media only screen and (max-width: 480px) {
+  .cat-controls .key.slider input[type=range]::-webkit-slider-thumb {
+    width: 3em;
+    height: 3em;
+  }
+  .cat-controls .key.slider input[type=range]::-webkit-slider-thumb:before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    left: -3px;
+    bottom: -3px;
+    border: 1px solid #fff;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+  }
 }
 .cat-controls .key.slider input[type=range]::-moz-range-thumb {
   height: 1em;
@@ -359,6 +377,24 @@ svg {
   cursor: pointer;
   -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  position: relative;
+}
+@media only screen and (max-width: 480px) {
+  .cat-controls .key.slider input[type=range]::-moz-range-thumb {
+    width: 3em;
+    height: 3em;
+  }
+  .cat-controls .key.slider input[type=range]::-moz-range-thumb:before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    left: -3px;
+    bottom: -3px;
+    border: 1px solid #fff;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+  }
 }
 .cat-controls .key.slider input[type=range]::-ms-thumb {
   height: 1em;
@@ -369,6 +405,24 @@ svg {
   cursor: pointer;
   -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  position: relative;
+}
+@media only screen and (max-width: 480px) {
+  .cat-controls .key.slider input[type=range]::-ms-thumb {
+    width: 3em;
+    height: 3em;
+  }
+  .cat-controls .key.slider input[type=range]::-ms-thumb:before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    left: -3px;
+    bottom: -3px;
+    border: 1px solid #fff;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+  }
 }
 .cat-controls #paw {
   margin-left: 1em;
