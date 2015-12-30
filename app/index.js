@@ -86,7 +86,7 @@ class Demo {
 		this.loadTerrain(inParameters);
 
 		// Load textures
-		var waterNormals = new THREE.ImageUtils.loadTexture('../assets/img/waternormals.jpg');
+		var waterNormals = new THREE.ImageUtils.loadTexture('assets/img/waternormals.jpg');
 		waterNormals.wrapS = waterNormals.wrapT = THREE.SphericalReflectionMapping;
 
 		// Create the water effect

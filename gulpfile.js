@@ -56,7 +56,7 @@ gulp.task('connectDist', function () {
 });
  
 gulp.task('html', function () {
-  gulp.src('./app/*.html')
+  gulp.src('./*.html')
     .pipe(connect.reload());
 });
  
@@ -70,7 +70,7 @@ gulp.task('stylus', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./app/*.html'], ['html']);
+  gulp.watch(['./index.html'], ['html']);
   gulp.watch(['./app/assets/stylus/*.styl'], ['stylus']);
   gulp.watch(['./app/index.js'], ['compile'] );
 });
