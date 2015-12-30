@@ -382,8 +382,8 @@ var Demo = (function () {
 					for (var y = 0; y < object.geometry.vertices.length; y++) {
 						var vertex = object.geometry.vertices[y];
 						vertex.y -= Math.random();
-						vertex.x += Math.cos(delta * 8.0 + vertex.z) * 70.0;
-						vertex.z += Math.sin(delta * 6.0 + vertex.x) * 100.0;
+						// vertex.x += Math.cos(delta*8.0 + (vertex.z));
+						vertex.z += Math.sin(delta * 6.0 + vertex.x);
 						if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
 					}
 					object.geometry.__dirtyVertices = true;
