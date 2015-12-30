@@ -215,7 +215,7 @@ svg {
   margin-bottom: 1rem;
 }
 .welcome-screen .message-wrapper .start-button {
-  padding: 1em 2em;
+  padding: 0.5em 1.5em;
   background: #fff;
   -webkit-border-radius: 0.5em;
   border-radius: 0.5em;
@@ -224,6 +224,7 @@ svg {
   font-weight: bold;
   cursor: pointer;
   width: 50%;
+  font-size: 1.2em;
   margin: 0 auto;
 }
 .welcome-screen .message-wrapper .start-button .fa {

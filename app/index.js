@@ -255,7 +255,7 @@ class Demo {
 	}
 	loadSnow() {
 
-		let sprite = THREE.ImageUtils.loadTexture("assets/img/snow-02.png");
+		let sprite = THREE.ImageUtils.loadTexture("assets/img/snow-squared.png");
 		sprite.format = THREE.AlphaFormat;
 		let geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
 
@@ -275,16 +275,16 @@ class Demo {
                 [1, 1, 0.5], 5
             ],
             [
-                [0.95, 2, 0.5], 4
+                [0.95, 1, 0.5], 4
             ],
             [
-                [0.90, 3, 0.5], 3
+                [0.90, 1, 0.5], 3
             ],
             [
-                [0.85, 5, 0.5], 2
+                [0.85, 1, 0.5], 6
             ],
             [
-                [0.80, 1, 0.5], 1
+                [0.80, 1, 0.5], 2
             ]
         ];
     let parameterCount = parameters.length;
@@ -294,9 +294,11 @@ class Demo {
         let color = parameters[i][0];
         let size = parameters[i][1];
 
-        materials[i] = new THREE.PointsMaterial({
-            size: size
+        materials[i] = new THREE.PointsMaterial({ 
+        	size: size
         });
+			
+		// materials[i].color.setHSL( color[0], color[1], color[2] );
 
         this.particles[i] = new THREE.Points(geometry, materials[i]);
         // this.particles[i].rotation.x = Math.random() * 6;
@@ -337,10 +339,10 @@ class Demo {
 		let zoom = this.ms_Camera.position.z;
 		let cameraX = this.ms_Camera.position.x;
 		let cameraY = this.ms_Camera.position.y;
-		const inc = 5;
-		if (zoom > 3000) {
+		const inc = 10;
+		if (zoom > 2000) {
 			this.ms_Camera.position.set(cameraX, cameraY, zoom - inc);
-	    this.ms_Camera.updateProjectionMatrix();
+	    	this.ms_Camera.updateProjectionMatrix();
 		} else {
 			ready = false;
 		}
@@ -366,8 +368,8 @@ class Demo {
 	            for (let y = 0; y < object.geometry.vertices.length; y++ ){
 	            	let vertex = object.geometry.vertices[y];
 	            	vertex.y -= Math.random();
-	            	// vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0; 
-	            	// vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
+	            	vertex.x += Math.cos(delta*8.0 + (vertex.z))*70.0; 
+	            	vertex.z += Math.sin(delta*6.0 + (vertex.x))*100.0;
 	            	if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
 	            }
 	        	object.geometry.__dirtyVertices = true;
