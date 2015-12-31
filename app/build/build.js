@@ -297,7 +297,7 @@ var Demo = (function () {
 			for (var i = 0; i < parameterCount; i++) {
 
 				var color = parameters[i][0];
-				var size = parameters[i][1];
+				var size = parameters[i][1] * 2;
 
 				materials[i] = new THREE.PointsMaterial({
 					size: size

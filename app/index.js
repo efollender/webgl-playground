@@ -292,7 +292,7 @@ class Demo {
     for (let i = 0; i < parameterCount; i++) {
 
         let color = parameters[i][0];
-        let size = parameters[i][1];
+        let size = parameters[i][1] * 2;
 
         materials[i] = new THREE.PointsMaterial({ 
         	size: size
