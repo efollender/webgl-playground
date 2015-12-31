@@ -273,8 +273,8 @@ var Demo = (function () {
 		key: 'loadSnow',
 		value: function loadSnow() {
 
-			var sprite = THREE.ImageUtils.loadTexture("assets/img/snow-squared.png");
-			sprite.format = THREE.AlphaFormat;
+			var sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
+			// sprite.format = THREE.AlphaFormat;
 			var geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
 
 			var particleCount = this.particleCount; /* Leagues under the sea */
@@ -297,10 +297,12 @@ var Demo = (function () {
 			for (var i = 0; i < parameterCount; i++) {
 
 				var color = parameters[i][0];
-				var size = parameters[i][1] * 2;
+				var size = parameters[i][1] * 3;
 
 				materials[i] = new THREE.PointsMaterial({
-					size: size
+					size: size,
+					map: sprite,
+					blending: THREE.AdditiveBlending, depthTest: false, transparent: true
 				});
 
 				// materials[i].color.setHSL( color[0], color[1], color[2] );

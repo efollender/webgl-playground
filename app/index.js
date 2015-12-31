@@ -255,8 +255,8 @@ class Demo {
 	}
 	loadSnow() {
 
-		let sprite = THREE.ImageUtils.loadTexture("assets/img/snow-squared.png");
-		sprite.format = THREE.AlphaFormat;
+		let sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
+		// sprite.format = THREE.AlphaFormat;
 		let geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
 
     let particleCount = this.particleCount; /* Leagues under the sea */
@@ -292,10 +292,12 @@ class Demo {
     for (let i = 0; i < parameterCount; i++) {
 
         let color = parameters[i][0];
-        let size = parameters[i][1] * 2;
+        let size = parameters[i][1] * 3;
 
         materials[i] = new THREE.PointsMaterial({ 
-        	size: size
+        	size: size,
+        	map: sprite,
+        	blending: THREE.AdditiveBlending, depthTest: false, transparent: true
         });
 			
 		// materials[i].color.setHSL( color[0], color[1], color[2] );
