@@ -139,8 +139,6 @@ var Demo = (function () {
 			mountains.addEventListener('click', function () {
 				_this.ms_Terrain.callback();
 			});
-			this.handleKeyDown();
-
 			//Audio
 			var happyHolidays = document.getElementsByClassName('welcome-screen')[0].cloneNode(true);
 			happyHolidays.className += ' closing-screen';
@@ -171,14 +169,6 @@ var Demo = (function () {
 			var aShader = THREE.ShaderLib['phong'];
 			aShader.uniforms['map'].value = skyTexture;
 
-			// var aSkyBoxMaterial = new THREE.ShaderMaterial({
-			// fragmentShader: aShader.fragmentShader,
-			// vertexShader: aShader.vertexShader,
-			// uniforms: aShader.uniforms,
-			//   depthWrite: false,
-			//   side: THREE.BackSide
-			// });
-
 			var aSkybox = new THREE.Mesh(new THREE.SphereGeometry(10000, 32, 32), new THREE.MeshPhongMaterial({
 				map: skyTexture,
 				side: THREE.BackSide,
@@ -195,23 +185,22 @@ var Demo = (function () {
 			var _this2 = this;
 
 			var terrainGeo = TERRAINGEN.Get(inParameters);
-			var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 			var terrainMaterial = new THREE.MeshPhongMaterial({
-				map: iceTexture,
 				shading: THREE.FlatShading,
 				side: THREE.DoubleSide,
-				color: new THREE.Color(0xCCCCEE)
+				color: new THREE.Color(0x6ECBF9)
 			});
 			this.ms_Terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
 			this.ms_Terrain.position.y = -(inParameters.depth * .85);
 			this.ms_Terrain.position.z = -4000;
 			this.ms_Terrain.callback = function () {
-				// console.log(this.ms_Terrain.position.y);
 				if (_this2.ms_Terrain.position.y <= -inParameters.depth) {
 					reducing = false;
+					console.log('reducing over.');
 					_this2.ms_Scene.remove(_this2.ms_Terrain);
 					_this2.loadTerrain(inParameters);
 				} else {
+					console.log('reducing');
 					reducing = true;
 				}
 			};
@@ -223,7 +212,6 @@ var Demo = (function () {
 		value: function loadGlaciers(index, z, x, scale) {
 			var objLoader = new THREE.OBJLoader();
 			var ms_Scene = this.ms_Scene;
-			var iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 			objLoader.load('assets/landscape_assets/glacier_0' + index + '.obj', function (glacier) {
 				//load ice texture
 				for (var i = 0; i < glacier.children.length; i++) {
@@ -247,7 +235,6 @@ var Demo = (function () {
 		value: function loadIce(index, z, x, scale) {
 			var objLoader = new THREE.OBJLoader();
 			var ms_Scene = this.ms_Scene;
-			// const iceTexture = THREE.ImageUtils.loadTexture('assets/img/texture_001.jpg');
 			objLoader.load('assets/landscape_assets/floe_0' + index + '.obj', function (glacier) {
 				//load ice texture
 				for (var i = 0; i < glacier.children.length; i++) {
@@ -255,10 +242,7 @@ var Demo = (function () {
 					geometry.computeFaceNormals();
 					geometry.computeVertexNormals();
 					glacier.children[i].receiveShadow = true;
-					// console.log('ice', glacier);source
-					// MOUNTAINS_COLORS.Apply(geometry, this.ms_Parameters);
 					glacier.children[i].material = new THREE.MeshPhongMaterial({
-						// map: iceTexture,
 						shading: THREE.FlatShading,
 						color: new THREE.Color(0x7BF8FF)
 					});
@@ -326,7 +310,6 @@ var Demo = (function () {
 				// this.particles[i].rotation.z = Math.random() * 6;
 				this.ms_Scene.add(this.particles[i]);
 			}
-			console.log('points', this.particles);
 		}
 	}, {
 		key: 'loadCat',
@@ -335,7 +318,6 @@ var Demo = (function () {
 
 			var jsonLoader = new THREE.JSONLoader();
 			jsonLoader.load("assets/js/cat_animated.js", function (geometry, materials) {
-				console.log('sds', geometry, materials);
 				var objTexture = THREE.ImageUtils.loadTexture("assets/img/catWithGlasses_diffuse.jpg");
 				for (var i = 0; i < materials.length; i++) {
 					var m = materials[i];
@@ -394,6 +376,7 @@ var Demo = (function () {
 				var object = this.ms_Scene.children[i];
 				if (object instanceof THREE.Points) {
 					object.rotation.y += Math.PI / 180 / 10 * (i % 2 === 1 ? -1 : 1);
+					object.geometry = this.updateFlakes(object.geometry);
 					for (var y = 0; y < this.particleCount; y++) {
 						var vertex = object.geometry.vertices[y];
 						vertex.y -= Math.random();
@@ -410,13 +393,6 @@ var Demo = (function () {
 		key: 'handleRange',
 		value: function handleRange(value) {
 			this.particleCount = value;
-			for (var i = 0; i < this.ms_Scene.children.length; i++) {
-				var object = this.ms_Scene.children[i];
-				if (object instanceof THREE.Points) {
-					object.geometry = this.updateFlakes(object.geometry);
-					object.geometry.verticesNeedUpdate = true;
-				}
-			}
 		}
 	}, {
 		key: 'handleButton',
@@ -430,25 +406,6 @@ var Demo = (function () {
 					mixers[i].actions[y].actionTime = 0;
 				}
 			}
-		}
-	}, {
-		key: 'handleKeyDown',
-		value: function handleKeyDown() {
-			var _this4 = this;
-
-			document.addEventListener('keydown', function (e) {
-				switch (e.keyCode) {
-					case 69:
-						_this4.ms_Terrain.callback();
-						break;
-					case 87:
-					case 81:
-						_this4.handleButton();
-						break;
-					default:
-						break;
-				}
-			});
 		}
 	}, {
 		key: 'resize',
