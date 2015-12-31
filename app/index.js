@@ -26,8 +26,8 @@ class Demo {
 		this.ms_geometry = null;
 		this.ms_audio = null;
 		this.particles = [];
-		this.particleCount = 60000;
-		this.maxParticles = 120000;
+		this.particleCount = 30000;
+		this.maxParticles = 60000;
 	}
 	enable() {
         try {
@@ -285,19 +285,19 @@ class Demo {
 
     let parameters = [
             [
-                [1, 1, 0.5], 5
+                [1, 1, 0.5], 6
             ],
             [
-                [0.95, 1, 0.5], 4
+                [0.95, 1, 0.5], 5
             ],
             [
-                [0.90, 1, 0.5], 3
+                [0.90, 1, 0.5], 4
             ],
             [
-                [0.85, 1, 0.5], 6
+                [0.85, 1, 0.5], 7
             ],
             [
-                [0.80, 1, 0.5], 4
+                [0.80, 1, 0.5], 5
             ]
         ];
     let parameterCount = parameters.length;
