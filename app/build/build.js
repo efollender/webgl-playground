@@ -196,11 +196,9 @@ var Demo = (function () {
 			this.ms_Terrain.callback = function () {
 				if (_this2.ms_Terrain.position.y <= -inParameters.depth) {
 					reducing = false;
-					console.log('reducing over.');
 					_this2.ms_Scene.remove(_this2.ms_Terrain);
 					_this2.loadTerrain(inParameters);
 				} else {
-					console.log('reducing');
 					reducing = true;
 				}
 			};

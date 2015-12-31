@@ -157,7 +157,7 @@ class Demo {
 
 		let aShader = THREE.ShaderLib['phong'];
 		aShader.uniforms['map'].value = skyTexture;
-		
+
 		var aSkybox = new THREE.Mesh(
 		  new THREE.SphereGeometry(10000, 32, 32),
 		  new THREE.MeshPhongMaterial({
@@ -184,11 +184,9 @@ class Demo {
 		this.ms_Terrain.callback = () => {
 			if (this.ms_Terrain.position.y <= -inParameters.depth) {
 				reducing = false;
-				console.log('reducing over.')
 				this.ms_Scene.remove(this.ms_Terrain);
 				this.loadTerrain(inParameters);
 			} else {
-				console.log('reducing');
 				reducing = true;
 			}
 		}
