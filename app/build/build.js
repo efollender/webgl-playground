@@ -33,6 +33,7 @@ var Demo = (function () {
 		this.ms_audio = null;
 		this.particles = [];
 		this.particleCount = 60000;
+		this.maxParticles = 120000;
 	}
 
 	_createClass(Demo, [{
@@ -106,10 +107,10 @@ var Demo = (function () {
 				textureWidth: 512,
 				textureHeight: 512,
 				waterNormals: waterNormals,
-				alpha: 1.0,
+				alpha: .95,
 				sunDirection: directionalLight.position.normalize(),
 				sunColor: 0xFFFFFF,
-				waterColor: 0x8F81A1,
+				waterColor: 0x00aeff,
 				distortionScale: 20.0
 			});
 			var aMeshMirror = new THREE.Mesh(new THREE.PlaneBufferGeometry(inParameters.width * 500, inParameters.height * 500, 10, 10), this.ms_Water.material);
@@ -270,32 +271,44 @@ var Demo = (function () {
 			});
 		}
 	}, {
-		key: 'loadSnow',
-		value: function loadSnow() {
-
-			var sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
-			// sprite.format = THREE.AlphaFormat;
-			var geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
-
-			var particleCount = this.particleCount; /* Leagues under the sea */
+		key: 'updateFlakes',
+		value: function updateFlakes(oldGeometry) {
+			if (!oldGeometry) oldGeometry = new THREE.Geometry();
+			var geometry = new THREE.Geometry();
 			var _ms_Parameters = this.ms_Parameters;
 			var width = _ms_Parameters.width;
 			var height = _ms_Parameters.height;
 
-			for (var i = 0; i < particleCount; i++) {
-
+			for (var i = 0; i < this.maxParticles; i++) {
 				var vertex = new THREE.Vector3();
-				vertex.x = Math.random() * width;
-				vertex.y = Math.random() * height;
-				vertex.z = Math.random() * 4000;
-
+				if (oldGeometry.vertices[i]) {
+					vertex = oldGeometry.vertices[i];
+				} else {
+					vertex.x = Math.random() * width;
+					vertex.y = Math.random() * height;
+					vertex.z = Math.random() * 4000;
+				}
+				if (i > this.particleCount) {
+					vertex.y = height + 2;
+				} else if (vertex.y > height) {
+					vertex.y = Math.random() * height;
+				}
 				geometry.vertices.push(vertex);
 			}
-			var parameters = [[[1, 1, 0.5], 5], [[0.95, 1, 0.5], 4], [[0.90, 1, 0.5], 3], [[0.85, 1, 0.5], 6], [[0.80, 1, 0.5], 2]];
+
+			return geometry;
+		}
+	}, {
+		key: 'loadSnow',
+		value: function loadSnow() {
+
+			var sprite = THREE.ImageUtils.loadTexture("assets/img/snowflake.png");
+			var geometry = this.updateFlakes();
+
+			var parameters = [[[1, 1, 0.5], 5], [[0.95, 1, 0.5], 4], [[0.90, 1, 0.5], 3], [[0.85, 1, 0.5], 6], [[0.80, 1, 0.5], 4]];
 			var parameterCount = parameters.length;
 			var materials = [];
 			for (var i = 0; i < parameterCount; i++) {
-
 				var color = parameters[i][0];
 				var size = parameters[i][1] * 3;
 
@@ -381,14 +394,12 @@ var Demo = (function () {
 				var object = this.ms_Scene.children[i];
 				if (object instanceof THREE.Points) {
 					object.rotation.y += Math.PI / 180 / 10 * (i % 2 === 1 ? -1 : 1);
-					for (var y = 0; y < object.geometry.vertices.length; y++) {
+					for (var y = 0; y < this.particleCount; y++) {
 						var vertex = object.geometry.vertices[y];
 						vertex.y -= Math.random();
-						// vertex.x += Math.cos(delta*8.0 + (vertex.z));
 						vertex.z += Math.sin(delta * 6.0 + vertex.x);
 						if (vertex.y < 0) object.geometry.vertices[y].y = this.ms_Parameters.height;
 					}
-					object.geometry.__dirtyVertices = true;
 					object.geometry.verticesNeedUpdate = true;
 				}
 			}
@@ -398,12 +409,14 @@ var Demo = (function () {
 	}, {
 		key: 'handleRange',
 		value: function handleRange(value) {
-
-			for (var i = 0; i < this.particleCount; i++) {
-				this.ms_Scene.remove(this.particles[i]);
-			}
 			this.particleCount = value;
-			this.loadSnow();
+			for (var i = 0; i < this.ms_Scene.children.length; i++) {
+				var object = this.ms_Scene.children[i];
+				if (object instanceof THREE.Points) {
+					object.geometry = this.updateFlakes(object.geometry);
+					object.geometry.verticesNeedUpdate = true;
+				}
+			}
 		}
 	}, {
 		key: 'handleButton',

@@ -21,7 +21,7 @@ THREE.ShaderLib['water'] = {
       "sunColor":         { type: "c", value: new THREE.Color(0x7F7F7F) },
       "sunDirection":     { type: "v3", value: new THREE.Vector3(0.70707, 0.70707, 0) },
       "eye":              { type: "v3", value: new THREE.Vector3(0, 0, 0) },
-      "waterColor":       { type: "c", value: new THREE.Color(0x555555) }
+      "waterColor":       { type: "c", value: new THREE.Color(0x00aeff) }
     }
   ] ),
 
