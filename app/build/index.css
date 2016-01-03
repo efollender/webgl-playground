@@ -197,7 +197,7 @@ svg {
     right: 15%;
   }
 }
-@media only screen and (max-width: 481px) {
+@media only screen and (max-width: 748px) {
   .welcome-screen .message-wrapper {
     left: 0.5em;
     right: 0.5em;
@@ -281,7 +281,7 @@ svg {
     bottom: calc(6em + 50px);
   }
 }
-@media only screen and (max-width: 481px) {
+@media only screen and (max-width: 748px) {
   .cat-controls {
     bottom: 1em;
   }
@@ -350,7 +350,7 @@ svg {
   cursor: pointer;
   position: relative;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 748px) {
   .cat-controls .key.slider input[type=range]::-webkit-slider-thumb {
     width: 3em;
     height: 3em;
@@ -378,7 +378,7 @@ svg {
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
   position: relative;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 748px) {
   .cat-controls .key.slider input[type=range]::-moz-range-thumb {
     width: 3em;
     height: 3em;
@@ -406,7 +406,7 @@ svg {
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
   position: relative;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 748px) {
   .cat-controls .key.slider input[type=range]::-ms-thumb {
     width: 3em;
     height: 3em;
@@ -455,7 +455,7 @@ svg {
   -ms-animation: clear-right 0.75s ease-in-out forwards 4s;
   animation: clear-right 0.75s ease-in-out forwards 4s;
 }
-@media only screen and (max-width: 481px) {
+@media only screen and (max-width: 748px) {
   .loading-message {
     left: 1em;
     right: 1em;
@@ -539,7 +539,7 @@ svg {
   bottom: 2em;
   overflow: hidden;
 }
-@media only screen and (max-width: 481px) {
+@media only screen and (max-width: 748px) {
   .border-animation {
     display: none;
   }

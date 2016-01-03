@@ -28,6 +28,7 @@ class Demo {
 		this.particles = [];
 		this.particleCount = 30000;
 		this.maxParticles = 60000;
+		this.updateCount = false;
 	}
 	enable() {
         try {
@@ -140,7 +141,6 @@ class Demo {
 	  	// this.ms_audio.muted = true;
 	  	this.ms_audio.appendChild(source);
 	  	this.ms_audio.addEventListener('ended', (e) => {
-	  		console.log('ended');
 	  		document.getElementsByClassName('ui-container')[0].appendChild(happyHolidays);
 	  	});
 
@@ -257,7 +257,7 @@ class Demo {
         }
         geometry.vertices.push(vertex);
     }
-    
+    this.updateCount = false;
     return geometry;
 	}
 	loadSnow() {
@@ -359,7 +359,7 @@ class Demo {
         let object = this.ms_Scene.children[i];
         if (object instanceof THREE.Points) {
           object.rotation.y += ((Math.PI/180)/10 * (i%2 === 1 ? -1 : 1));
-          object.geometry = this.updateFlakes(object.geometry);
+          if (this.updateCount) object.geometry = this.updateFlakes(object.geometry);
           for (let y = 0; y < this.particleCount; y++ ){
           	let vertex = object.geometry.vertices[y];
           	vertex.y -= Math.random();
@@ -374,6 +374,7 @@ class Demo {
 	}
 	handleRange(value) {
 		this.particleCount = value;
+		this.updateCount = true;
 	}
 	handleButton() {
 		pushed = true;

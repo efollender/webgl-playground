@@ -1,5 +1,6 @@
 @import 'nib'
 @import 'rupture'
+@import '_variables'
 
 *
 *:after
@@ -101,10 +102,10 @@ svg
     right 30%
     max-width 550px
     margin 0 auto
-    +below(1050px)
+    +below(landscapeTablet)
       left 15%
       right 15%
-    +below(481px)
+    +below(landscapeMobile)
       left .5em
       right .5em
     .welcome-text
@@ -155,9 +156,9 @@ svg
   opacity 0
   animation fade-in 1s ease-in-out forwards 8.75s
   bottom calc(4em + 50px)
-  +below(1050px)
+  +below(landscapeTablet)
     bottom calc(6em + 50px)
-  +below(481px)
+  +below(landscapeMobile)
     bottom 1em
   .key
     width 3em
@@ -205,7 +206,7 @@ svg
           box-shadow 0 0 3px rgba(black, .5)
           cursor pointer
           position relative
-          +below(480px)
+          +below(landscapeMobile)
             width 3em
             height 3em
             &:before
@@ -225,7 +226,7 @@ svg
           cursor pointer
           box-shadow 0 0 3px rgba(black, .5)
           position relative
-          +below(480px)
+          +below(landscapeMobile)
             width 3em
             height 3em
             &:before
@@ -245,7 +246,7 @@ svg
           cursor pointer
           box-shadow 0 0 3px rgba(black, .5)
           position relative
-          +below(480px)
+          +below(landscapeMobile)
             width 3em
             height 3em
             &:before
@@ -276,7 +277,7 @@ svg
   left 30%
   text-align center
   animation clear-right .75s ease-in-out forwards 4s
-  +below(481px)
+  +below(landscapeMobile)
     left 1em
     right 1em
   span
@@ -344,7 +345,7 @@ svg
   right 2em
   bottom 2em
   overflow hidden
-  +below(481px)
+  +below(landscapeMobile)
     display none
   .border-top
     height .15em
