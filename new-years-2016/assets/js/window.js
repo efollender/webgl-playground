@@ -17,7 +17,7 @@ var WINDOW = {
 	},
 	updateSize: function updateSize() {
 		this.ms_Width = $(window).width();
-		this.ms_Height = $(window).height() - 4;
+		this.ms_Height = $(window).height();
 	},
 	callAction: function callAction(inId) {
 		if(inId in this.ms_Callbacks) {
