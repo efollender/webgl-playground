@@ -465,7 +465,7 @@ $(function() {
 			welcome.parentNode.removeChild(welcome);
 		}, 350);
 	});
-	if (!isMobileSafari) {
+	if (!isMobileSafari()) {
 		volume.addEventListener('click', event => {
 			holidayAudio.muted = !holidayAudio.muted ;
 			if (holidayAudio.muted) {
