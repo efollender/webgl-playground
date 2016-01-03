@@ -425,6 +425,10 @@ var Demo = (function () {
 
 var DEMO = new Demo();
 
+function isMobileSafari() {
+	return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
+}
+
 function mainLoop() {
 	requestAnimationFrame(mainLoop);
 	DEMO.update();
@@ -487,15 +491,18 @@ $(function () {
 			welcome.parentNode.removeChild(welcome);
 		}, 350);
 	});
-
-	volume.addEventListener('click', function (event) {
-		holidayAudio.muted = !holidayAudio.muted;
-		if (holidayAudio.muted) {
-			volume.className = "key trigger vol-off";
-		} else {
-			volume.className = "key trigger";
-		}
-	});
+	if (!isMobileSafari) {
+		volume.addEventListener('click', function (event) {
+			holidayAudio.muted = !holidayAudio.muted;
+			if (holidayAudio.muted) {
+				volume.className = "key trigger vol-off";
+			} else {
+				volume.className = "key trigger";
+			}
+		});
+	} else {
+		volume.parentNode.removeChild(volume);
+	}
 });
 
 },{}]},{},[1]);
