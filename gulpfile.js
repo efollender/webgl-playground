@@ -15,10 +15,10 @@ var gulp = require('gulp'),
   fs = require('fs');
 
 gulp.task('compile', function() {
-  var bundler = watchify(browserify('./app/index.js')
+  var bundler = watchify(browserify('./new-years-2016/index.js')
       .transform(
         babel.configure({
-          sourceMapRelative: path.resolve(__dirname, 'app'),
+          sourceMapRelative: path.resolve(__dirname, 'new-years-2016'),
           presets: ['es2015']
         })
       ));
@@ -28,7 +28,7 @@ gulp.task('compile', function() {
       .on('error', function(err) { console.error(err); this.emit('end'); })
       .pipe(source('build.js'))
       .pipe(buffer())
-      .pipe(gulp.dest('./app/build'));
+      .pipe(gulp.dest('./new-years-2016/build'));
   }
 
   bundler.on('update', function() {
@@ -41,7 +41,7 @@ gulp.task('compile', function() {
  
 gulp.task('connectDev', function () {
   connect.server({
-    root: ['app'],
+    root: ['new-years-2016'],
     port: 4000,
     livereload: true
   });
@@ -61,18 +61,18 @@ gulp.task('html', function () {
 });
  
 gulp.task('stylus', function () {
-  gulp.src('./app/assets/stylus/*.styl')
+  gulp.src('./new-years-2016/assets/stylus/*.styl')
     .pipe(stylus({use: [rupture(), nib()] }))
     .pipe(sourcemaps.init())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./app/build'))
+    .pipe(gulp.dest('./new-years-2016/build'))
     .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
   gulp.watch(['./index.html'], ['html']);
-  gulp.watch(['./app/assets/stylus/*.styl'], ['stylus']);
-  gulp.watch(['./app/index.js'], ['compile'] );
+  gulp.watch(['./new-years-2016/assets/stylus/*.styl'], ['stylus']);
+  gulp.watch(['./new-years-2016/index.js'], ['compile'] );
 });
  
 gulp.task('default', ['connectDist', 'connectDev', 'watch']);
